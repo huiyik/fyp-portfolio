@@ -1,0 +1,453 @@
+<!-- Loading screen -->
+<div class="loader" [class.hidden]="!loading()">
+  <span class="loader-initials">Hi There !</span>
+</div>
+
+<!-- Scroll progress bar -->
+<div class="progress-bar" [style.width.%]="scrollProgress()"></div>
+
+<!-- Navigation -->
+<header class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" (click)="scrollToSection('home')">Tang Hui Yi</a>
+    <nav class="nav-links">
+      @for (link of navLinks; track link.id) {
+        <a
+          (click)="scrollToSection(link.id)"
+          [class.active]="activeSection() === link.id"
+        >{{ link.label }}</a>
+      }
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Welcome to my portfolio</p>
+      <p class="hero-im">I'm</p>
+      <h1 class="hero-name">Tang Hui Yi</h1>
+      <p class="hero-typing">
+        <span>{{ typedText() }}</span><span class="cursor">|</span>
+      </p>
+      <p class="hero-tagline">Turning raw data into real decisions.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" (click)="scrollToSection('fyp')">View My FYP</button>
+        <a class="btn btn-outline" href="assets/Tang-Hui-Yi-Resume.pdf" download>Download Resume</a>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll to explore ↓</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section about">
+    <div class="section-inner reveal">
+      <p class="eyebrow">Get to know me</p>
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <figure class="photo-frame" (click)="openLightbox(profilePhoto)">
+          <img [src]="profilePhoto.src" [alt]="profilePhoto.alt" />
+          <figcaption class="photo-caption">{{ profilePhoto.caption }}</figcaption>
+        </figure>
+        <div class="about-text">
+          <p>
+            Hi, I am Tang Hui Yi, a final year Decision Mathematics and Data Analytics student at the
+            School of Quantitative Sciences, Universiti Utara Malaysia, with a Minor in Information
+            Technology, currently maintaining a CGPA of <strong>3.69</strong>. I come from a background
+            that blends analytical thinking and creative expression. Outside of academics, I was a
+            member of the UUM Convocation Orchestra, led event coordination roles in large-scale
+            university concerts and cultural events, and have actively contributed to university life
+            through leadership and organisational responsibilities.
+          </p>
+          <p>
+            I am comfortable working with Python, Java, Tableau, and Power BI. I enjoy solving
+            real-world problems using data and I believe the best solutions are not only accurate but
+            also accessible to the people who need them.
+          </p>
+          <p>
+            I am someone who takes ownership of my work. Whether it is writing a full academic report,
+            building a Python pipeline, or coordinating a 200-person concert event, I approach every
+            task with attention to detail and a drive to see it through. I am a trilingual communicator
+            comfortable in English, Malay, and Chinese.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">⌄</div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section skills">
+    <div class="section-inner reveal">
+      <p class="eyebrow">What I work with</p>
+      <h2>Technical Skills</h2>
+      <div class="skills-grid">
+        @for (category of skillCategories; track category.title) {
+          <div class="skill-card" [style.background-image]="'url(' + category.bg + ')'">
+            <div class="skill-card-overlay"></div>
+            <div class="skill-card-content">
+              <h3>{{ category.title }}</h3>
+              <div class="skill-tags">
+                @for (skill of category.skills; track skill) {
+                  <span class="tag">{{ skill }}</span>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">⌄</div>
+  </section>
+
+  <!-- FYP -->
+  <section id="fyp" class="section fyp">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="eyebrow">What I Have Done</p>
+        <h2>Final Year Project</h2>
+        <p class="fyp-subtitle">
+          SQQZK4993 Academic Project &middot; School of Quantitative Sciences, UUM &middot; Session A252 2025/2026
+        </p>
+      </div>
+
+      <!-- Part A: Overview -->
+      <div class="card fyp-overview reveal">
+        <h3 class="fyp-title">Customer Churn Prediction in the Telecommunications Industry Using Data Mining Techniques</h3>
+        <div class="fyp-stats">
+          @for (stat of fypStats; track stat.label) {
+            <div class="stat">
+              <span class="stat-value">{{ stat.value }}</span>
+              <span class="stat-label">{{ stat.label }}</span>
+            </div>
+          }
+        </div>
+        <ul class="fyp-meta">
+          <li><strong>Supervisor:</strong>&nbsp;Associate Professor Ts. Dr. Izwan Nizal Bin Mohd Shaharanee</li>
+          <li><strong>Dataset:</strong>&nbsp;<strong>7,043</strong> customer records, 21 attributes, Kaggle/IBM</li>
+        </ul>
+        <div class="fyp-actions">
+          <a class="btn btn-primary" [href]="dashboardUrl" target="_blank" rel="noopener">Try Live Dashboard</a>
+          <a class="btn btn-outline" href="assets/FYP-Report-Tang-Hui-Yi-299390.pdf" download>Download Report</a>
+        </div>
+        <div class="fyp-why">
+          <h4>Why I Chose This Topic</h4>
+          <p>
+            I chose this topic because I wanted to work on a real-world business problem with a clear
+            and measurable impact. Customer churn affects millions of dollars in revenue every year, yet
+            many companies still rely on guesswork to identify at-risk customers. What motivated me even
+            more was the accessibility gap. Most existing tools require advanced programming knowledge,
+            which means business managers cannot use them. I wanted to close that gap by deploying the
+            model as a dashboard that anyone can use without writing a single line of code.
+          </p>
+        </div>
+      </div>
+
+      <!-- Part B: Problem Statement -->
+      <div class="fyp-block fyp-problem reveal">
+        <h3>Problem Statement</h3>
+        <div class="cards-row three">
+          @for (card of problemCards; track card.title) {
+            <div class="card problem-card">
+              <span class="problem-number">{{ card.number }}</span>
+              <h4>{{ card.title }}</h4>
+              <p>{{ card.text }}</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Part C: Methodology -->
+      <div class="fyp-block fyp-kdd reveal">
+        <h3>Methodology &mdash; KDD Process</h3>
+        <div class="kdd-flow">
+          @for (step of kddSteps; track step.name; let last = $last) {
+            <div class="kdd-step">
+              <div class="kdd-shape">
+                <span class="kdd-number">{{ step.number }}</span>
+                <h4 class="kdd-name">{{ step.name }}</h4>
+              </div>
+              <p class="kdd-desc" [innerHTML]="step.description"></p>
+            </div>
+            @if (!last) {
+              <div class="kdd-arrow-mobile" aria-hidden="true">↓</div>
+            }
+          }
+        </div>
+      </div>
+
+      <!-- Part D: Results -->
+      <div class="fyp-block fyp-results reveal">
+        <h3>Model Performance Results</h3>
+        <div class="table-wrap">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th><strong>Accuracy</strong></th>
+                <th><strong>Precision</strong></th>
+                <th><strong>Recall</strong></th>
+                <th><strong>F1-Score</strong></th>
+                <th>Rank</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of modelResults; track row.name) {
+                <tr [class.winner-row]="row.winner">
+                  <td [innerHTML]="row.name"></td>
+                  <td>{{ row.accuracy }}</td>
+                  <td>{{ row.precision }}</td>
+                  <td>{{ row.recall }}</td>
+                  <td>{{ row.f1 }}</td>
+                  <td>{{ row.rank }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cards-row three findings">
+          @for (card of findingCards; track card.title) {
+            <div class="card finding-card">
+              <h4>{{ card.title }}</h4>
+              <p [innerHTML]="card.text"></p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Part E: Poster -->
+      <div class="fyp-block fyp-block-center reveal">
+        <h3>FYP Poster</h3>
+        <figure class="photo-frame large" (click)="openLightbox(posterPhoto)">
+          <img [src]="posterPhoto.src" [alt]="posterPhoto.alt" />
+          <figcaption class="photo-caption">{{ posterPhoto.caption }}</figcaption>
+        </figure>
+      </div>
+
+      <!-- Part F: Dashboard Screenshots -->
+      <div class="fyp-block reveal">
+        <h3>Dashboard Screenshots</h3>
+        <div class="cards-row three">
+          @for (shot of dashboardShots; track shot.src) {
+            <figure class="photo-frame" (click)="openLightbox(shot)">
+              <img [src]="shot.src" [alt]="shot.alt" />
+              <figcaption class="photo-caption">{{ shot.caption }}</figcaption>
+            </figure>
+          }
+        </div>
+        <p class="fyp-caption">
+          The dashboard classifies customers into three risk levels and shows a factor contribution
+          chart explaining which variables influenced the prediction.
+        </p>
+      </div>
+
+      <!-- Part G: Gallery -->
+      <div class="fyp-block reveal">
+        <h3>Photo Gallery</h3>
+        <div class="gallery-grid">
+          @for (photo of galleryPhotos; track photo.src) {
+            <figure class="photo-frame" (click)="openLightbox(photo)">
+              <img [src]="photo.src" [alt]="photo.alt" />
+              <figcaption class="photo-caption">{{ photo.caption }}</figcaption>
+            </figure>
+          }
+        </div>
+      </div>
+
+      <!-- Part H: Supervision Record -->
+      <div class="fyp-block fyp-block-center reveal">
+        <h3>Supervision Record</h3>
+        <figure class="photo-frame large" (click)="openLightbox(attendancePhoto)">
+          <img [src]="attendancePhoto.src" [alt]="attendancePhoto.alt" />
+          <figcaption class="photo-caption">{{ attendancePhoto.caption }}</figcaption>
+        </figure>
+        <p class="fyp-caption">
+          All supervision meetings were documented and signed by the supervisor as part of the
+          SQQZK4993 Academic Project requirements.
+        </p>
+      </div>
+
+      <!-- Part I: FYP Journey Timeline -->
+      <div class="fyp-block fyp-journey reveal">
+        <h3>FYP Journey</h3>
+        <div class="timeline">
+          @for (item of timeline; track item.date) {
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">{{ item.date }}</span>
+                <p>{{ item.text }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">⌄</div>
+  </section>
+
+  <!-- BEYOND THE LECTURE HALL -->
+  <section id="activities" class="section activities">
+    <div class="section-inner reveal">
+      <p class="eyebrow">Outside academics</p>
+      <h2>Beyond the Lecture Hall</h2>
+      <p class="activities-intro">
+        Beyond academics, I have cultivated a diverse set of transferable skills through meaningful
+        involvement in university life and leadership roles. I served as <strong>Secretary</strong> for
+        the 7dian9 Song Composing Concert 2025, where I demonstrated <strong>leadership</strong>,
+        administrative coordination, and crisis management under pressure. I co-led logistics for two
+        major university cultural events, strengthening my teamwork and
+        <strong>project management</strong> capabilities. These experiences have shaped me into a
+        well-rounded individual who can communicate effectively across teams and deliver results in
+        dynamic environments.
+      </p>
+      <div class="cards-row three">
+        @for (card of activityCards; track card.title) {
+          <div class="card">
+            <h4>{{ card.title }}</h4>
+            <p>{{ card.text }}</p>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">⌄</div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="section education">
+    <div class="section-inner reveal">
+      <p class="eyebrow">Academic background</p>
+      <h2>Education</h2>
+      <div class="education-grid">
+        <div class="card education-card">
+          <div class="education-info">
+            <h3>Universiti Utara Malaysia</h3>
+            <p class="edu-line">School of Quantitative Sciences</p>
+            <p class="edu-line">Bachelor of Decision Mathematics and Data Analytics</p>
+            <p class="edu-line">Minor in Information Technology</p>
+            <div class="edu-facts">
+              <span><strong>CGPA:</strong>&nbsp;<span class="accent-text">3.69</span></span>
+              <span><strong>Expected Graduation:</strong>&nbsp;<span class="accent-text">November 2027</span></span>
+            </div>
+          </div>
+          <img class="education-logo" src="assets/uum-logo.png" alt="Universiti Utara Malaysia logo" />
+        </div>
+        <div class="card education-card">
+          <div class="education-info">
+            <h3>SMJK Jit Sin</h3>
+            <p class="edu-line">Sijil Tinggi Persekolahan Malaysia (STPM)</p>
+            <p class="edu-line">Science Stream — PA, Mathematics T, ICT, Physics</p>
+            <div class="edu-facts">
+              <span><strong>Finished:</strong>&nbsp;<span class="accent-text">2023</span></span>
+            </div>
+          </div>
+          <img class="education-logo" src="assets/jitsin-logo.png" alt="SMJK Jit Sin logo" />
+        </div>
+        <div class="card education-card">
+          <div class="education-info">
+            <h3>SMJK Jit Sin</h3>
+            <p class="edu-line">Malaysian Certificate of Education (SPM)</p>
+            <p class="edu-line">Science Stream</p>
+            <div class="edu-facts">
+              <span><strong>Finished:</strong>&nbsp;<span class="accent-text">2021</span></span>
+            </div>
+          </div>
+          <img class="education-logo" src="assets/jitsin-logo.png" alt="SMJK Jit Sin logo" />
+        </div>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">⌄</div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section contact">
+    <div class="section-inner reveal">
+      <p class="eyebrow">Let's connect</p>
+      <h2>Get In Touch</h2>
+      <p class="contact-intro">
+        Feel free to reach out for collaboration, internship opportunities, or any enquiries.
+      </p>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          @for (link of contactLinks; track link.label) {
+            @if (link.href) {
+              <a class="contact-item" [href]="link.href" target="_blank" rel="noopener">
+                <img class="contact-icon" [src]="link.icon" [alt]="link.label" />
+                <span>{{ link.label }}</span>
+              </a>
+            } @else {
+              <div class="contact-item contact-item-static">
+                <img class="contact-icon" [src]="link.icon" [alt]="link.label" />
+                <span>{{ link.label }}</span>
+              </div>
+            }
+          }
+        </div>
+
+        <form class="contact-form" (submit)="submitContactForm($event)">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Your name" required />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="your.email@example.com" required />
+          </label>
+          <label>
+            Message
+            <textarea name="message" rows="4" placeholder="Your message" required></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary" [disabled]="formStatus() === 'submitting'">Send</button>
+          @if (formStatus() === 'success') {
+            <p class="form-success">Thank you! Your message has been sent.</p>
+          }
+          @if (formStatus() === 'error') {
+            <p class="form-error">Something went wrong. Please try again.</p>
+          }
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>&copy; 2026 Tang Hui Yi | School of Quantitative Sciences, Universiti Utara Malaysia | SQQZK4993 Academic Project</p>
+</footer>
+
+<!-- Back to top -->
+<button class="back-to-top" [class.visible]="showBackToTop()" (click)="scrollToTop()" aria-label="Back to top">
+  ↑
+</button>
+
+<!-- Photo lightbox -->
+@if (lightboxPhoto(); as photo) {
+  <div class="lightbox-overlay" role="dialog" aria-modal="true">
+    <button class="lightbox-close" (click)="closeLightbox()" aria-label="Close">✕</button>
+    <div class="lightbox-content">
+      <div
+        class="lightbox-image-wrap"
+        [class.zoomed]="zoomScale() > 1"
+        (wheel)="onLightboxWheel($event)"
+        (pointerdown)="onLightboxPointerDown($event)"
+        (pointermove)="onLightboxPointerMove($event)"
+        (pointerup)="onLightboxPointerUp()"
+        (pointerleave)="onLightboxPointerUp()"
+        (dblclick)="toggleLightboxZoom()"
+      >
+        <img
+          [src]="photo.src"
+          [alt]="photo.alt"
+          class="lightbox-image"
+          [class.panning]="isPanning()"
+          [style.transform]="'translate(' + panX() + 'px, ' + panY() + 'px) scale(' + zoomScale() + ')'"
+          draggable="false"
+        />
+      </div>
+      <p class="lightbox-caption">{{ photo.caption }}</p>
+      <p class="lightbox-hint">Scroll or double-click to zoom &middot; Drag to pan &middot; Esc to close</p>
+    </div>
+  </div>
+}

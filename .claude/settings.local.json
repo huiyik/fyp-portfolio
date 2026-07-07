@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx ng *)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(chromium-cli --session fyp)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(npm ls *)",
+      "Bash(npx playwright *)",
+      "Bash(node verify.mjs)"
+    ]
+  }
+}
