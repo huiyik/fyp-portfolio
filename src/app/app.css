@@ -140,7 +140,7 @@ main > section:nth-of-type(even) {
 }
 
 .about::before {
-  background-image: url('/assets/sqs.jpg');
+  background-image: var(--bg-photo);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -238,7 +238,7 @@ main > section:nth-of-type(even) {
 }
 
 .activities::before {
-  background-image: url('/assets/events.png');
+  background-image: var(--bg-photo);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -303,7 +303,7 @@ main > section:nth-of-type(even) {
 }
 
 .education::before {
-  background-image: url('/assets/graduation.jpg');
+  background-image: var(--bg-photo);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -771,20 +771,11 @@ main > section:nth-of-type(even) {
   z-index: 0;
 }
 
-.fyp-overview::before {
-  background-image: url('/assets/telco.jpg');
-}
-
-.fyp-problem::before {
-  background-image: url('/assets/telco-2.jpg');
-}
-
-.fyp-kdd::before {
-  background-image: url('/assets/telco-3.jpg');
-}
-
+.fyp-overview::before,
+.fyp-problem::before,
+.fyp-kdd::before,
 .fyp-results::before {
-  background-image: url('/assets/telco-4.jpg');
+  background-image: var(--bg-photo);
 }
 
 .fyp-overview::before,
