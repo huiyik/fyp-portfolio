@@ -108,7 +108,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   };
 
   attendancePhoto: Photo = {
-    src: 'assets/attendance-form.jpg',
+    src: 'assets/attendance-form.png',
     alt: 'Signed Attendance and Supervision Monitoring Form',
     caption: 'Signed Attendance and Supervision Monitoring Form — SQQZK4993',
   };
