@@ -433,8 +433,9 @@
         (wheel)="onLightboxWheel($event)"
         (pointerdown)="onLightboxPointerDown($event)"
         (pointermove)="onLightboxPointerMove($event)"
-        (pointerup)="onLightboxPointerUp()"
-        (pointerleave)="onLightboxPointerUp()"
+        (pointerup)="onLightboxPointerUp($event)"
+        (pointerleave)="onLightboxPointerUp($event)"
+        (pointercancel)="onLightboxPointerUp($event)"
         (dblclick)="toggleLightboxZoom()"
       >
         <img
@@ -447,7 +448,7 @@
         />
       </div>
       <p class="lightbox-caption">{{ photo.caption }}</p>
-      <p class="lightbox-hint">Scroll or double-click to zoom &middot; Drag to pan &middot; Esc to close</p>
+      <p class="lightbox-hint">Pinch, scroll, or double-tap to zoom &middot; Drag to pan &middot; Esc or &#10005; to close</p>
     </div>
   </div>
 }

@@ -262,6 +262,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   private dragStart = { x: 0, y: 0 };
   private panStart = { x: 0, y: 0 };
 
+  private activePointers = new Map<number, { x: number; y: number }>();
+  private pinchStartDistance = 0;
+  private pinchStartScale = 1;
+
   ngOnInit(): void {
     setTimeout(() => this.loading.set(false), 1500);
     this.typeLoop();
@@ -344,16 +348,47 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onLightboxPointerDown(event: PointerEvent): void {
-    if (this.zoomScale() <= 1) {
+    this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (this.activePointers.size === 2) {
+      this.isDragging = false;
+      this.isPanning.set(false);
+      this.pinchStartDistance = this.getPinchDistance();
+      this.pinchStartScale = this.zoomScale();
       return;
     }
-    this.isDragging = true;
-    this.isPanning.set(true);
-    this.dragStart = { x: event.clientX, y: event.clientY };
-    this.panStart = { x: this.panX(), y: this.panY() };
+
+    if (this.activePointers.size === 1) {
+      if (this.zoomScale() <= 1) {
+        return;
+      }
+      this.isDragging = true;
+      this.isPanning.set(true);
+      this.dragStart = { x: event.clientX, y: event.clientY };
+      this.panStart = { x: this.panX(), y: this.panY() };
+    }
   }
 
   onLightboxPointerMove(event: PointerEvent): void {
+    if (!this.activePointers.has(event.pointerId)) {
+      return;
+    }
+    this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (this.activePointers.size === 2) {
+      const distance = this.getPinchDistance();
+      if (this.pinchStartDistance > 0) {
+        const scale = this.pinchStartScale * (distance / this.pinchStartDistance);
+        const next = Math.min(4, Math.max(1, scale));
+        this.zoomScale.set(next);
+        if (next === 1) {
+          this.panX.set(0);
+          this.panY.set(0);
+        }
+      }
+      return;
+    }
+
     if (!this.isDragging) {
       return;
     }
@@ -361,9 +396,23 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.panY.set(this.panStart.y + (event.clientY - this.dragStart.y));
   }
 
-  onLightboxPointerUp(): void {
-    this.isDragging = false;
-    this.isPanning.set(false);
+  onLightboxPointerUp(event: PointerEvent): void {
+    this.activePointers.delete(event.pointerId);
+
+    if (this.activePointers.size < 2) {
+      this.pinchStartDistance = 0;
+    }
+
+    if (this.activePointers.size === 0) {
+      this.isDragging = false;
+      this.isPanning.set(false);
+    }
+  }
+
+  private getPinchDistance(): number {
+    const points = Array.from(this.activePointers.values());
+    const [a, b] = points;
+    return Math.hypot(b.x - a.x, b.y - a.y);
   }
 
   scrollToSection(id: string): void {
