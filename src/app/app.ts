@@ -266,9 +266,28 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   private pinchStartDistance = 0;
   private pinchStartScale = 1;
 
+  private static readonly TAPPABLE_CARD_SELECTOR = '.card, .photo-frame, .skill-card';
+
   ngOnInit(): void {
     setTimeout(() => this.loading.set(false), 1500);
     this.typeLoop();
+
+    // Mobile browsers don't apply :hover on tap, so mirror the desktop
+    // hover glow explicitly for touch by toggling a class on the tapped card.
+    document.addEventListener(
+      'touchstart',
+      (event) => {
+        const card = (event.target as HTMLElement)?.closest(App.TAPPABLE_CARD_SELECTOR);
+        card?.classList.add('is-touched');
+      },
+      { passive: true },
+    );
+    const clearTouchedCard = (event: TouchEvent) => {
+      const card = (event.target as HTMLElement)?.closest(App.TAPPABLE_CARD_SELECTOR);
+      card?.classList.remove('is-touched');
+    };
+    document.addEventListener('touchend', clearTouchedCard, { passive: true });
+    document.addEventListener('touchcancel', clearTouchedCard, { passive: true });
   }
 
   ngAfterViewInit(): void {

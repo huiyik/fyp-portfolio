@@ -416,9 +416,12 @@ main > section:nth-of-type(even) {
 /* ---------- Card hover effects (applies broadly) ---------- */
 .card {
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.card:hover {
+.card:hover,
+.card:active,
+.card.is-touched {
   transform: translateY(-4px);
   border-color: var(--accent);
   box-shadow: 0 10px 28px rgba(240, 192, 64, 0.16);
@@ -592,9 +595,12 @@ main > section:nth-of-type(even) {
   align-self: start;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.photo-frame:hover {
+.photo-frame:hover,
+.photo-frame:active,
+.photo-frame.is-touched {
   transform: translateY(-4px);
   border-color: var(--accent);
   box-shadow: 0 10px 28px rgba(240, 192, 64, 0.16);
@@ -653,9 +659,12 @@ main > section:nth-of-type(even) {
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.skill-card:hover {
+.skill-card:hover,
+.skill-card:active,
+.skill-card.is-touched {
   transform: translateY(-4px);
   border-color: var(--accent);
   box-shadow: 0 10px 30px rgba(240, 192, 64, 0.22);
