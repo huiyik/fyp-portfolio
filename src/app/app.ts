@@ -238,12 +238,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   timeline: TimelineItem[] = [
-    { date: 'April 2025', text: 'Project development begins. Dashboard structure planned with supervisor.' },
-    { date: 'April – May 2025', text: 'Data preprocessing completed. Six models trained and evaluated.' },
-    { date: 'May – June 2025', text: 'Streamlit dashboard built and deployed on Streamlit Community Cloud.' },
-    { date: 'June 2025', text: 'Final report written and revised based on supervisor feedback.' },
-    { date: 'June 29, 2025', text: 'Poster presented at Decision Science Research Symposium 2026 at UUM.' },
-    { date: 'July 2025', text: 'Final report and e-portfolio submitted.' },
+    { date: 'April 2026', text: 'Project development begins. Dashboard structure planned with supervisor.' },
+    { date: 'April – May 2026', text: 'Data preprocessing completed. Six models trained and evaluated.' },
+    { date: 'May – June 2026', text: 'Streamlit dashboard built and deployed on Streamlit Community Cloud.' },
+    { date: 'June 2026', text: 'Final report written and revised based on supervisor feedback.' },
+    { date: 'June 29, 2026', text: 'Poster presented at Decision Science Research Symposium 2026 at UUM.' },
+    { date: 'July 2026', text: 'Final report and e-portfolio submitted.' },
   ];
 
   private readonly phrases = [
