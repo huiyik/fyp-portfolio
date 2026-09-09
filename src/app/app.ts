@@ -54,6 +54,17 @@ interface Photo {
   caption: string;
 }
 
+interface WeeklyReport {
+  week: string;
+  dates: string;
+  focus: string;
+  tasks: string[];
+  skills: string[];
+  challenges: string[];
+  learning: string;
+  next: string;
+}
+
 @Component({
   selector: 'app-root',
   imports: [],
@@ -82,8 +93,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'skills', label: 'Skills' },
+    { id: 'career', label: 'Résumé' },
     { id: 'fyp', label: 'FYP' },
+    { id: 'internship', label: 'Internship' },
     { id: 'activities', label: 'Activities' },
+    { id: 'education', label: 'Education' },
     { id: 'contact', label: 'Contact' },
   ];
 
@@ -110,24 +124,51 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   attendancePhoto: Photo = {
     src: 'assets/attendance-form.png',
     alt: 'Signed Attendance and Supervision Monitoring Form',
-    caption: 'Signed Attendance and Supervision Monitoring Form — SQQZK4993',
+    caption: 'Signed Attendance and Supervision Monitoring Form (SQQZK4993)',
   };
 
   skillCategories: SkillCategory[] = [
-    { title: 'Programming', bg: 'assets/bg-programming.jpg', skills: ['Python', 'Java'] },
+    {
+      title: 'Programming',
+      bg: 'assets/bg-programming.jpg',
+      skills: ['Python', 'Java', 'SQL', 'DAX'],
+    },
     {
       title: 'Data Processing',
       bg: 'assets/bg-data-processing.jpeg',
-      skills: ['Pandas', 'NumPy', 'Scikit-learn', 'Matplotlib'],
+      skills: ['Pandas', 'NumPy', 'Polars', 'Scikit-learn', 'Web Scraping'],
     },
-    { title: 'Visualisation', bg: 'assets/bg-visualisation.jpeg', skills: ['Tableau', 'Power BI'] },
-    { title: 'Deployment', bg: 'assets/bg-deployment.jpg', skills: ['Streamlit', 'GitHub'] },
+    {
+      title: 'Data Engineering',
+      bg: 'assets/bg-deployment.jpg',
+      skills: [
+        'Microsoft Fabric',
+        'Delta Lake / OneLake',
+        'Medallion Architecture',
+        'Pipeline Orchestration',
+      ],
+    },
+    {
+      title: 'Visualisation & BI',
+      bg: 'assets/bg-visualisation.jpeg',
+      skills: ['Power BI', 'Tableau', 'Semantic Models', 'Row-Level Security', 'Matplotlib'],
+    },
     {
       title: 'Methodology',
       bg: 'assets/bg-methodology.jpg',
-      skills: ['KDD Process', 'Machine Learning', 'Data Mining', 'Classification'],
+      skills: [
+        'KDD Process',
+        'Machine Learning',
+        'Data Mining',
+        'Kimball / Star Schema',
+        'Classification',
+      ],
     },
-    { title: 'Other', bg: 'assets/bg-other.jpg', skills: ['Microsoft Office', 'Google Workspace'] },
+    {
+      title: 'Tools & Workflow',
+      bg: 'assets/bg-other.jpg',
+      skills: ['Streamlit', 'Git & GitHub', 'Azure DevOps', 'Microsoft Office', 'Google Workspace'],
+    },
   ];
 
   problemCards: ProblemCard[] = [
@@ -177,17 +218,17 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     {
       src: 'assets/dashboard-high.jpg',
       alt: 'Dashboard screenshot: High Risk Prediction',
-      caption: 'Dashboard Output — High Risk Customer Prediction',
+      caption: 'Dashboard Output: High Risk Customer Prediction',
     },
     {
       src: 'assets/dashboard-low.jpg',
       alt: 'Dashboard screenshot: Low Risk Prediction',
-      caption: 'Dashboard Output — Low Risk Customer Prediction',
+      caption: 'Dashboard Output: Low Risk Customer Prediction',
     },
     {
       src: 'assets/dashboard-moderate.jpg',
       alt: 'Dashboard screenshot: Moderate Risk Prediction',
-      caption: 'Dashboard Output — Moderate Risk Customer Prediction',
+      caption: 'Dashboard Output: Moderate Risk Customer Prediction',
     },
   ];
 
@@ -195,7 +236,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     {
       src: 'assets/supervisor.jpeg',
       alt: 'With Supervisor Dr. Izwan',
-      caption: 'With Supervisor — Associate Professor Ts. Dr. Izwan Nizal Bin Mohd Shaharanee',
+      caption: 'With my Supervisor, Associate Professor Ts. Dr. Izwan Nizal Bin Mohd Shaharanee',
     },
     {
       src: 'assets/evaluator.jpeg',
@@ -211,7 +252,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       src: 'assets/silver-award.jpeg',
       alt: 'Silver Award, Decision Support System Category',
       caption:
-        'Silver Award — Decision Support System Category, Decision Science Research Symposium 2026 (Poster Presentation)',
+        'Silver Award for the Decision Support System Category at the Decision Science Research Symposium 2026 (Poster Presentation)',
     },
   ];
 
@@ -239,11 +280,195 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   timeline: TimelineItem[] = [
     { date: 'April 2026', text: 'Project development begins. Dashboard structure planned with supervisor.' },
-    { date: 'April – May 2026', text: 'Data preprocessing completed. Six models trained and evaluated.' },
-    { date: 'May – June 2026', text: 'Streamlit dashboard built and deployed on Streamlit Community Cloud.' },
+    { date: 'April to May 2026', text: 'Data preprocessing completed. Six models trained and evaluated.' },
+    { date: 'May to June 2026', text: 'Streamlit dashboard built and deployed on Streamlit Community Cloud.' },
     { date: 'June 2026', text: 'Final report written and revised based on supervisor feedback.' },
     { date: 'June 29, 2026', text: 'Poster presented at Decision Science Research Symposium 2026 at UUM.' },
     { date: 'July 2026', text: 'Final report and e-portfolio submitted.' },
+  ];
+
+  internshipResponsibilities: string[] = [
+    'Design and build an automated monthly data pipeline that identifies potential B2B customers from public industry directories.',
+    'Model the collected data for reporting using a medallion (bronze, silver, gold) architecture and a Kimball star schema.',
+    'Build and maintain Power BI dashboards for the business and sales teams.',
+    'Apply data-quality checks, change tracking, and row-level security across the model.',
+    'Move the work from sandbox development into the standard dev, test, and prod deployment lifecycle.',
+  ];
+
+  internshipContributions: string[] = [
+    'Delivered an end-to-end pipeline (ingest, clean, model, dashboard) that runs unattended on a monthly schedule.',
+    'Cut the reporting data model from ~13 tables to 5 through better grain and dimensional design.',
+    'Built a multi-page Power BI report with row-level security separating two business units.',
+    'Found and fixed dozens of real data-quality and logic bugs through systematic raw-data audits.',
+    'Rebuilt a second, independent pipeline project from scratch to reinforce the same architecture.',
+  ];
+
+  skillsApplied: string[] = [
+    'Python',
+    'SQL',
+    'Pandas',
+    'Data cleaning & EDA',
+    'Dimensional modelling basics',
+    'Power BI & Tableau fundamentals',
+    'Technical report writing',
+    'Stakeholder communication',
+  ];
+
+  skillsGained: string[] = [
+    'Microsoft Fabric (Lakehouse, OneLake, Data Pipelines)',
+    'Polars',
+    'Delta Lake',
+    'Medallion architecture',
+    'SCD Type 2',
+    'Semantic models & Direct Lake',
+    'Advanced DAX',
+    'Row-Level Security',
+    'Pipeline orchestration & idempotency',
+    'Production-safety practices',
+    'Git & Azure DevOps',
+    'Dev / Test / Prod ALM',
+  ];
+
+  weeklyReports: WeeklyReport[] = [
+    {
+      week: 'Week 1',
+      dates: '3 to 7 August 2026',
+      focus: 'Onboarding and a first working pipeline',
+      tasks: [
+        "Learned the organisation's history, structure, policies, and culture framework, and clarified the project brief with my mentor.",
+        'Built the first version of a web scraper: collect a member list, scrape individual profile pages, then filter and score the results.',
+        'Set up Python, a virtual environment, and Delta Lake on the work machine.',
+        'Practised the Lakehouse workflow in Microsoft Fabric by uploading data to OneLake, loading it into Delta tables, and querying it through both the SQL endpoint and notebooks.',
+        'Built a first star schema (one fact table plus dimension tables).',
+      ],
+      skills: [
+        'Python',
+        'Web scraping',
+        'Polars',
+        'Delta Lake',
+        'Microsoft Fabric (Lakehouse, OneLake)',
+        'Star schema basics',
+      ],
+      challenges: [
+        'A CSV export kept crashing because the column headers were built from only the first record. I fixed it by defining a complete, fixed schema up front.',
+        'The scraper was silently pulling the wrong text into one field on every row. I traced it to an outer wrapper element matching first, then rewrote it to read the real label and value structure directly.',
+        'Spaces in the machine username broke Delta Lake. I fixed it by writing tables to a path without spaces.',
+      ],
+      learning:
+        'A script can look like it is working while quietly corrupting data, so checking the actual output, not just whether it ran, is the only reliable test. Saving raw data first and filtering later keeps that data reusable for other work.',
+      next: 'Formalise the bronze, silver, and gold layers and move the pipeline fully into Fabric.',
+    },
+    {
+      week: 'Week 2',
+      dates: '10 to 14 August 2026',
+      focus: 'Medallion architecture and a production-ready pipeline',
+      tasks: [
+        'Restructured the whole pipeline on the medallion (bronze, silver, gold) pattern.',
+        'Simplified the data model by folding redundant bridge tables into a single shared attribute bridge, cutting the star schema from about 13 tables to 5.',
+        'Migrated all cleaning, filtering, and scoring logic from local scripts into Fabric notebooks.',
+        'Rebuilt the semantic model relationships and DAX measures, and built a multi-page Power BI report (overview, attribute detail pages, and a pipeline-health page).',
+        'Added production-safety guards: a row-count sanity check before overwriting good data, bounded retries on network calls, idempotent writes, and an orchestrator notebook to run the pipeline end to end.',
+      ],
+      skills: [
+        'Medallion architecture',
+        'Kimball dimensional modelling',
+        'Grain and bridge tables',
+        'Advanced DAX (DISTINCTCOUNT, CALCULATE)',
+        'Power BI cross-filter direction',
+        'Pipeline orchestration',
+        'Idempotency and defensive coding',
+      ],
+      challenges: [
+        'DAX measures returned inflated values once a company had multiple fact rows. I fixed it by switching aggregation from Sum to Max and using DISTINCTCOUNT.',
+        'Slicers were not filtering paired tables. I traced it to a single-direction relationship, then split attribute types onto separate pages to avoid cross-filter side effects.',
+        'I found that a safety guard had never actually run because an error was being silently swallowed.',
+      ],
+      learning:
+        'Too many bridge tables usually signal a grain problem, not a modelling need. "Does it work when I watch it" is not the same as "is it safe to run unattended", and automation needs guards, retries, and loud failures.',
+      next: 'Add slowly-changing history to track profile changes over time, and set up the monthly schedule.',
+    },
+    {
+      week: 'Week 3',
+      dates: '17 to 21 August 2026',
+      focus: 'Change tracking, security, and data quality',
+      tasks: [
+        'Completed a Slowly Changing Dimension (Type 2) design so historical changes are preserved rather than overwritten.',
+        "Built a two-stage matching process to separate net-new prospects from the company's existing customer records.",
+        'Configured Row-Level Security so each business unit sees only its own customer data while sharing new prospects, plus a manager role with full access.',
+        'Ran a full data-quality audit across about 800 records, standardising inconsistent wording in several fields and fixing real logic bugs (a year-stripping rule that damaged valid codes, a case-sensitivity bug, greedy patterns causing data loss).',
+        'Evaluated other public directories as extra lead sources and documented why most were not usable (anti-bot protection, paywalls, thin data, wrong company type).',
+      ],
+      skills: [
+        'SCD Type 2',
+        'Hashing for change detection',
+        'Name and fuzzy matching',
+        'String normalisation',
+        'Row-Level Security',
+        'Regex',
+        'Systematic data-quality auditing',
+      ],
+      challenges: [
+        '"Unchanged" records kept stale derived columns after the cleaning logic changed, because the raw data had not changed. I fixed it by re-deriving on every run.',
+        'RLS "Test as role" did not work under single sign-on on this connection type. I worked around it with a live viewer-account test.',
+        'Inconsistent place-name spellings silently broke a filter until the output was checked directly.',
+      ],
+      learning:
+        'Logic that is correct on paper can still produce wrong results because of a data-format quirk (empty string versus null) or a platform quirk, so verifying against a real example beats trusting that it "should" work. A filter is only as good as its keyword list.',
+      next: 'Finalise the monthly schedule and connect Git version control.',
+    },
+    {
+      week: 'Week 4',
+      dates: '24 to 28 August 2026',
+      focus: 'Automation, an agent-assisted workflow, and a second pipeline',
+      tasks: [
+        'Set the pipeline to run automatically on a monthly schedule with no manual trigger.',
+        'Explored an agent-driven workflow from the code editor to the cloud in an isolated sandbox, keeping production and any internal data strictly out of scope.',
+        'Rebuilt the sandbox from scratch as a separate practice project: a self-updating daily weather monitor for several cities from a free public API.',
+        'Applied every lesson from the main project: a clean star schema with business-friendly names, correct data types, a scheduled orchestration pipeline, and a themed multi-page Power BI report with a map, drill-through, and anomaly indicators.',
+      ],
+      skills: [
+        'Pipeline scheduling and dependencies',
+        'Environment isolation and security boundaries',
+        'Semantic-model best practices',
+        'Power BI report authoring (PBIP)',
+        'Theming, map visuals, drill-through',
+        'Time-series anomaly logic',
+      ],
+      challenges: [
+        'Intermittent refresh failures turned out to be a plain schema-name mismatch, not the capacity throttling I first assumed.',
+        'A documented platform bug made one card visual break with multiple measures. I confirmed it through community threads, then split it into separate cards.',
+        'An outbound email alert was removed after reviewing the "data leaving the tenant automatically" implication.',
+      ],
+      learning:
+        'Rebuilding a project clean, with the right guidelines loaded from the start, is far faster than retrofitting. Always confirm the actual root cause instead of acting on the first theory, and think about where data goes, not just whether a feature works.',
+      next: 'Bring both projects into a shared team workspace and the standard dev, test, and prod lifecycle.',
+    },
+    {
+      week: 'Week 5',
+      dates: '1 to 5 September 2026',
+      focus: 'Deployment lifecycle and handover',
+      tasks: [
+        'Built a second internal search tool for the business team on a small finance dataset, with data-quality checks on record uniqueness.',
+        'Moved both semantic models and reports into official team Dev and Test workspaces using a purpose-built deployment function, while keeping the data in its original location (no duplicate storage).',
+        'Reviewed the standard Dev, Test, and Prod deployment pipeline with my mentor.',
+        'Reconfigured Row-Level Security across environments and traced a data-visibility bug to reports still bound to the old model. I fixed it by rebinding them to the correct one.',
+        'Updated the portable project-context documentation for handover.',
+      ],
+      skills: [
+        'ALM and deployment pipelines',
+        'Cross-workspace model deployment',
+        'RLS across environments',
+        'Dev, Test, and Prod discipline',
+        'Documentation',
+      ],
+      challenges: [
+        "A visibility reversal during audience testing meant each account saw the other unit's data. I root-caused it to cloned reports still pointing at an outdated model with an inverted rule set, then resolved it by rebinding to the corrected models.",
+        'A file-permission error hit when writing through a local mount path. I fixed it by using the authenticated cloud path already used elsewhere in the pipeline.',
+      ],
+      learning:
+        'When you copy or clone report artefacts, check what they are actually connected to, because a stale binding will silently serve wrong data. Keeping data in one place and only deploying the models around it avoids redundant storage and drift.',
+      next: 'Continue promoting the work toward production and hand over with clear documentation.',
+    },
   ];
 
   private readonly phrases = [

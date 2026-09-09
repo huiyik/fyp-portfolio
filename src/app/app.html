@@ -25,16 +25,20 @@
   <!-- HERO -->
   <section id="home" class="hero">
     <div class="hero-inner">
+      <img class="hero-photo" src="assets/profile.jpg" alt="Tang Hui Yi" />
       <p class="eyebrow">Welcome to my portfolio</p>
       <p class="hero-im">I'm</p>
       <h1 class="hero-name">Tang Hui Yi</h1>
+      <p class="hero-degree">
+        Final-year Bachelor of Decision Mathematics &amp; Data Analytics &middot; Universiti Utara Malaysia
+      </p>
       <p class="hero-typing">
         <span>{{ typedText() }}</span><span class="cursor">|</span>
       </p>
       <p class="hero-tagline">Turning raw data into real decisions.</p>
       <div class="hero-actions">
         <button class="btn btn-primary" (click)="scrollToSection('fyp')">View My FYP</button>
-        <a class="btn btn-outline" href="assets/Tang-Hui-Yi-Resume.pdf" download>Download Resume</a>
+        <button class="btn btn-outline" (click)="scrollToSection('career')">View Résumé</button>
       </div>
     </div>
     <div class="scroll-hint">Scroll to explore ↓</div>
@@ -45,6 +49,19 @@
     <div class="section-inner reveal">
       <p class="eyebrow">Get to know me</p>
       <h2>About Me</h2>
+
+      <p class="elevator-pitch">
+        I am a final-year Decision Mathematics and Data Analytics student at Universiti Utara Malaysia
+        (CGPA <strong>3.71</strong>) who turns messy, real-world data into decisions people can act on.
+        For my final-year project, I compared six machine-learning models to predict telecom customer
+        churn at <strong>80% accuracy</strong> and deployed the best one as a live dashboard for
+        non-technical users. During my industrial training, I handled the data architecture and data
+        engineering for an automated pipeline in Microsoft Fabric that turns raw web data into a
+        Power BI dashboard used by the business team. My strengths are Python and SQL, dimensional
+        data modelling, and translating technical analysis into clear business insight, communicated
+        confidently in English, Malay, and Chinese.
+      </p>
+
       <div class="about-grid">
         <figure class="photo-frame" (click)="openLightbox(profilePhoto)">
           <img [src]="profilePhoto.src" [alt]="profilePhoto.alt" />
@@ -52,18 +69,15 @@
         </figure>
         <div class="about-text">
           <p>
-            Hi, I am Tang Hui Yi, a final year Decision Mathematics and Data Analytics student at the
-            School of Quantitative Sciences, Universiti Utara Malaysia, with a Minor in Information
-            Technology, currently maintaining a CGPA of <strong>3.69</strong>. I come from a background
-            that blends analytical thinking and creative expression. Outside of academics, I was a
-            member of the UUM Convocation Orchestra, led event coordination roles in large-scale
-            university concerts and cultural events, and have actively contributed to university life
-            through leadership and organisational responsibilities.
+            Beyond the numbers, I come from a background that blends analytical thinking and creative
+            expression. Alongside my degree I hold a Minor in Information Technology, and outside of
+            academics I was a member of the UUM Convocation Orchestra, led event coordination roles in
+            large-scale university concerts and cultural events, and have actively contributed to
+            university life through leadership and organisational responsibilities.
           </p>
           <p>
-            I am comfortable working with Python, Java, Tableau, and Power BI. I enjoy solving
-            real-world problems using data and I believe the best solutions are not only accurate but
-            also accessible to the people who need them.
+            I enjoy solving real-world problems using data, and I believe the best solutions are not
+            only accurate but also accessible to the people who need them.
           </p>
           <p>
             I am someone who takes ownership of my work. Whether it is writing a full academic report,
@@ -96,6 +110,81 @@
             </div>
           </div>
         }
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">⌄</div>
+  </section>
+
+  <!-- CAREER PROFILE -->
+  <section id="career" class="section career">
+    <div class="section-inner reveal">
+      <p class="eyebrow">Career profile</p>
+      <h2>Résumé</h2>
+      <p class="career-summary">
+        Final-year Decision Mathematics and Data Analytics student working across the full analytics
+        workflow, from data architecture and dimensional modelling to machine learning and dashboard
+        delivery. Comfortable with Python, SQL, Power BI, and Microsoft Fabric, and focused on
+        building solutions that are both accurate and usable by the people who depend on them.
+      </p>
+
+      <div class="career-grid">
+        <div class="career-highlights">
+          <h3>Highlights</h3>
+          <ul>
+            <li>
+              CGPA <strong>3.71 / 4.00</strong> in the Bachelor of Decision Mathematics &amp; Data
+              Analytics, Universiti Utara Malaysia
+            </li>
+            <li>
+              <strong>Silver Award</strong>, Decision Support System category, at the Decision Science
+              Research Symposium 2026 (poster presentation)
+            </li>
+            <li>
+              Built <strong>3 end-to-end data projects</strong>: telecom churn prediction (80%
+              accuracy), used-car price prediction, and a 100-agent assignment optimiser
+            </li>
+            <li>
+              Industrial training in <strong>data architecture and data engineering</strong>,
+              automating a pipeline in Microsoft Fabric that feeds a Power BI dashboard for the
+              business team
+            </li>
+            <li>
+              Secretary of a university concert for a 200+ audience, leading cross-department
+              coordination and on-ground contingency planning
+            </li>
+            <li>Trilingual in English, Malay, and Chinese</li>
+          </ul>
+        </div>
+
+        <aside class="career-card card">
+          <h3>Quick facts</h3>
+          <dl>
+            <div>
+              <dt>Seeking</dt>
+              <dd>Data Analyst / Data Engineer roles</dd>
+            </div>
+            <div>
+              <dt>Graduation</dt>
+              <dd>November 2027</dd>
+            </div>
+            <div>
+              <dt>Based in</dt>
+              <dd>Penang, Malaysia</dd>
+            </div>
+            <div>
+              <dt>Languages</dt>
+              <dd>English &middot; Malay &middot; Chinese</dd>
+            </div>
+          </dl>
+          <a class="btn btn-primary" href="assets/Tang-Hui-Yi-Resume.pdf" download>
+            Download Résumé (PDF)
+          </a>
+          <div class="career-links">
+            <a href="https://www.linkedin.com/in/tang-hui-yi-b9b9b91b3/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/huiyik" target="_blank" rel="noopener">GitHub</a>
+            <a href="#contact" (click)="scrollToSection('contact')">Contact</a>
+          </div>
+        </aside>
       </div>
     </div>
     <div class="scroll-cue" aria-hidden="true">⌄</div>
@@ -160,7 +249,7 @@
 
       <!-- Part C: Methodology -->
       <div class="fyp-block fyp-kdd reveal" style="--bg-photo: url('assets/telco-3.jpg')">
-        <h3>Methodology &mdash; KDD Process</h3>
+        <h3>Methodology: KDD Process</h3>
         <div class="kdd-flow">
           @for (step of kddSteps; track step.name; let last = $last) {
             <div class="kdd-step">
@@ -288,6 +377,136 @@
     <div class="scroll-cue" aria-hidden="true">⌄</div>
   </section>
 
+  <!-- INTERNSHIP EXPERIENCE -->
+  <section id="internship" class="section internship">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="eyebrow">Where I have worked</p>
+        <h2>Internship Experience</h2>
+        <p class="internship-subtitle">
+          SQQXK4966 Industrial Training &middot; Data Analyst and Data Engineering Intern &middot;
+          August to September 2026
+        </p>
+      </div>
+
+      <!-- Overview -->
+      <div class="card internship-overview reveal">
+        <h3>Overview</h3>
+        <div class="internship-role">
+          <div>
+            <span class="io-label">Organisation</span>
+            <p>
+              Lean Giap Group (Giap Chew Holdings Sdn Bhd) is a Malaysian group founded in 1979. It
+              started as a plastics trading company and now spans plastics trading and a dedicated
+              innovation and sustainability arm, running two divisions guided by a
+              &ldquo;triple bottom line&rdquo; philosophy of people, planet, and profit.
+            </p>
+          </div>
+          <div>
+            <span class="io-label">Role and department</span>
+            <p>
+              I joined the IT Department as a Data Analyst Intern and grew into a Data Engineering
+              Intern. I owned the <strong>data architecture and data engineering</strong> for a
+              customer-lead pipeline, from ingestion through to the reporting model and dashboard.
+            </p>
+          </div>
+        </div>
+
+        <div class="internship-cols">
+          <div>
+            <h4>Key responsibilities</h4>
+            <ul class="tick-list">
+              @for (item of internshipResponsibilities; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </div>
+          <div>
+            <h4>Contributions</h4>
+            <ul class="tick-list">
+              @for (item of internshipContributions; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+
+        <div class="internship-skills">
+          <div>
+            <h4>Skills applied</h4>
+            <div class="skill-tags">
+              @for (skill of skillsApplied; track skill) {
+                <span class="tag">{{ skill }}</span>
+              }
+            </div>
+          </div>
+          <div>
+            <h4>Skills gained</h4>
+            <div class="skill-tags">
+              @for (skill of skillsGained; track skill) {
+                <span class="tag tag-accent">{{ skill }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weekly reports -->
+      <div class="internship-weekly reveal">
+        <h3>Weekly Reports</h3>
+        @for (report of weeklyReports; track report.week) {
+          <div class="card weekly-card">
+            <div class="weekly-head">
+              <span class="weekly-week">{{ report.week }}</span>
+              <span class="weekly-dates">{{ report.dates }}</span>
+            </div>
+            <p class="weekly-focus">{{ report.focus }}</p>
+
+            <div class="weekly-body">
+              <div class="weekly-block">
+                <h5>Tasks completed</h5>
+                <ul class="tick-list">
+                  @for (task of report.tasks; track task) {
+                    <li>{{ task }}</li>
+                  }
+                </ul>
+              </div>
+
+              <div class="weekly-block">
+                <h5>Skills applied / developed</h5>
+                <div class="skill-tags">
+                  @for (skill of report.skills; track skill) {
+                    <span class="tag">{{ skill }}</span>
+                  }
+                </div>
+              </div>
+
+              <div class="weekly-block">
+                <h5>Challenges &amp; how I addressed them</h5>
+                <ul class="tick-list">
+                  @for (challenge of report.challenges; track challenge) {
+                    <li>{{ challenge }}</li>
+                  }
+                </ul>
+              </div>
+
+              <div class="weekly-block">
+                <h5>Key learning</h5>
+                <p>{{ report.learning }}</p>
+              </div>
+
+              <div class="weekly-block">
+                <h5>Next week's focus</h5>
+                <p>{{ report.next }}</p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">⌄</div>
+  </section>
+
   <!-- BEYOND THE LECTURE HALL -->
   <section id="activities" class="section activities" style="--bg-photo: url('assets/events.png')">
     <div class="section-inner reveal">
@@ -328,7 +547,7 @@
             <p class="edu-line">Bachelor of Decision Mathematics and Data Analytics</p>
             <p class="edu-line">Minor in Information Technology</p>
             <div class="edu-facts">
-              <span><strong>CGPA:</strong>&nbsp;<span class="accent-text">3.69</span></span>
+              <span><strong>CGPA:</strong>&nbsp;<span class="accent-text">3.71</span></span>
               <span><strong>Expected Graduation:</strong>&nbsp;<span class="accent-text">November 2027</span></span>
             </div>
           </div>
@@ -338,7 +557,7 @@
           <div class="education-info">
             <h3>SMJK Jit Sin</h3>
             <p class="edu-line">Sijil Tinggi Persekolahan Malaysia (STPM)</p>
-            <p class="edu-line">Science Stream — PA, Mathematics T, ICT, Physics</p>
+            <p class="edu-line">Science Stream: PA, Mathematics T, ICT, Physics</p>
             <div class="edu-facts">
               <span><strong>Finished:</strong>&nbsp;<span class="accent-text">2023</span></span>
             </div>
