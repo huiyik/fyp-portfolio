@@ -1238,6 +1238,33 @@ main > section:nth-of-type(even) {
 
 .career-card {
   align-self: start;
+  position: relative;
+  overflow: hidden;
+}
+
+.career-card::before,
+.career-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.career-card::before {
+  background-image: var(--bg-photo);
+  background-size: cover;
+  background-position: center 18%;
+  background-repeat: no-repeat;
+}
+
+.career-card::after {
+  background: linear-gradient(160deg, rgba(10, 15, 26, 0.9) 0%, rgba(13, 21, 38, 0.87) 100%);
+}
+
+.career-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .career-card dl {
