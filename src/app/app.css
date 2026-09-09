@@ -1333,6 +1333,29 @@ main > section:nth-of-type(even) {
   border-bottom: 1px solid var(--border);
 }
 
+.internship-org {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+.internship-logo {
+  width: clamp(84px, 11vw, 116px);
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  /* crop the "LEAN GIAP GROUP" wordmark off the bottom, keep the monogram */
+  aspect-ratio: 1024 / 480;
+  object-fit: cover;
+  object-position: center top;
+}
+
+@media (max-width: 560px) {
+  .internship-org {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
 .internship-role p {
   margin: 0;
 }
