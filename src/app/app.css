@@ -1261,9 +1261,9 @@ main > section:nth-of-type(even) {
 .career-card::after {
   background: linear-gradient(
     180deg,
-    rgba(10, 15, 26, 0.93) 0%,
-    rgba(11, 17, 30, 0.85) 52%,
-    rgba(13, 21, 38, 0.78) 100%
+    rgba(10, 15, 26, 0.88) 0%,
+    rgba(11, 17, 30, 0.8) 52%,
+    rgba(13, 21, 38, 0.73) 100%
   );
 }
 
