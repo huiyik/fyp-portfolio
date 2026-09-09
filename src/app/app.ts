@@ -93,7 +93,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'skills', label: 'Skills' },
-    { id: 'career', label: 'Résumé' },
+    { id: 'career', label: 'Resume' },
     { id: 'fyp', label: 'FYP' },
     { id: 'internship', label: 'Internship' },
     { id: 'activities', label: 'Activities' },
