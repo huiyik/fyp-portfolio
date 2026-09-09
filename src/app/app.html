@@ -1,3 +1,6 @@
+<!-- Page-wide slow colour drift -->
+<div class="bg-drift" aria-hidden="true"></div>
+
 <!-- Loading screen -->
 <div class="loader" [class.hidden]="!loading()">
   <span class="loader-initials">Hi There !</span>
@@ -452,10 +455,10 @@
       </div>
 
       <!-- Weekly reports -->
-      <div class="internship-weekly reveal">
-        <h3>Weekly Reports</h3>
+      <div class="internship-weekly">
+        <h3 class="reveal">Weekly Reports</h3>
         @for (report of weeklyReports; track report.week) {
-          <div class="card weekly-card">
+          <div class="card weekly-card reveal">
             <div class="weekly-head">
               <span class="weekly-week">{{ report.week }}</span>
               <span class="weekly-dates">{{ report.dates }}</span>

@@ -529,7 +529,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
           }
         }
       },
-      { threshold: 0.12 },
+      // Small threshold + bottom margin so blocks reveal reliably regardless
+      // of their height (a large threshold never fires on very tall elements).
+      { threshold: 0.02, rootMargin: '0px 0px -6% 0px' },
     );
 
     document.querySelectorAll('.reveal').forEach((el) => this.revealObserver?.observe(el));

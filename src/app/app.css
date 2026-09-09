@@ -122,24 +122,26 @@
   }
 }
 
-/* ---------- Section backgrounds (bold transition between sections) ---------- */
+/* ---------- Section backgrounds ---------- */
+/* Subtle alternating tint, kept semi-transparent so the page-wide
+   colour drift (.bg-drift) shows through. */
 main > section:nth-of-type(odd) {
   background: linear-gradient(
     to bottom,
-    #0d1526 0%,
-    #0a0f1a 18%,
-    #0a0f1a 82%,
-    #0d1526 100%
+    rgba(13, 21, 38, 0.5) 0%,
+    rgba(10, 15, 26, 0.5) 18%,
+    rgba(10, 15, 26, 0.5) 82%,
+    rgba(13, 21, 38, 0.5) 100%
   );
 }
 
 main > section:nth-of-type(even) {
   background: linear-gradient(
     to bottom,
-    #0a0f1a 0%,
-    #0d1526 18%,
-    #0d1526 82%,
-    #0a0f1a 100%
+    rgba(10, 15, 26, 0.5) 0%,
+    rgba(13, 21, 38, 0.5) 18%,
+    rgba(13, 21, 38, 0.5) 82%,
+    rgba(10, 15, 26, 0.5) 100%
   );
 }
 
@@ -495,21 +497,24 @@ main > section:nth-of-type(even) {
     radial-gradient(circle at 82% 74%, rgba(240, 192, 64, 0.06), transparent 38%);
 }
 
-/* Slow, low-contrast colour drift behind the hero content */
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: -20%;
+/* Slow, low-contrast colour drift behind the whole page.
+   One fixed, viewport-sized layer, so it stays cheap on mobile even
+   behind very tall sections (a per-section version created huge
+   composited layers that some mobile browsers drop, blanking content). */
+.bg-drift {
+  position: fixed;
+  inset: 0;
   z-index: 0;
   pointer-events: none;
+  transform: translateZ(0);
   background:
-    radial-gradient(52% 52% at 20% 24%, rgba(28, 56, 132, 0.55), transparent 78%),
-    radial-gradient(46% 46% at 84% 64%, rgba(120, 84, 26, 0.42), transparent 78%),
-    radial-gradient(54% 54% at 54% 112%, rgba(74, 36, 128, 0.52), transparent 78%),
-    radial-gradient(44% 44% at 70% 12%, rgba(20, 96, 92, 0.42), transparent 78%);
-  background-size: 240% 240%;
+    radial-gradient(52% 52% at 20% 24%, rgba(28, 56, 132, 0.5), transparent 78%),
+    radial-gradient(46% 46% at 84% 64%, rgba(120, 84, 26, 0.38), transparent 78%),
+    radial-gradient(54% 54% at 54% 112%, rgba(74, 36, 128, 0.48), transparent 78%),
+    radial-gradient(44% 44% at 70% 12%, rgba(20, 96, 92, 0.38), transparent 78%);
+  background-size: 220% 220%;
   background-repeat: no-repeat;
-  animation: hero-drift 18s ease-in-out infinite alternate;
+  animation: hero-drift 22s ease-in-out infinite alternate;
   will-change: background-position, filter;
 }
 
@@ -528,59 +533,8 @@ main > section:nth-of-type(even) {
   }
 }
 
-/* Same colour drift behind the sections that have no background photo */
-.skills,
-.career,
-.fyp,
-.internship,
-.contact {
-  overflow: hidden;
-}
-
-.skills::after,
-.career::after,
-.fyp::after,
-.internship::after,
-.contact::after {
-  content: '';
-  position: absolute;
-  inset: -15%;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(52% 52% at 20% 24%, rgba(28, 56, 132, 0.34), transparent 78%),
-    radial-gradient(46% 46% at 84% 64%, rgba(120, 84, 26, 0.26), transparent 78%),
-    radial-gradient(54% 54% at 54% 112%, rgba(74, 36, 128, 0.32), transparent 78%),
-    radial-gradient(44% 44% at 70% 12%, rgba(20, 96, 92, 0.26), transparent 78%);
-  background-size: 240% 240%;
-  background-repeat: no-repeat;
-  animation: hero-drift 24s ease-in-out infinite alternate;
-  will-change: background-position, filter;
-}
-
-.skills::after {
-  animation-delay: -4s;
-}
-.career::after {
-  animation-delay: -10s;
-}
-.fyp::after {
-  animation-delay: -16s;
-}
-.internship::after {
-  animation-delay: -7s;
-}
-.contact::after {
-  animation-delay: -13s;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .hero::after,
-  .skills::after,
-  .career::after,
-  .fyp::after,
-  .internship::after,
-  .contact::after {
+  .bg-drift {
     animation: none;
   }
 }
