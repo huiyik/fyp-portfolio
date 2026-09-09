@@ -166,7 +166,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       title: 'Tools & Workflow',
-      bg: 'assets/bg-other.jpg',
+      bg: 'assets/tools-picture.png',
       skills: ['Streamlit', 'Git & GitHub', 'Azure DevOps', 'Microsoft Office', 'Google Workspace'],
     },
   ];
