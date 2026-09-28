@@ -293,6 +293,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     'Build and maintain Power BI dashboards for the business and sales teams.',
     'Apply data-quality checks, change tracking, and row-level security across the model.',
     'Move the work from sandbox development into the standard dev, test, and prod deployment lifecycle.',
+    'Build a credit-risk scoring model for the finance team from historical invoice and payment data.',
   ];
 
   internshipContributions: string[] = [
@@ -301,6 +302,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     'Built a multi-page Power BI report with row-level security separating two business units.',
     'Found and fixed dozens of real data-quality and logic bugs through systematic raw-data audits.',
     'Rebuilt a second, independent pipeline project from scratch to reinforce the same architecture.',
+    'Built a customer credit-risk score, validated it against real outcomes, then stress-tested it with an out-of-time test that uncovered a lasting shift in the underlying business the original model had missed.',
   ];
 
   skillsApplied: string[] = [
@@ -327,6 +329,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     'Production-safety practices',
     'Git & Azure DevOps',
     'Dev / Test / Prod ALM',
+    'Credit risk / provision-matrix modelling',
+    'Out-of-time statistical validation',
+    'DAX filter-context debugging',
   ];
 
   weeklyReports: WeeklyReport[] = [
@@ -468,6 +473,118 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       learning:
         'When you copy or clone report artefacts, check what they are actually connected to, because a stale binding will silently serve wrong data. Keeping data in one place and only deploying the models around it avoids redundant storage and drift.',
       next: 'Continue promoting the work toward production and hand over with clear documentation.',
+    },
+    {
+      week: 'Week 6',
+      dates: '7 to 11 September 2026',
+      focus: 'Starting a second internship project: credit-risk analytics for the finance team',
+      tasks: [
+        'Reviewed a credit-review meeting recording with the finance team and my mentor to understand how credit release decisions are made today, then drafted a project brief covering the business background, objective, and candidate risk factors.',
+        'Researched what drives B2B payment default, including payment behaviour, company profile, and credit-bureau data, and checked whether industry trade or customs datasets could measure a customer’s dependency on a single buyer. Concluded that data source was not reliable enough for this purpose and dropped it.',
+        'Mapped how a volatile 2026 petrochemical and resin market could squeeze a customer’s cash flow and, in turn, their ability to pay on time.',
+        'Got hands-on with the invoice data in Microsoft Fabric. Rebuilt a customer risk-grouping approach after mentor feedback, moving from one forced category per customer to independent yes-or-no risk flags, and checked whether write-offs cluster at particular times of year.',
+        'Found and fixed a serious bug in my own earlier join logic. Invoice numbers repeat across separate business units, and I had been joining on invoice number alone, silently matching unrelated invoices together. Fixing it dropped a wildly inflated write-off count down to the real, much smaller figure.',
+        'Explored the invoice line-items table for the first time, built a clean grouping of raw material families from free text, and ran the project’s first hypothesis test on whether the material a customer buys relates to default risk. The result was negative, so I dropped it as a feature.',
+      ],
+      skills: [
+        'Credit risk analytics',
+        'Hypothesis testing',
+        'SQL joins & key design',
+        'Microsoft Fabric notebooks',
+        'Data-quality auditing',
+        'Literature review',
+      ],
+      challenges: [
+        'I assumed write-offs clustered because of year-end processing timing. Checking it directly showed the pattern was mild and better explained by processing behaviour than true default timing.',
+        'A query returning more rows than existed in the source table was the only reason I caught the invoice-number join bug. Otherwise a badly wrong number would have gone into the analysis unnoticed.',
+        'I tried to identify bounced cheques in the data. No column marks this and genuine failures were too rare to detect reliably, so I recorded it as a dead end rather than forcing a weak signal.',
+      ],
+      learning:
+        'Always check that the numbers add up, especially when a query looks reasonable. An identifier that is unique inside one business unit is not automatically unique across all of them. A negative result, like material type not predicting risk, is still useful: it stopped me building a feature that looked sensible but predicted nothing.',
+      next: 'Get the early findings reviewed, then start requesting the real payment and credit history data needed for hands-on testing.',
+    },
+    {
+      week: 'Week 7',
+      dates: '14 to 18 September 2026',
+      focus: 'A frozen data snapshot, a first risk score, and migrating the other pipeline out of its sandbox',
+      tasks: [
+        'Built a frozen, read-only snapshot of the invoice data using a cross-workspace shortcut rather than a copy back into production, so the risk analysis would give reproducible answers instead of shifting every time the source data changed.',
+        'Cleaned out legacy system-migration residue from the data, a block of old records carried over from a prior ERP that were still flagged open but were not real outstanding debt, then classified every invoice into an aging band.',
+        'Designed and validated a first customer risk score from invoice aging history, benchmarked against customers who actually defaulted. Flagging under 10% of the customer base caught roughly 40% of eventual failures.',
+        'Tested and rejected my own hypothesis that a sharp jump in risk around 60 days overdue was simply customers paying one extra billing cycle late. The pattern held regardless of payment terms, so it is more likely a business process trigger at that point.',
+        'Migrated an unrelated production pipeline built earlier in the internship out of its sandbox workspace into the permanent one ahead of a trial expiring. Moved every table and notebook, switched every file-path reference to a workspace-independent connection, and verified that internal ID numbers stayed stable across the move, since anything referencing an old ID would otherwise silently point at the wrong record.',
+        'Found and fixed a permissions bug where report viewers, but not me, hit an access error. Traced it to a connection-type default that routed permission checks through the wrong layer, and corrected the underlying connection settings.',
+      ],
+      skills: [
+        'Data snapshotting & reproducibility',
+        'Cross-workspace data shortcuts',
+        'Risk scoring & validation',
+        'Semantic model migration',
+        'Power BI permissions troubleshooting',
+        'Deployment auditing',
+      ],
+      challenges: [
+        'The prediction target had to be kept out of the score’s own inputs, otherwise the score would just recognise failures that had already happened instead of warning about new ones.',
+        'A successful data refresh did not guarantee a working report. The permissions bug only showed up when someone outside the workspace opened the page, which is why I ran a full connection and access audit across every workspace afterward.',
+      ],
+      learning:
+        'A snapshot is not for convenience, it is for reproducibility, since the source data changes daily and the same query can give a different answer on different days unless something is frozen. Repointing an existing model to a new location, rather than rebuilding it, preserves all its security rules, which is exactly the part you do not want to rebuild by hand and risk getting subtly wrong.',
+      next: 'Finish the customer risk-scoring build on the new snapshot and begin proper report pages for it.',
+    },
+    {
+      week: 'Week 8',
+      dates: '21 to 25 September 2026',
+      focus: 'Applying an accounting-standard risk methodology and stress-testing my own results',
+      tasks: [
+        'Reworked the credit-risk report pages. Fixed a misleading fully-stacked chart that hid the real currency scale, cleaned up labels and titles, and corrected a card that was quietly under-reporting the true overdue balance by reading from the wrong source.',
+        'Researched the accounting-standard method for this kind of risk scoring, a provision matrix under the relevant financial reporting standard for expected credit losses, rather than continuing with judgement-based weights, and re-derived the model’s loss rates directly from tens of thousands of historical settled invoices.',
+        'Rebuilt the risk model on the standard-based rates. Split the overdue categories to match the historical ones exactly, added a real loss-rate column, and confirmed the well-known wall in the data, where risk multiplies roughly tenfold once an invoice passes 60 days overdue, held up under a second, independent measurement.',
+        'Added customer tenure and an active, quiet, or stopped activity status, computed carefully so a longstanding customer was not undercounted by only looking at data since a system migration.',
+        'Found and fixed a subtle ranking bug where adding the new tenure column broke a top-customer ranking measure, because the underlying formula was only clearing part of the filter context it needed to.',
+        'Verified all of the above against a full set of checks before treating any of it as final, and wrote a standalone methodology note explaining the approach with illustrative figures only.',
+      ],
+      skills: [
+        'Expected-credit-loss / provision-matrix methodology',
+        'DAX filter-context debugging',
+        'Financial risk data modelling',
+        'Technical writing',
+        'Rigorous validation practice',
+      ],
+      challenges: [
+        'Hit a type-mismatch error multiplying a fixed-point currency value by a floating-point rate. Fixed it by converting inside the calculation rather than changing how the currency column itself was stored.',
+        'The thresholds I used to define a quiet versus a stopped customer were conventional, not something I had actually derived from the data yet. I flagged this honestly as a limitation rather than presenting it as settled.',
+      ],
+      learning:
+        'A rule you set for yourself in advance, like a minimum sample size before trusting a result, only means something if you still follow it on the day the result looks especially good. The most defensible number is rarely the most dramatic-looking one, and it is worth the extra step to check why.',
+      next: 'Validate the methodology note’s references, check the tenure and activity thresholds properly against real buying patterns, and take the open data-quality issues found so far back to the finance team.',
+    },
+    {
+      week: 'Week 9',
+      dates: '28 September 2026 (in progress)',
+      focus: 'Responding to mentor feedback and finding a major flaw in my own model',
+      tasks: [
+        'Went back through my mentor’s critique of the risk methodology line by line rather than assuming either of us was right, and confirmed my original statistics were mathematically sound. My write-up had explained them poorly enough to cause the misreading, so I rewrote the unclear section and accepted the parts of the feedback that were genuinely valid, including the lack of a held-out test period.',
+        'Traced a data-location concern back to its root cause using version history rather than guesswork, confirmed nothing had ever been written to a production data source I do not own, and added an automatic safeguard that refuses to run if it is ever pointed at the wrong location.',
+        'Added a missing reference field to the credit-risk report by building a small lookup table rather than reworking the whole snapshot, keeping every previously validated figure reproducible.',
+        'Ran an out-of-time validation, the test explicitly requested after the previous review, training the model’s risk rates on older data and testing them on newer data.',
+        'The headline result: default rates measured on recent years came out roughly seven times lower than on older years. After ruling out two explanations, data censoring and pandemic-era disruption, I traced it to a real, lasting shift in the underlying business around 2019 that the original nine-year window had been quietly averaging over.',
+        'Quantified the impact: correcting for this brought the model’s flagship risk figure down by roughly 9 percent, while leaving which customers are riskiest almost completely unchanged, so the fix improves how defensible the number is rather than the ranking itself.',
+        'Surfaced two immediately actionable data-quality issues for the finance team: a set of paid-up-front invoices that should not logically be overdue at all, and a meaningful block of open invoices with no payment terms recorded, so their risk cannot be assessed.',
+      ],
+      skills: [
+        'Out-of-time statistical validation',
+        'Root-cause analysis under critique',
+        'Delta Lake version-history auditing',
+        'Financial control gap analysis',
+        'Stakeholder communication',
+      ],
+      challenges: [
+        'My mentor’s critique of the method turned out to be based on a misreading, but it was a misreading my own document invited. A statistically correct result can still fail to communicate.',
+        'A result that looks like good news, default rates falling dramatically, deserved more suspicion rather than less. It took ruling out two other explanations before I could trust what it actually meant.',
+      ],
+      learning:
+        'The most valuable finding this week did not come from building something new. It came from taking a piece of criticism seriously enough to re-verify my own work from scratch, which is what surfaced a genuine, previously invisible flaw in the model’s foundation.',
+      next: 'Re-derive the model’s rates on the corrected, more recent time window, update the methodology write-up with the correction, and raise the two data-quality gaps directly with the finance team.',
     },
   ];
 
