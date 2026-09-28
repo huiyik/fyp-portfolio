@@ -62,7 +62,7 @@ interface SignatureWork {
   skills: string[];
   outcome: string;
   reflection: string;
-  jumpTo?: string;
+  pdf: string;
 }
 
 interface WeeklyReport {
@@ -301,19 +301,6 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   signatureWorks: SignatureWork[] = [
     {
-      title: 'Customer Churn Prediction in the Telecommunications Industry',
-      format: 'Final-year research project: full report (PDF), poster, and a deployed Streamlit dashboard',
-      summary:
-        'My final-year project, covered in full detail in the FYP section above. Compared six classification models to predict telecom customer churn from 7,043 customer records, and deployed the best-performing model, Logistic Regression at 80% accuracy, as a live, code-free dashboard for business users.',
-      role: 'Individual project, supervised by Associate Professor Ts. Dr. Izwan Nizal Bin Mohd Shaharanee.',
-      skills: ['Python', 'Scikit-learn', 'Streamlit', 'KDD Process', 'Model Evaluation'],
-      outcome:
-        'Achieved 80% prediction accuracy, deployed a working dashboard, and won a Silver Award for the Decision Support System category at the Decision Science Research Symposium 2026.',
-      reflection:
-        'See the full FYP section above for the complete methodology, results, poster, and reflection.',
-      jumpTo: 'fyp',
-    },
-    {
       title: 'Simulated Annealing: Java Implementation for a 100-Agent Assignment Problem',
       format: 'Java console application and technical report (PDF) with convergence graph and results tables',
       summary:
@@ -324,6 +311,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Reduced the assignment cost from a random baseline of 4,828 to 360, a 92.5% improvement, in around 13 seconds across roughly 36 million iterations. Comparing three parameter configurations showed that a slower cooling rate and more inner iterations meaningfully improved solution quality at the cost of runtime.',
       reflection:
         'This project was my first hands-on encounter with metaheuristics: instead of guaranteeing the optimal answer like an exact algorithm would, Simulated Annealing trades a small, measurable gap from optimal for the ability to solve problems too large to brute-force. The most interesting challenge was tuning the cooling schedule, since too fast and the algorithm gets stuck in a local optimum early, too slow and it barely gets anywhere before time runs out. Comparing our three configurations side by side made that trade-off concrete rather than theoretical, a mindset I still use in my data work today: an approximate, well-justified answer delivered on time often beats a perfect one that never ships.',
+      pdf: 'assets/Simulated%20Annealing%20-%20100%20Agent%20Assignment%20Problem.pdf',
     },
     {
       title: 'Predicting Electricity Consumption Through Analysis of Usage Patterns',
@@ -336,6 +324,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Linear Regression came out as the most reliable model, narrowly ahead of a tuned Neural Network, while Random Forest needed more trees than there was time to test to close the gap. The top 5 ranked features gave the most balanced results: fewer features under-informed the models, and all 7 introduced noise that hurt generalisation.',
       reflection:
         'The counter-intuitive result was that the simplest model, Linear Regression, beat both Neural Networks and Random Forest on this dataset once we controlled properly for cross-validation and feature count. It was a direct lesson that model complexity should match the data, not the other way around: a small, structured dataset does not automatically need a deep model to fit well. Systematically walking every model through the same partition and fold combinations, rather than picking the first result that looked good, is a discipline I carried straight into my later data engineering work, where I still default to comparing configurations side by side instead of trusting a single run.',
+      pdf: 'assets/Predicting%20Electicity%20Consumption.pdf',
     },
     {
       title: 'Computer Shop Management System',
@@ -348,6 +337,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Delivered a fully working dual-interface application (console and GUI) with tiered and membership-based discount logic, real-time stock validation during checkout, and an automatically generated profit summary, all backed by persistent file storage that survives a restart.',
       reflection:
         'This was my first project applying full object-oriented design end to end, from an abstract base class down to a working GUI. The trickiest part was the checkout flow: getting quantity validation, tiered discounts, and membership discounts to apply correctly and in the right order, without letting a cart item silently oversell stock that another item in the same cart had already reserved. Debugging that taught me to trace a transaction through every state it can be in, not just the happy path, the same instinct I now use auditing data pipelines: check what happens at the edges, not just when everything goes right.',
+      pdf: 'assets/Computer%20Shop%20Management.pdf',
     },
     {
       title: 'Car Price Prediction System',
@@ -360,6 +350,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Delivered a working end-to-end pipeline, from live scraping through to a deployed, user-facing prediction tool, that returns a real-time price estimate from just three inputs (year, mileage, location).',
       reflection:
         'The scraping stage taught me that real websites fight back: pages load dynamically, listings paginate, and automation gets detected and blocked if the scraper looks too much like a bot. Getting the Selenium script to wait for elements properly and scroll like a real user, rather than just hoping the page had loaded, was the difference between a script that worked once and one that worked reliably across 88 pages. Turning the trained model into something a non-technical user could actually use, just three inputs and an instant answer, reinforced why I care about deployment as much as model accuracy: a model nobody can use is not actually a solution. This project directly shaped the direction of my FYP, which does the same thing (train a model, then deploy it as a dashboard) for a different problem.',
+      pdf: 'assets/Car%20Price%20Prediction%20System.pdf',
     },
   ];
 

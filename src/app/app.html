@@ -424,11 +424,9 @@
               <p>{{ work.reflection }}</p>
             </div>
 
-            @if (work.jumpTo) {
-              <button class="btn btn-outline work-jump" (click)="scrollToSection(work.jumpTo!)">
-                View Full FYP Write-Up
-              </button>
-            }
+            <a class="btn btn-outline work-jump" [href]="work.pdf" target="_blank" rel="noopener" download>
+              Download Report (PDF)
+            </a>
           </div>
         }
       </div>
