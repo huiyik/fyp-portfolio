@@ -54,6 +54,17 @@ interface Photo {
   caption: string;
 }
 
+interface SignatureWork {
+  title: string;
+  format: string;
+  summary: string;
+  role: string;
+  skills: string[];
+  outcome: string;
+  reflection: string;
+  jumpTo?: string;
+}
+
 interface WeeklyReport {
   week: string;
   dates: string;
@@ -95,6 +106,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     { id: 'skills', label: 'Skills' },
     { id: 'career', label: 'Resume' },
     { id: 'fyp', label: 'FYP' },
+    { id: 'projects', label: 'Projects' },
     { id: 'internship', label: 'Internship' },
     { id: 'activities', label: 'Activities' },
     { id: 'education', label: 'Education' },
@@ -285,6 +297,70 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     { date: 'June 2026', text: 'Final report written and revised based on supervisor feedback.' },
     { date: 'June 29, 2026', text: 'Poster presented at Decision Science Research Symposium 2026 at UUM.' },
     { date: 'July 2026', text: 'Final report and e-portfolio submitted.' },
+  ];
+
+  signatureWorks: SignatureWork[] = [
+    {
+      title: 'Customer Churn Prediction in the Telecommunications Industry',
+      format: 'Final-year research project: full report (PDF), poster, and a deployed Streamlit dashboard',
+      summary:
+        'My final-year project, covered in full detail in the FYP section above. Compared six classification models to predict telecom customer churn from 7,043 customer records, and deployed the best-performing model, Logistic Regression at 80% accuracy, as a live, code-free dashboard for business users.',
+      role: 'Individual project, supervised by Associate Professor Ts. Dr. Izwan Nizal Bin Mohd Shaharanee.',
+      skills: ['Python', 'Scikit-learn', 'Streamlit', 'KDD Process', 'Model Evaluation'],
+      outcome:
+        'Achieved 80% prediction accuracy, deployed a working dashboard, and won a Silver Award for the Decision Support System category at the Decision Science Research Symposium 2026.',
+      reflection:
+        'See the full FYP section above for the complete methodology, results, poster, and reflection.',
+      jumpTo: 'fyp',
+    },
+    {
+      title: 'Simulated Annealing: Java Implementation for a 100-Agent Assignment Problem',
+      format: 'Java console application and technical report (PDF) with convergence graph and results tables',
+      summary:
+        'A metaheuristic optimisation project solving the classic Linear Assignment Problem: matching 100 agents to 100 tasks one to one to minimise total cost, out of a search space of 100 factorial permutations that makes brute-force search impossible. Implemented Simulated Annealing in Java from scratch, including a random initial solution, a swap-based neighbourhood operator, and the Metropolis acceptance criterion that lets the algorithm accept worse moves early on to escape local optima. Tuned the cooling schedule, inner-loop iteration count, and stopping condition, then compared three configurations to show how the parameters trade off runtime against solution quality.',
+      role: 'Group project (team of 3). Contributed to the algorithm design, Java implementation, and results analysis.',
+      skills: ['Java', 'Simulated Annealing', 'Metaheuristic Optimisation', 'Algorithm Design', 'Performance Tuning'],
+      outcome:
+        'Reduced the assignment cost from a random baseline of 4,828 to 360, a 92.5% improvement, in around 13 seconds across roughly 36 million iterations. Comparing three parameter configurations showed that a slower cooling rate and more inner iterations meaningfully improved solution quality at the cost of runtime.',
+      reflection:
+        'This project was my first hands-on encounter with metaheuristics: instead of guaranteeing the optimal answer like an exact algorithm would, Simulated Annealing trades a small, measurable gap from optimal for the ability to solve problems too large to brute-force. The most interesting challenge was tuning the cooling schedule, since too fast and the algorithm gets stuck in a local optimum early, too slow and it barely gets anywhere before time runs out. Comparing our three configurations side by side made that trade-off concrete rather than theoretical, a mindset I still use in my data work today: an approximate, well-justified answer delivered on time often beats a perfect one that never ships.',
+    },
+    {
+      title: 'Predicting Electricity Consumption Through Analysis of Usage Patterns',
+      format: 'Research report (PDF) using Orange Data Mining software, with model comparison tables',
+      summary:
+        'A data mining project comparing three techniques, Multiple Linear Regression, Neural Networks, and Random Forest, to predict monthly household electricity usage from eight household and lifestyle attributes such as household size, air-conditioner ownership, and average daily usage hours. Built the full KDD-style pipeline in Orange: data selection, missing-value imputation, three data-partition ratios, and three cross-validation fold counts, then compared every model across Mean Squared Error, Mean Absolute Error, Mean Absolute Percentage Error, and R-squared. Also tested how many top-ranked features each model needed to perform best, to see whether more input variables always helped.',
+      role: 'Group project (team of 4). Contributed to the methodology design, running the Orange experiments across data partitions and cross-validation settings, and the results write-up.',
+      skills: ['Orange Data Mining', 'Random Forest', 'Neural Networks', 'Linear Regression', 'Cross-Validation', 'Model Evaluation Metrics'],
+      outcome:
+        'Linear Regression came out as the most reliable model, narrowly ahead of a tuned Neural Network, while Random Forest needed more trees than there was time to test to close the gap. The top 5 ranked features gave the most balanced results: fewer features under-informed the models, and all 7 introduced noise that hurt generalisation.',
+      reflection:
+        'The counter-intuitive result was that the simplest model, Linear Regression, beat both Neural Networks and Random Forest on this dataset once we controlled properly for cross-validation and feature count. It was a direct lesson that model complexity should match the data, not the other way around: a small, structured dataset does not automatically need a deep model to fit well. Systematically walking every model through the same partition and fold combinations, rather than picking the first result that looked good, is a discipline I carried straight into my later data engineering work, where I still default to comparing configurations side by side instead of trusting a single run.',
+    },
+    {
+      title: 'Computer Shop Management System',
+      format: 'Java desktop application (Swing GUI and console interface), with a technical report (PDF), UML diagram, and source code',
+      summary:
+        'An object-oriented inventory, sales, and membership management system built in Java for a hypothetical computer retail shop, developed with both a console interface and a Swing-based GUI. The system covers full product management (add, update, delete, view), a multi-item shopping cart with tiered discounts and a membership discount, sales history, and a profit summary report, all backed by file-based data persistence so nothing is lost between sessions. Designed around an abstract Product base class extended by a concrete Computer class, with separate manager classes handling inventory, sales, and membership logic, and a UML class diagram documenting the structure before implementation began.',
+      role: 'Group project (team of 3). Contributed to the object-oriented design, core business logic (product and sales management), and the accompanying documentation.',
+      skills: ['Java', 'Object-Oriented Programming', 'Java Swing (GUI)', 'File I/O', 'UML Design', 'Software Documentation'],
+      outcome:
+        'Delivered a fully working dual-interface application (console and GUI) with tiered and membership-based discount logic, real-time stock validation during checkout, and an automatically generated profit summary, all backed by persistent file storage that survives a restart.',
+      reflection:
+        'This was my first project applying full object-oriented design end to end, from an abstract base class down to a working GUI. The trickiest part was the checkout flow: getting quantity validation, tiered discounts, and membership discounts to apply correctly and in the right order, without letting a cart item silently oversell stock that another item in the same cart had already reserved. Debugging that taught me to trace a transaction through every state it can be in, not just the happy path, the same instinct I now use auditing data pipelines: check what happens at the edges, not just when everything goes right.',
+    },
+    {
+      title: 'Car Price Prediction System',
+      format: 'Python web scraper, machine learning model, and interactive Streamlit dashboard, with a full report (PDF)',
+      summary:
+        'An end-to-end machine learning system that scrapes live used-car listings from an online marketplace, cleans the data, trains a price-prediction model, and serves it through an interactive web dashboard. Built a Selenium scraper that handles dynamic page loading and scrolls through paginated results to collect car title, price, mileage, year, and location, gathering 3,480+ listings across 88 pages. Cleaned the scraped data (stripping currency symbols, averaging mileage ranges, imputing missing years with the median) and trained a Random Forest Regressor with one-hot encoded location as a feature. Deployed the trained model behind a Streamlit dashboard where a user enters a car’s year, mileage, and location and receives an instant estimated market price.',
+      role: 'Group project (team of 4). Contributed to the Selenium web scraper and the Streamlit dashboard deployment.',
+      skills: ['Python', 'Selenium', 'Web Scraping', 'Pandas', 'Random Forest Regressor', 'Streamlit', 'Data Cleaning'],
+      outcome:
+        'Delivered a working end-to-end pipeline, from live scraping through to a deployed, user-facing prediction tool, that returns a real-time price estimate from just three inputs (year, mileage, location).',
+      reflection:
+        'The scraping stage taught me that real websites fight back: pages load dynamically, listings paginate, and automation gets detected and blocked if the scraper looks too much like a bot. Getting the Selenium script to wait for elements properly and scroll like a real user, rather than just hoping the page had loaded, was the difference between a script that worked once and one that worked reliably across 88 pages. Turning the trained model into something a non-technical user could actually use, just three inputs and an instant answer, reinforced why I care about deployment as much as model accuracy: a model nobody can use is not actually a solution. This project directly shaped the direction of my FYP, which does the same thing (train a model, then deploy it as a dashboard) for a different problem.',
+    },
   ];
 
   internshipResponsibilities: string[] = [

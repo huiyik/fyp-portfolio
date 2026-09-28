@@ -1329,6 +1329,75 @@ main > section:nth-of-type(even) {
   }
 }
 
+/* ---------- Signature Works ---------- */
+.projects-subtitle {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  max-width: 700px;
+}
+
+.works-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.work-card {
+  border-color: var(--border);
+}
+
+.work-head h3 {
+  font-size: 1.25rem;
+  color: #ffffff;
+  margin-bottom: 0.3rem;
+}
+
+.work-format {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 1.1rem;
+}
+
+.work-summary {
+  text-align: justify;
+  margin-bottom: 1.25rem;
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.work-grid p {
+  margin: 0;
+}
+
+.work-skills {
+  margin-bottom: 1.25rem;
+}
+
+.work-reflection p {
+  margin: 0;
+  text-align: justify;
+  color: var(--text-body);
+}
+
+.work-jump {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .work-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ---------- Internship ---------- */
 .internship-subtitle {
   color: var(--text-muted);

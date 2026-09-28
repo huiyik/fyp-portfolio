@@ -380,6 +380,62 @@
     <div class="scroll-cue" aria-hidden="true">⌄</div>
   </section>
 
+  <!-- SIGNATURE WORKS -->
+  <section id="projects" class="section projects">
+    <div class="section-inner">
+      <div class="reveal">
+        <p class="eyebrow">Academic journey</p>
+        <h2>Signature Work Showcase</h2>
+        <p class="projects-subtitle">
+          Five projects from across my degree, spanning machine learning, data mining, algorithm
+          design, and full-stack application development.
+        </p>
+      </div>
+
+      <div class="works-list">
+        @for (work of signatureWorks; track work.title) {
+          <div class="card work-card reveal">
+            <div class="work-head">
+              <h3>{{ work.title }}</h3>
+              <p class="work-format">{{ work.format }}</p>
+            </div>
+
+            <p class="work-summary">{{ work.summary }}</p>
+
+            <div class="work-grid">
+              <div>
+                <span class="io-label">Role</span>
+                <p>{{ work.role }}</p>
+              </div>
+              <div>
+                <span class="io-label">Outcome / impact</span>
+                <p>{{ work.outcome }}</p>
+              </div>
+            </div>
+
+            <div class="skill-tags work-skills">
+              @for (skill of work.skills; track skill) {
+                <span class="tag">{{ skill }}</span>
+              }
+            </div>
+
+            <div class="work-reflection">
+              <span class="io-label">Reflection</span>
+              <p>{{ work.reflection }}</p>
+            </div>
+
+            @if (work.jumpTo) {
+              <button class="btn btn-outline work-jump" (click)="scrollToSection(work.jumpTo!)">
+                View Full FYP Write-Up
+              </button>
+            }
+          </div>
+        }
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true">⌄</div>
+  </section>
+
   <!-- INTERNSHIP EXPERIENCE -->
   <section id="internship" class="section internship">
     <div class="section-inner">
