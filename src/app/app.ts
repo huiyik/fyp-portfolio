@@ -355,21 +355,21 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   internshipResponsibilities: string[] = [
-    'Design and build an automated monthly data pipeline that identifies potential B2B customers from public industry directories.',
+    'Design and build an automated monthly data pipeline for a business reporting use case, using data gathered from public sources.',
     'Model the collected data for reporting using a medallion (bronze, silver, gold) architecture and a Kimball star schema.',
-    'Build and maintain Power BI dashboards for the business and sales teams.',
+    'Build and maintain Power BI dashboards for internal business stakeholders.',
     'Apply data-quality checks, change tracking, and row-level security across the model.',
     'Move the work from sandbox development into the standard dev, test, and prod deployment lifecycle.',
-    'Build a credit-risk scoring model for the Credit Control team from historical invoice and payment data.',
+    'Build a statistical risk-scoring model for a separate analytics project, using historical transactional data.',
   ];
 
   internshipContributions: string[] = [
     'Delivered an end-to-end pipeline (ingest, clean, model, dashboard) that runs unattended on a monthly schedule.',
-    'Cut the reporting data model from ~13 tables to 5 through better grain and dimensional design.',
+    'Cut the reporting data model from about 13 tables to 5 through better grain and dimensional design.',
     'Built a multi-page Power BI report with row-level security separating two business units.',
-    'Found and fixed dozens of real data-quality and logic bugs through systematic raw-data audits.',
+    'Found and fixed many real data-quality and logic bugs through systematic raw-data audits.',
     'Rebuilt a second, independent pipeline project from scratch to reinforce the same architecture.',
-    'Built a customer credit-risk score, validated it against known outcomes, and stress-tested it with an out-of-time test that surfaced a meaningful gap in the original model’s assumptions.',
+    'Built and validated a statistical risk-scoring model, then stress-tested it with an out-of-time validation method. This found an assumption in the original design that needed correcting.',
   ];
 
   skillsApplied: string[] = [
@@ -409,7 +409,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       focus: 'Onboarding and a first working pipeline',
       tasks: [
         "Learned the organisation's history, structure, policies, and culture framework, and clarified the project brief with my mentor.",
-        'Built the first version of a web scraper: collect a member list, scrape individual profile pages, then filter and score the results.',
+        'Built the first version of a web scraper. It collects a list of entries, scrapes individual profile pages, then filters and scores the results.',
         'Set up Python, a virtual environment, and Delta Lake on the work machine.',
         'Practised the Lakehouse workflow in Microsoft Fabric by uploading data to OneLake, loading it into Delta tables, and querying it through both the SQL endpoint and notebooks.',
         'Built a first star schema (one fact table plus dimension tables).',
@@ -428,7 +428,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Spaces in the machine username broke Delta Lake. I fixed it by writing tables to a path without spaces.',
       ],
       learning:
-        'A script can look like it is working while quietly corrupting data, so checking the actual output, not just whether it ran, is the only reliable test. Saving raw data first and filtering later keeps that data reusable for other work.',
+        'A script can look like it is working, but still quietly corrupt data. So checking the actual output, not just whether it ran, is the only reliable test. Saving raw data first and filtering later keeps that data reusable for other work.',
       next: 'Formalise the bronze, silver, and gold layers and move the pipeline fully into Fabric.',
     },
     {
@@ -440,7 +440,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Simplified the data model by folding redundant bridge tables into a single shared attribute bridge, cutting the star schema from about 13 tables to 5.',
         'Migrated all cleaning, filtering, and scoring logic from local scripts into Fabric notebooks.',
         'Rebuilt the semantic model relationships and DAX measures, and built a multi-page Power BI report (overview, attribute detail pages, and a pipeline-health page).',
-        'Added production-safety guards: a row-count sanity check before overwriting good data, bounded retries on network calls, idempotent writes, and an orchestrator notebook to run the pipeline end to end.',
+        'Added production-safety guards. These included a row-count check before overwriting good data, bounded retries on network calls, idempotent writes, and an orchestrator notebook to run the pipeline end to end.',
       ],
       skills: [
         'Medallion architecture',
@@ -465,11 +465,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       dates: '17 to 21 August 2026',
       focus: 'Change tracking, security, and data quality',
       tasks: [
-        'Completed a Slowly Changing Dimension (Type 2) design so historical changes are preserved rather than overwritten.',
-        "Built a two-stage matching process to separate net-new prospects from the company's existing customer records.",
-        'Configured Row-Level Security so each business unit sees only its own customer data while sharing new prospects, plus a manager role with full access.',
-        'Ran a full data-quality audit across about 800 records, standardising inconsistent wording in several fields and fixing real logic bugs (a year-stripping rule that damaged valid codes, a case-sensitivity bug, greedy patterns causing data loss).',
-        'Evaluated other public directories as extra lead sources and documented why most were not usable (anti-bot protection, paywalls, thin data, wrong company type).',
+        'Completed a Slowly Changing Dimension (Type 2) design, so historical changes are kept instead of overwritten.',
+        "Built a two-stage matching process to separate new records from the existing dataset.",
+        'Configured Row-Level Security so each business unit sees only its own data, while still sharing new records, plus a manager role with full access.',
+        'Ran a full data-quality audit across about 800 records. I standardised inconsistent wording in several fields and fixed real logic bugs (a year-stripping rule that damaged valid codes, a case-sensitivity bug, and greedy patterns causing data loss).',
+        'Evaluated other public data sources as extra options and documented why most were not usable (anti-bot protection, paywalls, thin data, wrong record type).',
       ],
       skills: [
         'SCD Type 2',
@@ -486,7 +486,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Inconsistent place-name spellings silently broke a filter until the output was checked directly.',
       ],
       learning:
-        'Logic that is correct on paper can still produce wrong results because of a data-format quirk (empty string versus null) or a platform quirk, so verifying against a real example beats trusting that it "should" work. A filter is only as good as its keyword list.',
+        'Logic that is correct on paper can still give wrong results because of a data-format quirk (empty string versus null) or a platform quirk. So checking against a real example beats trusting that it "should" work. A filter is only as good as its keyword list.',
       next: 'Finalise the monthly schedule and connect Git version control.',
     },
     {
@@ -496,8 +496,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       tasks: [
         'Set the pipeline to run automatically on a monthly schedule with no manual trigger.',
         'Explored an agent-driven workflow from the code editor to the cloud in an isolated sandbox, keeping production and any internal data strictly out of scope.',
-        'Rebuilt the sandbox from scratch as a separate practice project: a self-updating daily weather monitor for several cities from a free public API.',
-        'Applied every lesson from the main project: a clean star schema with business-friendly names, correct data types, a scheduled orchestration pipeline, and a themed multi-page Power BI report with a map, drill-through, and anomaly indicators.',
+        'Rebuilt the sandbox from scratch as a separate practice project. It is a self-updating daily weather monitor for several cities, built from a free public API.',
+        'Applied every lesson from the main project to it. This included a clean star schema with business-friendly names, correct data types, a scheduled orchestration pipeline, and a themed multi-page Power BI report with a map, drill-through, and anomaly indicators.',
       ],
       skills: [
         'Pipeline scheduling and dependencies',
@@ -522,7 +522,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       focus: 'Deployment lifecycle and handover',
       tasks: [
         'Built a second internal search tool for the business team on a small finance dataset, with data-quality checks on record uniqueness.',
-        'Moved both semantic models and reports into official team Dev and Test workspaces using a purpose-built deployment function, while keeping the data in its original location (no duplicate storage).',
+        'Moved both semantic models and reports into official team Dev and Test workspaces, using a purpose-built deployment function. This kept the data in its original location, with no duplicate storage.',
         'Reviewed the standard Dev, Test, and Prod deployment pipeline with my mentor.',
         'Reconfigured Row-Level Security across environments and traced a data-visibility bug to reports still bound to the old model. I fixed it by rebinding them to the correct one.',
         'Updated the portable project-context documentation for handover.',
@@ -545,14 +545,14 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     {
       week: 'Week 6',
       dates: '7 to 11 September 2026',
-      focus: 'Starting a second internship project: credit-risk analytics for the Credit Control team',
+      focus: 'Starting a second internship project: statistical risk analytics for a business dataset',
       tasks: [
-        'Sat in on a credit-review discussion with the Credit Control team and my mentor to understand how credit decisions are made today, then drafted a project brief covering the objective and candidate risk factors.',
-        'Researched general drivers of B2B payment default, including payment behaviour, company profile, and credit-bureau data, and evaluated whether public trade or customs datasets could help measure customer concentration risk. Concluded that source was not reliable enough for this purpose and did not pursue it.',
-        'Read into how broader market conditions can affect a customer’s ability to pay on time, as background for the risk factors under consideration.',
-        'Worked with invoice data in Microsoft Fabric and reworked an early customer risk-grouping approach after mentor feedback, moving from a single forced category per customer to independent risk flags.',
-        'Found and corrected a data-joining error in my own earlier work, where an identifier that was not unique across the full dataset had been treated as if it were. Fixing it materially changed an early summary figure.',
-        'Explored a product-level dataset for the first time, built a clean categorisation from free text, and ran a first hypothesis test on whether product type relates to default risk. The result was negative, so the feature was dropped.',
+        'Sat in on a review discussion with a business team and my mentor, to understand how credit decisions are made today. Then I drafted a project brief covering the objective and candidate risk factors.',
+        'Researched general drivers of business payment default, including payment behaviour, company profile, and credit-bureau data. I also checked whether public trade datasets could help measure customer concentration risk, but found that source was not reliable enough, so I did not pursue it.',
+        'Read about how broader market conditions can affect a customer’s ability to pay on time. This gave background for the risk factors under consideration.',
+        'Worked with transactional data in Microsoft Fabric. After mentor feedback, I reworked an early risk-grouping approach, moving from a single forced category per record to independent risk flags.',
+        'Found and corrected a data-joining error in my own earlier work, where an identifier that was not unique across the full dataset had been treated as if it were. Fixing it changed an early summary figure.',
+        'Explored a new dataset for the first time. I built a clean categorisation from free text, then ran a first hypothesis test on whether this attribute relates to default risk. The result was negative, so I dropped the feature.',
       ],
       skills: [
         'Credit risk analytics',
@@ -563,25 +563,25 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Literature review',
       ],
       challenges: [
-        'I initially assumed one pattern in the data was linked to seasonal timing. Checking it directly showed the effect was minor and better explained by internal processing behaviour.',
-        'A query returning more rows than expected was the clue that led me to the join error. Without that check, an incorrect figure would have gone into the analysis unnoticed.',
-        'Tried to identify a specific payment-failure type in the data. No reliable signal existed for it, so I recorded it as a dead end rather than forcing a weak feature.',
+        'I first assumed one pattern in the data was linked to seasonal timing. Checking it directly showed the effect was small and was better explained by internal processing behaviour.',
+        'A query returning more rows than expected was the clue that led me to the join error. Without that check, a wrong figure would have gone into the analysis unnoticed.',
+        'Tried to identify a specific pattern in the data. No reliable signal existed for it, so I recorded it as a dead end instead of forcing a weak feature.',
       ],
       learning:
-        'Always check that the numbers reconcile, especially when a result looks reasonable at first glance, and treat an identifier as unique only within the scope it was actually designed for. A negative result is still a useful one: it stops a feature that looks sensible on paper from being built on nothing.',
-      next: 'Get the early findings reviewed with my mentor, then begin requesting the additional data needed for further testing.',
+        'Always check that the numbers reconcile, especially when a result looks reasonable at first glance. Also treat an identifier as unique only within the scope it was actually designed for. A negative result is still a useful one, because it stops a feature that looks sensible on paper from being built on nothing.',
+      next: 'Get the early findings reviewed with my mentor, then begin requesting the extra data needed for further testing.',
     },
     {
       week: 'Week 7',
       dates: '14 to 18 September 2026',
       focus: 'A reproducible data snapshot, a first risk score, and migrating an earlier project out of its sandbox',
       tasks: [
-        'Built a frozen, read-only snapshot of the relevant data using a read-only cross-workspace link rather than a duplicate copy, so the analysis would give reproducible results instead of shifting every time the source data changed.',
+        'Built a frozen, read-only snapshot of the relevant data using a cross-workspace link instead of a duplicate copy. This way, the analysis gives reproducible results instead of shifting every time the source data changed.',
         'Cleaned residual records from a past system migration out of the dataset, then classified records by how overdue they were.',
-        'Designed and validated a first customer risk score from payment history, checking it against known outcomes to confirm it concentrated risk sensibly rather than spreading it evenly.',
-        'Tested and rejected a hypothesis about why risk increased sharply past a certain point in the aging data. The pattern held regardless of payment terms, suggesting a process-driven cause rather than a billing-cycle artefact.',
-        'Migrated an earlier internship project out of its temporary workspace into the permanent one ahead of a trial period ending, moving all its tables and notebooks and confirming that internal reference IDs stayed stable across the move.',
-        'Found and fixed a permissions issue where report viewers, but not I, hit an access error, traced to a connection setting that routed permission checks incorrectly.',
+        'Designed and validated a first risk score from payment history. I checked it against known outcomes to confirm it concentrated risk sensibly instead of spreading it evenly.',
+        'Tested and rejected a hypothesis about why risk increased sharply past a certain point in the data. The pattern held regardless of payment terms, which pointed to a process-driven cause instead of a billing-cycle artefact.',
+        'Migrated an earlier internship project out of its temporary workspace into the permanent one, ahead of a trial period ending. I moved all its tables and notebooks and confirmed that internal reference IDs stayed stable across the move.',
+        'Found and fixed a permissions issue where report viewers, but not I, hit an access error. I traced it to a connection setting that routed permission checks incorrectly.',
       ],
       skills: [
         'Data snapshotting & reproducibility',
@@ -592,11 +592,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Deployment auditing',
       ],
       challenges: [
-        'The outcome being predicted had to be kept separate from the score’s own inputs, otherwise the score would describe what had already happened rather than warn about what might happen next.',
+        'The outcome being predicted had to be kept separate from the score’s own inputs. Otherwise, the score would describe what had already happened instead of warning about what might happen next.',
         'A working data refresh did not guarantee a working report for everyone. The permissions issue only appeared when someone outside my own account opened the page, which is why a full access audit was worth running.',
       ],
       learning:
-        'A data snapshot exists for reproducibility, not convenience, since a live source can change daily and the same query can return different answers on different days unless something is frozen. Repointing an existing model to a new location, rather than rebuilding it, keeps its existing security configuration intact.',
+        'A data snapshot exists for reproducibility, not convenience. A live source can change daily, so the same query can return different answers on different days unless something is frozen. Repointing an existing model to a new location, instead of rebuilding it, keeps its existing security setup intact.',
       next: 'Finish the risk-scoring build on the new snapshot and begin proper report pages for it.',
     },
     {
@@ -604,10 +604,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       dates: '21 to 25 September 2026',
       focus: 'Applying a recognised risk methodology and stress-testing the results',
       tasks: [
-        'Reworked the credit-risk report pages: fixed a chart that was misrepresenting scale, cleaned up labelling, and corrected a figure that was being read from the wrong source.',
-        'Researched a recognised accounting methodology for this kind of risk scoring, a provision-matrix approach for expected credit losses, rather than continuing with judgement-based weights, and re-derived the model’s rates from historical settled records.',
-        'Rebuilt the risk model on the new methodology, aligning the categories with the historical bands and confirming a known risk threshold held up under a second, independent check.',
-        'Added customer tenure and an activity status (active, quiet, or lapsed) to the model, computed carefully so long-standing customers were not undercounted.',
+        'Reworked the risk report pages. I fixed a chart that was misrepresenting scale, cleaned up labelling, and corrected a figure that was being read from the wrong source.',
+        'Researched a recognised accounting methodology for this kind of risk scoring, a provision-matrix approach for expected credit losses, instead of continuing with judgement-based weights. I then re-derived the model’s rates from historical settled records.',
+        'Rebuilt the risk model on the new methodology. I aligned the categories with the historical bands and confirmed a known risk threshold held up under a second, independent check.',
+        'Added customer tenure and an activity status (active, quiet, or lapsed) to the model. I computed this carefully so long-standing customers were not undercounted.',
         'Found and fixed a ranking bug introduced by the new tenure field, caused by a formula only partially clearing its filter context.',
         'Verified the rebuilt model against a full set of checks before treating it as final, and wrote a standalone methodology note using illustrative figures only.',
       ],
@@ -619,25 +619,25 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Rigorous validation practice',
       ],
       challenges: [
-        'Hit a type-mismatch error combining a fixed-point value with a floating-point rate. Resolved it by converting within the calculation rather than changing how the underlying data was stored.',
-        'The thresholds used to define an inactive customer were conventional rather than data-derived, so I flagged this openly as a limitation rather than presenting it as settled.',
+        'Hit a type-mismatch error combining a fixed-point value with a floating-point rate. I resolved it by converting within the calculation instead of changing how the underlying data was stored.',
+        'The thresholds used to define an inactive customer were conventional, not data-derived, so I openly flagged this as a limitation instead of presenting it as settled.',
       ],
       learning:
         'A validation rule set in advance, like a minimum sample size before trusting a result, only means something if it is still followed on the day a result looks especially convincing. The most defensible answer is rarely the most striking-looking one.',
-      next: 'Validate the methodology note’s references, properly test the activity thresholds against real behaviour, and take the data-quality issues found so far back to the Credit Control team.',
+      next: 'Validate the methodology note’s references, test the activity thresholds against real behaviour, and share the data-quality issues found so far with the business team.',
     },
     {
       week: 'Week 9',
       dates: '28 September 2026 (in progress)',
       focus: 'Responding to mentor feedback and re-testing the model’s own assumptions',
       tasks: [
-        'Reviewed my mentor’s critique of the risk methodology in detail rather than assuming either side was right, and confirmed the underlying statistics were sound, but that my write-up explained them poorly enough to cause the misunderstanding. Rewrote the unclear section and accepted the parts of the feedback that were genuinely valid.',
-        'Traced a data-provenance question back to its root cause using version history rather than assumption, and confirmed no changes had been made to a data source outside the project’s own scope. Added a safeguard against this happening by accident in future.',
-        'Added a missing reference field to the report using a small lookup table rather than reworking the whole snapshot, keeping every previously validated figure reproducible.',
+        'Reviewed my mentor’s critique of the risk methodology in detail, instead of assuming either side was right. I confirmed the underlying statistics were sound, but my write-up had explained them poorly enough to cause the misunderstanding. I rewrote the unclear section and accepted the parts of the feedback that were genuinely valid.',
+        'Traced a data question back to its root cause using version history instead of assumption, and confirmed no changes had been made to a data source outside the project’s own scope. I then added a safeguard against this happening by accident in future.',
+        'Added a missing reference field to the report using a small lookup table, instead of reworking the whole snapshot. This kept every previously validated figure reproducible.',
         'Ran an out-of-time validation, training the model on an earlier period and testing it on a later one, as requested after the previous review.',
-        'Found that risk rates estimated from more recent data differed meaningfully from those estimated using the full historical window, and, after ruling out a couple of alternative explanations, concluded the model’s original time window mixed two different periods of the business that should be treated separately.',
-        'Quantified how much this correction changed the model’s overall risk estimate, while confirming the relative ranking of customers stayed largely the same, so the change improves how defensible the model is rather than which accounts it flags.',
-        'Surfaced two general data-quality gaps for the Credit Control team to review, relating to how completely certain account records were populated.',
+        'Found that risk rates estimated from more recent data differed meaningfully from those estimated using the full historical window. After ruling out a couple of other explanations, I concluded the model’s original time window mixed two different periods of the business that should be treated separately.',
+        'Measured how much this correction changed the model’s overall risk estimate. The relative ranking of customers stayed largely the same, so the change improves how defensible the model is, not which accounts it flags.',
+        'Surfaced two general data-quality gaps for the business team to review, about how completely certain account records were populated.',
       ],
       skills: [
         'Out-of-time statistical validation',
@@ -648,24 +648,24 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       ],
       challenges: [
         'My mentor’s critique turned out to be based on a misreading of my own write-up, a useful reminder that a statistically sound result can still fail to communicate clearly.',
-        'A result that initially looked like good news deserved more scrutiny, not less. It took ruling out a couple of alternative explanations before I could trust what it actually meant.',
+        'A result that initially looked like good news deserved more scrutiny, not less. It took ruling out a couple of other explanations before I could trust what it actually meant.',
       ],
       learning:
-        'The most valuable outcome this week did not come from building something new. It came from taking a piece of critical feedback seriously enough to re-verify the work from scratch, which is what surfaced a genuine gap in the model’s original assumptions.',
-      next: 'Re-derive the model’s rates on the corrected time window, update the methodology write-up accordingly, and raise the data-quality gaps directly with the Credit Control team.',
+        'The most valuable outcome this week did not come from building something new. It came from taking a piece of critical feedback seriously enough to re-check the work from scratch, which is what surfaced a genuine gap in the model’s original assumptions.',
+      next: 'Re-derive the model’s rates on the corrected time window, update the methodology write-up, and raise the data-quality gaps directly with the business team.',
     },
     {
       week: 'Week 10',
       dates: '29 September to 5 October 2026 (in progress)',
       focus: 'A structured model review, and a corrected out-of-time test to answer it',
       tasks: [
-        'Took part in a structured review of the risk model with stakeholders, separating what was confirmed as sound, the overall ranking approach, the general expected-credit-loss framework, the rate calculation logic, and the exclusion of one unrepresentative historical period, from what still needed evidence.',
-        'Wrote up every open issue from the review as a ranked list of findings by severity, covering how the model was being evaluated, how its historical window behaved over time, how closely its output duplicated an existing report, and how clearly it was presented to a non-technical audience.',
-        'Built a proper out-of-time test: trained the rates on one block of historical records and evaluated them only on a later, non-overlapping block, directly answering the review’s most serious finding that the existing accuracy figure had been measured on data the model had already learned from.',
-        'Found and fixed a bug in my own test query: a filter meant to exclude records too recent to have a known outcome yet had been dropped during an earlier rewrite, which was quietly making recent periods look better than they actually were.',
-        'Studied a worked walkthrough of the expected-credit-loss framework and confirmed the model’s structure (exposure, probability of default, and loss severity) matched the standard approach, while finding that the loss-severity assumption had effectively been fixed at total loss without that ever being a deliberate decision.',
-        'Discussed the findings with my mentor. The exposure and loss-severity assumptions were accepted as reasonable, leaving the probability-of-default estimate as the main open question.',
-        'Started building a roll-rate style query that reconstructs, month by month, how accounts move between aging stages, as an alternative way of estimating that same probability.',
+        'Took part in a structured review of the risk model with stakeholders. We separated what was confirmed as sound, the overall ranking approach, the general expected-credit-loss framework, the rate calculation logic, and the exclusion of one unrepresentative historical period, from what still needed evidence.',
+        'Wrote up every open issue from the review as a ranked list of findings by severity. This covered how the model was being evaluated, how its historical window behaved over time, how closely its output duplicated an existing report, and how clearly it was presented to a non-technical audience.',
+        'Built a proper out-of-time test. I trained the rates on one block of historical records and evaluated them only on a later, non-overlapping block. This directly answered the review’s most serious finding, that the existing accuracy figure had been measured on data the model had already learned from.',
+        'Found and fixed a bug in my own test query. A filter meant to exclude records too recent to have a known outcome had been dropped during an earlier rewrite, which was quietly making recent periods look better than they actually were.',
+        'Studied a worked walkthrough of the expected-credit-loss framework and confirmed the model’s structure (exposure, probability of default, and loss severity) matched the standard approach. I also found that the loss-severity assumption had effectively been fixed at total loss, without that ever being a deliberate decision.',
+        'Discussed the findings with my mentor. The exposure and loss-severity assumptions were accepted as reasonable, so the probability-of-default estimate is now the main open question.',
+        'Started building a roll-rate style query that reconstructs, month by month, how accounts move between aging stages. This is an alternative way of estimating that same probability.',
       ],
       skills: [
         'Out-of-time test design',
@@ -675,12 +675,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Critical evaluation of a model’s own assumptions',
       ],
       challenges: [
-        'The first corrected test run still overstated how wrong the model was, because the same filtering bug I had fixed once before had crept back in during a rewrite, a reminder that a fix needs a regression check, not just a one-time correction.',
-        'The clean, non-overlapping test sample was still fairly small, so the result says something is off in direction but is not yet large enough on its own to settle the exact scale of the problem.',
+        'The first corrected test run still overstated how wrong the model was, because the same filtering bug I had fixed once before had crept back in during a rewrite. This was a reminder that a fix needs a regression check, not just a one-time correction.',
+        'The clean, non-overlapping test sample was still fairly small, so the result shows something is off in direction, but is not yet large enough on its own to settle the exact scale of the problem.',
       ],
       learning:
-        'The review’s biggest lesson was that a single aggregate accuracy figure can hide almost everything that matters. The same model can look strong overall while failing badly in its most recent, most relevant periods. Measuring something the right way, with no overlap between what it learned from and what it is judged on, matters more than the number that measurement produces.',
-      next: 'Re-run the corrected out-of-time test to confirm the result holds, finish the roll-rate query and compare it against the current method, and follow up on a data-definition question with the team that owns the underlying records before finalising the probability-of-default estimate.',
+        'The review’s biggest lesson was that a single aggregate accuracy figure can hide almost everything that matters. The same model can look strong overall but still fail badly in its most recent, most relevant periods. Measuring something the right way, with no overlap between what it learned from and what it is judged on, matters more than the number that measurement produces.',
+      next: 'Re-run the corrected out-of-time test to confirm the result holds, finish the roll-rate query and compare it against the current method, and follow up on a data-definition question with the team that owns the underlying records, before finalising the probability-of-default estimate.',
     },
   ];
 
