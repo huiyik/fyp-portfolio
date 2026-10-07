@@ -399,6 +399,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     'Credit risk / provision-matrix modelling',
     'Out-of-time statistical validation',
     'DAX filter-context debugging',
+    'Structured model-review & findings documentation',
   ];
 
   weeklyReports: WeeklyReport[] = [
@@ -652,6 +653,34 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       learning:
         'The most valuable outcome this week did not come from building something new. It came from taking a piece of critical feedback seriously enough to re-verify the work from scratch, which is what surfaced a genuine gap in the model’s original assumptions.',
       next: 'Re-derive the model’s rates on the corrected time window, update the methodology write-up accordingly, and raise the data-quality gaps directly with the Credit Control team.',
+    },
+    {
+      week: 'Week 10',
+      dates: '29 September to 5 October 2026 (in progress)',
+      focus: 'A structured model review, and a corrected out-of-time test to answer it',
+      tasks: [
+        'Took part in a structured review of the risk model with stakeholders, separating what was confirmed as sound, the overall ranking approach, the general expected-credit-loss framework, the rate calculation logic, and the exclusion of one unrepresentative historical period, from what still needed evidence.',
+        'Wrote up every open issue from the review as a ranked list of findings by severity, covering how the model was being evaluated, how its historical window behaved over time, how closely its output duplicated an existing report, and how clearly it was presented to a non-technical audience.',
+        'Built a proper out-of-time test: trained the rates on one block of historical records and evaluated them only on a later, non-overlapping block, directly answering the review’s most serious finding that the existing accuracy figure had been measured on data the model had already learned from.',
+        'Found and fixed a bug in my own test query: a filter meant to exclude records too recent to have a known outcome yet had been dropped during an earlier rewrite, which was quietly making recent periods look better than they actually were.',
+        'Studied a worked walkthrough of the expected-credit-loss framework and confirmed the model’s structure (exposure, probability of default, and loss severity) matched the standard approach, while finding that the loss-severity assumption had effectively been fixed at total loss without that ever being a deliberate decision.',
+        'Discussed the findings with my mentor. The exposure and loss-severity assumptions were accepted as reasonable, leaving the probability-of-default estimate as the main open question.',
+        'Started building a roll-rate style query that reconstructs, month by month, how accounts move between aging stages, as an alternative way of estimating that same probability.',
+      ],
+      skills: [
+        'Out-of-time test design',
+        'Root-cause debugging of a data pipeline',
+        'Expected-credit-loss (IFRS 9 / MFRS 9) framework application',
+        'Structured findings documentation',
+        'Critical evaluation of a model’s own assumptions',
+      ],
+      challenges: [
+        'The first corrected test run still overstated how wrong the model was, because the same filtering bug I had fixed once before had crept back in during a rewrite, a reminder that a fix needs a regression check, not just a one-time correction.',
+        'The clean, non-overlapping test sample was still fairly small, so the result says something is off in direction but is not yet large enough on its own to settle the exact scale of the problem.',
+      ],
+      learning:
+        'The review’s biggest lesson was that a single aggregate accuracy figure can hide almost everything that matters. The same model can look strong overall while failing badly in its most recent, most relevant periods. Measuring something the right way, with no overlap between what it learned from and what it is judged on, matters more than the number that measurement produces.',
+      next: 'Re-run the corrected out-of-time test to confirm the result holds, finish the roll-rate query and compare it against the current method, and follow up on a data-definition question with the team that owns the underlying records before finalising the probability-of-default estimate.',
     },
   ];
 
