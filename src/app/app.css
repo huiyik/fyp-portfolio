@@ -1439,6 +1439,38 @@ main > section:nth-of-type(even) {
 .internship-overview {
   border-color: var(--accent);
   margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.internship-overview::before,
+.internship-overview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.internship-overview::before {
+  background-image: var(--bg-photo);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.internship-overview::after {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 26, 0.84) 0%,
+    rgba(11, 17, 30, 0.8) 45%,
+    rgba(13, 21, 38, 0.77) 100%
+  );
+}
+
+.internship-overview > * {
+  position: relative;
+  z-index: 1;
 }
 
 .internship-overview h3,
