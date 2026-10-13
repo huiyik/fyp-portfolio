@@ -447,6 +447,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     'Out-of-time statistical validation',
     'DAX filter-context debugging',
     'Structured model-review & findings documentation',
+    'Sensitivity analysis',
+    'Cohort-based measurement design',
+    'Platform governance (service accounts, licensing)',
   ];
 
   weeklyReports: WeeklyReport[] = [
@@ -675,7 +678,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       week: 'Week 9',
-      dates: '28 September 2026 (in progress)',
+      dates: '28 September 2026',
       focus: 'Responding to mentor feedback and re-testing the model’s own assumptions',
       tasks: [
         'Reviewed my mentor’s critique of the risk methodology in detail, instead of assuming either side was right. I confirmed the underlying statistics were sound, but my write-up had explained them poorly enough to cause the misunderstanding. I rewrote the unclear section and accepted the parts of the feedback that were genuinely valid.',
@@ -703,14 +706,15 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       week: 'Week 10',
-      dates: '29 September to 5 October 2026 (in progress)',
-      focus: 'A structured model review, and a corrected out-of-time test to answer it',
+      dates: '29 September to 5 October 2026',
+      focus: 'A structured model review, a corrected out-of-time test, and a closer look at the governing standard',
       tasks: [
         'Took part in a structured review of the risk model with stakeholders. We separated what was confirmed as sound, the overall ranking approach, the general expected-credit-loss framework, the rate calculation logic, and the exclusion of one unrepresentative historical period, from what still needed evidence.',
         'Wrote up every open issue from the review as a ranked list of findings by severity. This covered how the model was being evaluated, how its historical window behaved over time, how closely its output duplicated an existing report, and how clearly it was presented to a non-technical audience.',
         'Built a proper out-of-time test. I trained the rates on one block of historical records and evaluated them only on a later, non-overlapping block. This directly answered the review’s most serious finding, that the existing accuracy figure had been measured on data the model had already learned from.',
         'Found and fixed a bug in my own test query. A filter meant to exclude records too recent to have a known outcome had been dropped during an earlier rewrite, which was quietly making recent periods look better than they actually were.',
         'Studied a worked walkthrough of the expected-credit-loss framework and confirmed the model’s structure (exposure, probability of default, and loss severity) matched the standard approach. I also found that the loss-severity assumption had effectively been fixed at total loss, without that ever being a deliberate decision.',
+        'Went deeper into the governing accounting standard itself and found several genuine differences between the current method and the standard: how a loss is actually defined, the absence of any forward-looking adjustment for current conditions, grouping accounts only by how overdue they are instead of by shared risk characteristics, and the assumption that a loss is always total once an account is flagged.',
         'Discussed the findings with my mentor. The exposure and loss-severity assumptions were accepted as reasonable, so the probability-of-default estimate is now the main open question.',
         'Started building a roll-rate style query that reconstructs, month by month, how accounts move between aging stages. This is an alternative way of estimating that same probability.',
       ],
@@ -723,11 +727,67 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       ],
       challenges: [
         'The first corrected test run still overstated how wrong the model was, because the same filtering bug I had fixed once before had crept back in during a rewrite. This was a reminder that a fix needs a regression check, not just a one-time correction.',
-        'The clean, non-overlapping test sample was still fairly small, so the result shows something is off in direction, but is not yet large enough on its own to settle the exact scale of the problem.',
+        'A cleaned, machine-generated summary of a long review meeting read convincingly on its own, but checking it line by line against the raw recording showed it contained a worked example and a line of reasoning that were never actually said. I discarded the summary and rebuilt the record from the raw recording instead.',
       ],
       learning:
-        'The review’s biggest lesson was that a single aggregate accuracy figure can hide almost everything that matters. The same model can look strong overall but still fail badly in its most recent, most relevant periods. Measuring something the right way, with no overlap between what it learned from and what it is judged on, matters more than the number that measurement produces.',
-      next: 'Re-run the corrected out-of-time test to confirm the result holds, finish the roll-rate query and compare it against the current method, and follow up on a data-definition question with the team that owns the underlying records, before finalising the probability-of-default estimate.',
+        'Verifying a summary against its original source is not optional. A plausible-sounding summary can contain material that was never there, and acting on it would mean responding to a problem nobody actually raised.',
+      next: 'Audit the first pipeline project for similar blind spots, properly separate the roll-rate measurement from the final loss-rate figure, and design a fixed, repeatable rule for splitting data into training and testing periods.',
+    },
+    {
+      week: 'Week 11',
+      dates: '6 to 9 October 2026',
+      focus: 'Auditing the first pipeline project and rebuilding the evaluation around a fixed rule',
+      tasks: [
+        'Returned to audit the first internship pipeline project, reviewing its two core transformation steps in detail. Confirmed how each layer writes its data: the raw layer appends one batch per run, the cleaned layer rebuilds its full change history in memory before writing so nothing is lost, and the reporting layer is fully rebuilt every run.',
+        'Found a bug where a record removed from the source would still be carried forward indefinitely in the cleaned layer, so a count that should be able to fall could only stay the same or grow. Traced it to the query only keeping the latest run of each record and discarding the history that would let a fix be dated properly.',
+        'Found that the underlying collection step has no retry logic and no check on how many records succeeded, which was the original reason the carry-forward behaviour was added. Fixing the retry first would make it safe to introduce a proper expiry rule.',
+        'Looked into automating report deployment with a service account, and found a real platform limitation: ownership of an existing item cannot be transferred to a service account directly, only assigned at creation. Planned a workaround and confirmed the orchestration step only needed a single piece re-created this way, since it calls the other steps directly rather than through a separate scheduler.',
+        'Confirmed a licensing limitation: below a certain capacity tier, every user needs an individual licence to view or edit reports, regardless of the service account’s access. Built and ran a small test write to confirm a safe, fail-if-exists write pattern, then built and scheduled a test pipeline. Its first run reported success in five seconds with no steps actually executed, a false pass rather than a real result.',
+        'Worked the roll-rate method through end to end: measure each step between aging stages separately, then multiply the chain to estimate the probability of loss from each stage. Found that all five current rates rest on the same small set of past failures, so they are really one measurement split five ways rather than five independent ones.',
+        'Ran a sensitivity check and found the influence was inverted from the evidence. The final step in the chain has the most influence on the end result but rests on the fewest observations, while the earliest steps rest on far more data but barely move the final number. Defined an escalation rule for the rates going forward: an isolated off reading is treated as noise, a short run in the same direction gets a closer look, and a sustained run either widens the measurement window or, if it traces to one customer, flags that customer instead of the rate.',
+        'Replaced the training and testing split with a fixed, pre-stated rule instead of one chosen after seeing where the figures looked weakest, to avoid the split itself becoming a source of bias. Wrote the new test as a single repeatable query so the result can be regenerated rather than quoted from memory.',
+      ],
+      skills: [
+        'Data pipeline staleness-bug root-causing',
+        'Platform governance (service accounts, licensing)',
+        'Roll-rate methodology',
+        'Sensitivity analysis',
+        'Reproducible evaluation design',
+      ],
+      challenges: [
+        'The scheduled test pipeline has not actually passed yet. The run that reported success executed nothing, which only came to light because the run time was suspiciously short.',
+        'Still waiting on confirmation from the team that owns the underlying records about whether a particular status field means a payment was received or the amount was written off. The final loss-rate figure depends directly on the answer.',
+      ],
+      learning:
+        'A failed test on its own gives no instruction. Breaking the error down into its separate causes, rather than reporting one combined number, is what turns a failure into a decision about what to change next.',
+      next: 'Reconcile the roll-rate measurement against the chained final figure on a single, non-forecast period, to check the two methods agree before relying on either for future periods.',
+    },
+    {
+      week: 'Week 12',
+      dates: '12 to 18 October 2026 (in progress)',
+      focus: 'Self-checking the method from memory and separating how two account groups must be measured',
+      tasks: [
+        'Wrote out my own understanding of the roll-rate method from memory, without checking any reference, then compared it against the actual data and logic. Four points were wrong, and are worth recording as the easiest parts of the method to get wrong.',
+        'Corrected the first error: a record does not belong to one aging stage, it belongs to a stage on a specific date. The same record contributes many rows over its life as time passes, which is also where most of the measurement volume comes from.',
+        'Corrected the second error: I had described comparing a predicted figure against an actual outcome without stating that the final figure can take months to resolve, while a single step in the chain resolves in about a month. The two checks run on completely different timelines.',
+        'Corrected the third error: I had treated multiplying the steps together as a given, when it actually depends on each step being independent of the one before it, which does not automatically hold for slow-paying accounts. This is why it now sits behind a test rather than being assumed.',
+        'Corrected the fourth error: I had left out the largest, not-yet-overdue group of accounts entirely, because it cannot use the same monthly measurement as the others. Its width varies by customer, so a month of waiting does not move every account the same distance.',
+        'Worked out exactly why that group, and one other wider aging band, fail the monthly measurement: a month of waiting has to move a record exactly one stage for the monthly method to be valid, and it does not for either of these two groups. Measuring them correctly, as a cohort tracked from entry rather than as a monthly snapshot, gives a meaningfully different rate than the shortcut does.',
+        'Identified that this same cohort-style measurement is needed in several places, not just those two groups: the same two aging bands, a fallback direct measurement if the chaining approach fails its own test, and every evaluation of the final combined figure, which is a cohort measurement by definition.',
+      ],
+      skills: [
+        'Self-verification of technical methodology',
+        'Cohort-based measurement design',
+        'Technical documentation',
+        'Root-cause analysis',
+      ],
+      challenges: [
+        'All four errors were in the same place: what exactly is being measured and on what timeline. That suggests the unit of measurement is the part most worth stating explicitly in any write-up of the method, not the formula itself.',
+        'The two account groups that fail the monthly shortcut are not a small edge case. One of them holds most of the money that has not yet gone overdue at all, so measuring it incorrectly would misstate the figure that matters most.',
+      ],
+      learning:
+        'Writing a method out from memory and checking it against the data found errors that simply reading the method back would not have. Recording where a well-understood method is still easy to misstate is as useful as recording the method itself.',
+      next: 'Apply the correct cohort-based measurement to the two account groups that need it, and re-run the full evaluation with the corrected logic in place.',
     },
   ];
 
