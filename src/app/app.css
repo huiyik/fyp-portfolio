@@ -2242,3 +2242,62 @@ main > section:nth-of-type(even) {
     gap: 1.25rem 0.75rem;
   }
 }
+
+/* ---------- Weekly report card: inverted to a light panel ---------- */
+/* The rest of the page is dark with yellow accents. Inside this card
+   that is flipped: the yellow becomes the surface, so it cannot also
+   carry the accents, and every mark on it goes dark instead.
+   Tuning lives in these four tokens. */
+.weekly-card {
+  --wk-bg: #f6d87f;
+  --wk-ink: #17191d;
+  --wk-body: #2e3138;
+  --wk-grey: #5f5844;
+
+  background: var(--wk-bg);
+  border-color: #cfa93a;
+  color: var(--wk-body);
+}
+
+/* The shared card hover throws an accent border and a yellow glow, which
+   both vanish on a yellow surface. */
+.weekly-card:hover,
+.weekly-card:active,
+.weekly-card.is-touched {
+  border-color: #a8832a;
+  box-shadow: 0 10px 28px rgba(10, 15, 26, 0.3);
+}
+
+.weekly-card .weekly-week {
+  color: var(--wk-ink);
+}
+
+.weekly-card .weekly-dates {
+  color: #5f594e;
+}
+
+.weekly-card .weekly-focus {
+  color: var(--wk-ink);
+  font-weight: 700;
+}
+
+/* Section labels were the accent; on this surface they read as grey. */
+.weekly-card .weekly-block h5 {
+  color: var(--wk-grey);
+}
+
+.weekly-card .weekly-block p,
+.weekly-card .tick-list li {
+  color: var(--wk-body);
+}
+
+.weekly-card .tick-list li::before {
+  color: var(--wk-grey);
+}
+
+/* Skill pills were dark chips on dark; they invert to light chips. */
+.weekly-card .tag {
+  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(23, 25, 29, 0.18);
+  color: var(--wk-body);
+}
