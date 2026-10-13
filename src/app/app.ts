@@ -98,6 +98,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   panY = signal(0);
   isPanning = signal(false);
 
+  selectedWeek = signal('Week 1');
+
+  selectWeek(week: string): void {
+    this.selectedWeek.set(week);
+  }
+
   readonly dashboardUrl = 'https://telco-churn-prediction-mly57bjbcpgnh48swfsz9a.streamlit.app/';
 
   navLinks: NavLink[] = [

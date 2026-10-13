@@ -517,53 +517,70 @@
       <!-- Weekly reports -->
       <div class="internship-weekly">
         <h3 class="reveal">Weekly Reports</h3>
+
+        <div class="weekly-selector reveal">
+          <label for="week-select">Choose a week to view</label>
+          <select
+            id="week-select"
+            class="week-select"
+            [value]="selectedWeek()"
+            (change)="selectWeek($any($event.target).value)"
+          >
+            @for (report of weeklyReports; track report.week) {
+              <option [value]="report.week">{{ report.week }} &middot; {{ report.dates }}</option>
+            }
+          </select>
+        </div>
+
         @for (report of weeklyReports; track report.week) {
-          <div class="card weekly-card reveal">
-            <div class="weekly-head">
-              <span class="weekly-week">{{ report.week }}</span>
-              <span class="weekly-dates">{{ report.dates }}</span>
-            </div>
-            <p class="weekly-focus">{{ report.focus }}</p>
-
-            <div class="weekly-body">
-              <div class="weekly-block">
-                <h5>Tasks completed</h5>
-                <ul class="tick-list">
-                  @for (task of report.tasks; track task) {
-                    <li>{{ task }}</li>
-                  }
-                </ul>
+          @if (report.week === selectedWeek()) {
+            <div class="card weekly-card">
+              <div class="weekly-head">
+                <span class="weekly-week">{{ report.week }}</span>
+                <span class="weekly-dates">{{ report.dates }}</span>
               </div>
+              <p class="weekly-focus">{{ report.focus }}</p>
 
-              <div class="weekly-block">
-                <h5>Skills applied / developed</h5>
-                <div class="skill-tags">
-                  @for (skill of report.skills; track skill) {
-                    <span class="tag">{{ skill }}</span>
-                  }
+              <div class="weekly-body">
+                <div class="weekly-block">
+                  <h5>Tasks completed</h5>
+                  <ul class="tick-list">
+                    @for (task of report.tasks; track task) {
+                      <li>{{ task }}</li>
+                    }
+                  </ul>
+                </div>
+
+                <div class="weekly-block">
+                  <h5>Skills applied / developed</h5>
+                  <div class="skill-tags">
+                    @for (skill of report.skills; track skill) {
+                      <span class="tag">{{ skill }}</span>
+                    }
+                  </div>
+                </div>
+
+                <div class="weekly-block">
+                  <h5>Challenges &amp; how I addressed them</h5>
+                  <ul class="tick-list">
+                    @for (challenge of report.challenges; track challenge) {
+                      <li>{{ challenge }}</li>
+                    }
+                  </ul>
+                </div>
+
+                <div class="weekly-block">
+                  <h5>Key learning</h5>
+                  <p>{{ report.learning }}</p>
+                </div>
+
+                <div class="weekly-block">
+                  <h5>Next week's focus</h5>
+                  <p>{{ report.next }}</p>
                 </div>
               </div>
-
-              <div class="weekly-block">
-                <h5>Challenges &amp; how I addressed them</h5>
-                <ul class="tick-list">
-                  @for (challenge of report.challenges; track challenge) {
-                    <li>{{ challenge }}</li>
-                  }
-                </ul>
-              </div>
-
-              <div class="weekly-block">
-                <h5>Key learning</h5>
-                <p>{{ report.learning }}</p>
-              </div>
-
-              <div class="weekly-block">
-                <h5>Next week's focus</h5>
-                <p>{{ report.next }}</p>
-              </div>
             </div>
-          </div>
+          }
         }
       </div>
     </div>

@@ -1519,6 +1519,55 @@ main > section:nth-of-type(even) {
   margin-top: 3rem;
 }
 
+.weekly-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.weekly-selector label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+}
+
+.week-select {
+  appearance: none;
+  background: var(--navy-light);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 2.75rem 0.75rem 1rem;
+  max-width: 420px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23f0c040'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23f0c040' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  transition: border-color 0.15s ease;
+}
+
+.week-select:hover,
+.week-select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.week-select option {
+  background: var(--navy-light);
+  color: var(--text);
+}
+
+@media (max-width: 560px) {
+  .week-select {
+    max-width: 100%;
+  }
+}
+
 .weekly-card {
   margin-bottom: 1.5rem;
 }
