@@ -4,6 +4,7 @@ import {
   HostListener,
   OnDestroy,
   OnInit,
+  computed,
   signal,
 } from '@angular/core';
 
@@ -106,10 +107,38 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.selectedWeek.set(week);
   }
 
+  /** Position of the shown week in weeklyReports, or -1 if it is not found. */
+  weekIndex = computed(() =>
+    this.weeklyReports.findIndex((report) => report.week === this.selectedWeek()),
+  );
+
+  /** Move the week selection by delta, clamped to the ends of the list. */
+  stepWeek(delta: number): void {
+    const next = this.weekIndex() + delta;
+    const report = this.weeklyReports[next];
+    if (report) {
+      this.selectedWeek.set(report.week);
+    }
+  }
+
   selectedWork = signal('');
 
   selectWork(title: string): void {
     this.selectedWork.set(title);
+  }
+
+  /** Position of the shown project in signatureWorks, or -1 if it is not found. */
+  workIndex = computed(() =>
+    this.signatureWorks.findIndex((work) => work.title === this.selectedWork()),
+  );
+
+  /** Move the project selection by delta, clamped to the ends of the list. */
+  stepWork(delta: number): void {
+    const next = this.workIndex() + delta;
+    const work = this.signatureWorks[next];
+    if (work) {
+      this.selectedWork.set(work.title);
+    }
   }
 
   readonly dashboardUrl = 'https://telco-churn-prediction-mly57bjbcpgnh48swfsz9a.streamlit.app/';

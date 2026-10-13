@@ -405,10 +405,20 @@
         </select>
       </div>
 
-      <div class="works-list">
+      <div class="works-list pager">
+        <button
+          type="button"
+          class="pager-btn"
+          aria-label="Previous project"
+          [disabled]="workIndex() <= 0"
+          (click)="stepWork(-1)"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 L7 12 L15 20" /></svg>
+        </button>
+
         @for (work of signatureWorks; track work.title) {
           @if (work.title === selectedWork()) {
-            <div class="card work-card" [style.--bg-photo]="'url(' + work.bg + ')'">
+            <div class="card work-card pager-card" [style.--bg-photo]="'url(' + work.bg + ')'">
               <div class="work-head">
                 <h3>{{ work.title }}</h3>
                 <p class="work-format">{{ work.format }}</p>
@@ -444,6 +454,16 @@
             </div>
           }
         }
+
+        <button
+          type="button"
+          class="pager-btn"
+          aria-label="Next project"
+          [disabled]="workIndex() >= signatureWorks.length - 1"
+          (click)="stepWork(1)"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 L17 12 L9 20" /></svg>
+        </button>
       </div>
     </div>
     <div class="scroll-cue" aria-hidden="true">⌄</div>
@@ -548,9 +568,20 @@
           </select>
         </div>
 
+        <div class="pager">
+        <button
+          type="button"
+          class="pager-btn"
+          aria-label="Previous week"
+          [disabled]="weekIndex() <= 0"
+          (click)="stepWeek(-1)"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 L7 12 L15 20" /></svg>
+        </button>
+
         @for (report of weeklyReports; track report.week) {
           @if (report.week === selectedWeek()) {
-            <div class="card weekly-card">
+            <div class="card weekly-card pager-card">
               <div class="weekly-head">
                 <span class="weekly-week">{{ report.week }}</span>
                 <span class="weekly-dates">{{ report.dates }}</span>
@@ -598,6 +629,17 @@
             </div>
           }
         }
+
+        <button
+          type="button"
+          class="pager-btn"
+          aria-label="Next week"
+          [disabled]="weekIndex() >= weeklyReports.length - 1"
+          (click)="stepWeek(1)"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 L17 12 L9 20" /></svg>
+        </button>
+        </div>
       </div>
     </div>
     <div class="scroll-cue" aria-hidden="true">⌄</div>
