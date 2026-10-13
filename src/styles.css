@@ -134,3 +134,13 @@ a {
   font-weight: 300;
   margin: 0.25rem 0.5rem 0.25rem 0;
 }
+
+/* Phone: trim the whole type scale in one place, so the proportions
+   between heading, body and label stay as designed and the page gets
+   meaningfully shorter. Component styles cannot do this -- Angular
+   scopes them, and <html> sits outside the component. */
+@media (max-width: 600px) {
+  html {
+    font-size: 15px;
+  }
+}
