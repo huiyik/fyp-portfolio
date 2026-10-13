@@ -31,6 +31,7 @@ interface ModelResult {
 interface SimpleCard {
   title: string;
   text: string;
+  bg?: string;
 }
 
 interface ProblemCard extends SimpleCard {
@@ -282,9 +283,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   activityCards: SimpleCard[] = [
-    { title: 'Leadership', text: 'Event coordination, team management, administrative oversight' },
-    { title: 'Project Management', text: 'Logistics planning, contingency preparation, cross-department coordination' },
-    { title: 'Communication', text: 'Trilingual in English, Malay, and Chinese. Stakeholder reporting and documentation.' },
+    { title: 'Leadership', text: 'Event coordination, team management, administrative oversight', bg: 'assets/leadership%20pic.jpg' },
+    { title: 'Project Management', text: 'Logistics planning, contingency preparation, cross-department coordination', bg: 'assets/project%20management%20pic.jpg' },
+    { title: 'Communication', text: 'Trilingual in English, Malay, and Chinese. Stakeholder reporting and documentation.', bg: 'assets/communication%20pic.jpg' },
   ];
 
   contactLinks: { icon: string; label: string; href: string }[] = [

@@ -440,6 +440,41 @@ main > section:nth-of-type(even) {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.activity-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.activity-card::before,
+.activity-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.activity-card::before {
+  background-image: var(--bg-photo);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.activity-card::after {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 26, 0.8) 0%,
+    rgba(11, 17, 30, 0.76) 45%,
+    rgba(13, 21, 38, 0.73) 100%
+  );
+}
+
+.activity-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* ---------- Card hover effects (applies broadly) ---------- */
 .card {
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
