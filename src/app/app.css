@@ -1854,6 +1854,40 @@ main > section:nth-of-type(even) {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.education-card::before,
+.education-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.education-card::before {
+  background-image: var(--bg-photo);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* These cards carry dense text, so the wash runs a little heavier than
+   the activity cards to keep the CGPA and course lines readable. */
+.education-card::after {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 26, 0.86) 0%,
+    rgba(11, 17, 30, 0.82) 45%,
+    rgba(13, 21, 38, 0.8) 100%
+  );
+}
+
+.education-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .education-info {
