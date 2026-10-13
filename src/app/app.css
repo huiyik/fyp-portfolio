@@ -2244,36 +2244,40 @@ main > section:nth-of-type(even) {
 }
 
 /* ---------- Weekly report card: inverted to a light panel ---------- */
-/* The rest of the page is dark with yellow accents. Inside this card
-   that is flipped: the yellow becomes the surface, so it cannot also
-   carry the accents, and every mark on it goes dark instead.
-   Tuning lives in these four tokens. */
+/* The rest of the page is dark with gold accents. This card flips that:
+   a light panel, dark text, and the gold demoted to a single edge rail
+   and the week number, so it still belongs to the site without the gold
+   having to carry a whole surface. Tuning lives in these five tokens. */
 .weekly-card {
-  --wk-bg: #f6d87f;
-  --wk-ink: #17191d;
-  --wk-body: #2e3138;
-  --wk-grey: #5f5844;
+  --wk-bg: #edf1f6;
+  --wk-ink: #11161d;
+  --wk-body: #2c3440;
+  --wk-grey: #5a6775;
+  --wk-gold: #775b05;
 
   background: var(--wk-bg);
-  border-color: #cfa93a;
+  border: 1px solid #ccd5e0;
+  border-left: 3px solid var(--accent);
   color: var(--wk-body);
 }
 
-/* The shared card hover throws an accent border and a yellow glow, which
-   both vanish on a yellow surface. */
+/* The shared card hover throws an accent border and a gold glow, neither
+   of which register on a light panel. */
 .weekly-card:hover,
 .weekly-card:active,
 .weekly-card.is-touched {
-  border-color: #a8832a;
-  box-shadow: 0 10px 28px rgba(10, 15, 26, 0.3);
+  border-color: #b7c3d2;
+  border-left-color: var(--accent);
+  box-shadow: 0 12px 30px rgba(5, 9, 16, 0.45);
 }
 
+/* The one place the gold survives inside the card. */
 .weekly-card .weekly-week {
-  color: var(--wk-ink);
+  color: var(--wk-gold);
 }
 
 .weekly-card .weekly-dates {
-  color: #5f594e;
+  color: #626f7d;
 }
 
 .weekly-card .weekly-focus {
@@ -2295,9 +2299,10 @@ main > section:nth-of-type(even) {
   color: var(--wk-grey);
 }
 
-/* Skill pills were dark chips on dark; they invert to light chips. */
+/* Skill chips were dark on dark; they need to sit just below the panel
+   rather than above it, or they glow. */
 .weekly-card .tag {
-  background: rgba(255, 255, 255, 0.58);
-  border-color: rgba(23, 25, 29, 0.18);
+  background: #e0e6ee;
+  border-color: #ccd5e0;
   color: var(--wk-body);
 }
