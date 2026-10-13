@@ -578,26 +578,13 @@ main > section:nth-of-type(even) {
 
 /* Gentle, slow float on every hero element except the buttons, each on
    its own timing so they drift slightly out of phase instead of moving
-   as one block. Drifts sideways as well as up and down so it reads as
-   a loose wave rather than a straight bob. */
+   as one block. */
 @keyframes hero-float {
-  0% {
-    transform: translate(0, 0);
+  0%, 100% {
+    transform: translateY(0);
   }
-  20% {
-    transform: translate(6px, -5px);
-  }
-  40% {
-    transform: translate(3px, -8px);
-  }
-  60% {
-    transform: translate(-5px, -4px);
-  }
-  80% {
-    transform: translate(-6px, 2px);
-  }
-  100% {
-    transform: translate(0, 0);
+  50% {
+    transform: translateY(-7px);
   }
 }
 
