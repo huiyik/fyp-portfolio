@@ -1344,6 +1344,38 @@ main > section:nth-of-type(even) {
 
 .work-card {
   border-color: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.work-card::before,
+.work-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.work-card::before {
+  background-image: var(--bg-photo);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.work-card::after {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 26, 0.9) 0%,
+    rgba(11, 17, 30, 0.86) 45%,
+    rgba(13, 21, 38, 0.84) 100%
+  );
+}
+
+.work-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .work-head h3 {

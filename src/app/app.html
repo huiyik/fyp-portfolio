@@ -408,7 +408,7 @@
       <div class="works-list">
         @for (work of signatureWorks; track work.title) {
           @if (work.title === selectedWork()) {
-            <div class="card work-card">
+            <div class="card work-card" [style.--bg-photo]="'url(' + work.bg + ')'">
               <div class="work-head">
                 <h3>{{ work.title }}</h3>
                 <p class="work-format">{{ work.format }}</p>

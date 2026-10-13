@@ -63,6 +63,7 @@ interface SignatureWork {
   outcome: string;
   reflection: string;
   pdf: string;
+  bg: string;
 }
 
 interface WeeklyReport {
@@ -324,6 +325,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       reflection:
         'This project was my first hands-on experience with metaheuristics. An exact algorithm always finds the optimal answer, but Simulated Annealing trades a small, measurable gap from optimal for the ability to solve problems too large to brute-force. The most interesting challenge was tuning the cooling schedule. If it is too fast, the algorithm gets stuck in a local optimum early. If it is too slow, it barely improves before time runs out. Comparing our three configurations side by side made this trade-off clear and real, not just a theory.',
       pdf: 'assets/Simulated%20Annealing%20-%20100%20Agent%20Assignment%20Problem.pdf',
+      bg: 'assets/simulated%20annealing%20pic.jpg',
     },
     {
       title: 'Predicting Electricity Consumption Through Analysis of Usage Patterns',
@@ -337,6 +339,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       reflection:
         'The surprising result was that the simplest model, Linear Regression, beat both Neural Networks and Random Forest on this dataset, once we controlled properly for cross-validation and feature count. This taught me that model complexity should match the data. A small, structured dataset does not need a deep model to fit well. We tested every model on the same partition and fold combinations, instead of just picking the first result that looked good.',
       pdf: 'assets/Predicting%20Electicity%20Consumption.pdf',
+      bg: 'assets/predicting%20electricity%20consumption%20pic.jpg',
     },
     {
       title: 'Computer Shop Management System',
@@ -350,6 +353,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       reflection:
         'This was my first project using full object-oriented design from start to finish, from an abstract base class down to a working GUI. The trickiest part was the checkout flow. I had to get quantity checks, tiered discounts, and membership discounts to apply correctly and in the right order. I also had to stop one cart item from quietly overselling stock that another item in the same cart had already reserved. Debugging this taught me to trace a transaction through every state it can be in, not just the normal path.',
       pdf: 'assets/Computer%20Shop%20Management.pdf',
+      bg: 'assets/computer%20shop%20mangement%20pic.jpg',
     },
     {
       title: 'Car Price Prediction System',
@@ -363,6 +367,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       reflection:
         'The scraping stage taught me that real websites fight back. Pages load dynamically, listings paginate, and automation gets detected and blocked if the scraper looks too much like a bot. I had to get the Selenium script to wait for elements properly and scroll like a real user, instead of just hoping the page had loaded. This was the difference between a script that worked once and one that worked reliably across 88 pages. Turning the trained model into something a non-technical user could use, with just three inputs and an instant answer, showed me why I care about deployment as much as model accuracy. A model nobody can use is not really a solution.',
       pdf: 'assets/Car%20Price%20Prediction%20System.pdf',
+      bg: 'assets/Car%20price%20prediction%20system%20pic.jpg',
     },
   ];
 
