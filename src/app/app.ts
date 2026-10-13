@@ -104,6 +104,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.selectedWeek.set(week);
   }
 
+  selectedWork = signal('');
+
+  selectWork(title: string): void {
+    this.selectedWork.set(title);
+  }
+
   readonly dashboardUrl = 'https://telco-churn-prediction-mly57bjbcpgnh48swfsz9a.streamlit.app/';
 
   navLinks: NavLink[] = [
@@ -715,6 +721,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     setTimeout(() => this.loading.set(false), 1500);
     this.typeLoop();
+    this.selectedWork.set(this.signatureWorks[0]?.title ?? '');
 
     // Mobile browsers don't apply :hover on tap, so mirror the desktop
     // hover glow explicitly for touch by toggling a class on the tapped card.

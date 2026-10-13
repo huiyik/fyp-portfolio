@@ -391,42 +391,58 @@
         </p>
       </div>
 
+      <div class="weekly-selector reveal">
+        <label for="work-select">Choose a project to view</label>
+        <select
+          id="work-select"
+          class="week-select"
+          [value]="selectedWork()"
+          (change)="selectWork($any($event.target).value)"
+        >
+          @for (work of signatureWorks; track work.title) {
+            <option [value]="work.title">{{ work.title }}</option>
+          }
+        </select>
+      </div>
+
       <div class="works-list">
         @for (work of signatureWorks; track work.title) {
-          <div class="card work-card reveal">
-            <div class="work-head">
-              <h3>{{ work.title }}</h3>
-              <p class="work-format">{{ work.format }}</p>
-            </div>
-
-            <p class="work-summary">{{ work.summary }}</p>
-
-            <div class="work-grid">
-              <div>
-                <span class="io-label">Role</span>
-                <p>{{ work.role }}</p>
+          @if (work.title === selectedWork()) {
+            <div class="card work-card">
+              <div class="work-head">
+                <h3>{{ work.title }}</h3>
+                <p class="work-format">{{ work.format }}</p>
               </div>
-              <div>
-                <span class="io-label">Outcome / impact</span>
-                <p>{{ work.outcome }}</p>
+
+              <p class="work-summary">{{ work.summary }}</p>
+
+              <div class="work-grid">
+                <div>
+                  <span class="io-label">Role</span>
+                  <p>{{ work.role }}</p>
+                </div>
+                <div>
+                  <span class="io-label">Outcome / impact</span>
+                  <p>{{ work.outcome }}</p>
+                </div>
               </div>
-            </div>
 
-            <div class="skill-tags work-skills">
-              @for (skill of work.skills; track skill) {
-                <span class="tag">{{ skill }}</span>
-              }
-            </div>
+              <div class="skill-tags work-skills">
+                @for (skill of work.skills; track skill) {
+                  <span class="tag">{{ skill }}</span>
+                }
+              </div>
 
-            <div class="work-reflection">
-              <span class="io-label">Reflection</span>
-              <p>{{ work.reflection }}</p>
-            </div>
+              <div class="work-reflection">
+                <span class="io-label">Reflection</span>
+                <p>{{ work.reflection }}</p>
+              </div>
 
-            <a class="btn btn-outline work-jump" [href]="work.pdf" target="_blank" rel="noopener" download>
-              Download Report (PDF)
-            </a>
-          </div>
+              <a class="btn btn-outline work-jump" [href]="work.pdf" target="_blank" rel="noopener" download>
+                Download Report (PDF)
+              </a>
+            </div>
+          }
         }
       </div>
     </div>
