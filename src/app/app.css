@@ -576,6 +576,36 @@ main > section:nth-of-type(even) {
   z-index: 1;
 }
 
+/* Gentle, slow float on every hero element except the buttons, each on
+   its own timing so they drift slightly out of phase instead of moving
+   as one block. */
+@keyframes hero-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.hero-inner > *:not(.hero-actions) {
+  animation: hero-float 6.5s ease-in-out infinite;
+}
+
+.hero-inner > *:nth-child(1) { animation-duration: 7.2s; animation-delay: 0s; }
+.hero-inner > *:nth-child(2) { animation-duration: 6.4s; animation-delay: 0.5s; }
+.hero-inner > *:nth-child(3) { animation-duration: 6.8s; animation-delay: 1s; }
+.hero-inner > *:nth-child(4) { animation-duration: 7.6s; animation-delay: 0.3s; }
+.hero-inner > *:nth-child(5) { animation-duration: 6.2s; animation-delay: 1.3s; }
+.hero-inner > *:nth-child(6) { animation-duration: 7s; animation-delay: 0.8s; }
+.hero-inner > *:nth-child(7) { animation-duration: 6.6s; animation-delay: 1.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-inner > * {
+    animation: none;
+  }
+}
+
 .hero-photo {
   display: block;
   width: clamp(140px, 20vw, 210px);
