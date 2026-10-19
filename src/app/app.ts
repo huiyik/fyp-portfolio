@@ -417,6 +417,20 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       pdf: 'assets/Car%20Price%20Prediction%20System.pdf',
       bg: 'assets/Car%20price%20prediction%20system%20pic.jpg',
     },
+    {
+      title: 'Discrete Event Simulation: Expanded Retail Store Operations Model',
+      format: 'Arena simulation model and technical report (PDF), with flowcharts and a performance comparison table',
+      summary:
+        'This project expands a Discrete Event Simulation (DES) model of a retail store, covering the fresh produce, butchery, and payment counter sections. I built it in Arena simulation software. The expanded model adds multiple customer types, scheduled arrivals for peak and off-peak hours, staff scheduling across sections, cycle time tracking, and full entity transfer animations. I used the model to run a what-if analysis. This compared a fixed staffing level of two workers against the store’s existing flexible staffing schedule, to see which approach served customers better.',
+      role: 'Group project (team of 3). Contributed to building the expanded simulation model and running the what-if analysis comparing staffing scenarios.',
+      skills: ['Discrete Event Simulation', 'Arena Simulation Software', 'Queueing & Resource Scheduling', 'What-If / Sensitivity Analysis', 'Model Verification & Validation', 'Business Process Modelling'],
+      outcome:
+        'The what-if model, with a steady two-person staff, served more customers than the basic model (373.8 against 364 on average) and cut both the average total time in the system and the average waiting time. Maximum waiting time also dropped, and staff utilisation rose moderately across all three sections. The only trade-off was a small rise in lost customers during peak periods.',
+      reflection:
+        'This was my first time using Discrete Event Simulation to test a real operational decision instead of just building a model. The most useful part was the verification and validation step: checking that the schedule module repeated correctly over the full three-day run, then comparing the expanded model against the earlier, simpler one to confirm it still behaved as expected before trusting any of its results. The what-if analysis also showed a genuine trade-off rather than a clean win. Fixed staffing improved average waiting times, but the maximum waiting time was still high enough that our own recommendation was to reject it in favour of a variable schedule. A model does not have to recommend the most impressive-looking change to be useful.',
+      pdf: 'assets/DES%20project.pdf',
+      bg: 'assets/DES%20Performance%20Comparison%20Table.jpg',
+    },
   ];
 
   internshipResponsibilities: string[] = [
