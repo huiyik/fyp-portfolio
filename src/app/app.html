@@ -354,7 +354,7 @@
         <h3>Photo Gallery</h3>
         <div class="gallery-grid">
           @for (photo of galleryPhotos; track photo.src) {
-            <figure class="photo-frame card-slide" (click)="openLightbox(photo)">
+            <figure class="photo-frame reveal" (click)="openLightbox(photo)">
               <img [src]="photo.src" [alt]="photo.alt" />
               <figcaption class="photo-caption">{{ photo.caption }}</figcaption>
             </figure>
@@ -714,7 +714,7 @@
         <h3>Photo Gallery</h3>
         <div class="gallery-grid">
           @for (photo of internshipGalleryPhotos; track photo.src) {
-            <figure class="photo-frame card-slide" (click)="openLightbox(photo)">
+            <figure class="photo-frame reveal" (click)="openLightbox(photo)">
               <img [src]="photo.src" [alt]="photo.alt" />
               <figcaption class="photo-caption">{{ photo.caption }}</figcaption>
             </figure>
