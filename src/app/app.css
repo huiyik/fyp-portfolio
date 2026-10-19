@@ -421,6 +421,23 @@ main > section:nth-of-type(even) {
   transform: translateY(0);
 }
 
+/* Individual cards in a row slide in from alternating sides instead of
+   straight up, so a row of cards reads as converging into place. */
+.card-slide {
+  opacity: 0;
+  transform: translateX(-56px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.card-slide:nth-child(even) {
+  transform: translateX(56px);
+}
+
+.card-slide.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .cards-row {
   display: grid;
   gap: 1.5rem;

@@ -100,7 +100,7 @@
       <h2>Technical Skills</h2>
       <div class="skills-grid">
         @for (category of skillCategories; track category.title) {
-          <div class="skill-card" [style.background-image]="'url(' + category.bg + ')'">
+          <div class="skill-card card-slide" [style.background-image]="'url(' + category.bg + ')'">
             <div class="skill-card-overlay"></div>
             <div class="skill-card-content">
               <h3>{{ category.title }}</h3>
@@ -242,7 +242,7 @@
         <h3>Problem Statement</h3>
         <div class="cards-row three">
           @for (card of problemCards; track card.title) {
-            <div class="card problem-card">
+            <div class="card problem-card card-slide">
               <span class="problem-number">{{ card.number }}</span>
               <h4>{{ card.title }}</h4>
               <p>{{ card.text }}</p>
@@ -302,7 +302,7 @@
 
         <div class="cards-row three findings">
           @for (card of findingCards; track card.title) {
-            <div class="card finding-card">
+            <div class="card finding-card card-slide">
               <h4>{{ card.title }}</h4>
               <p [innerHTML]="card.text"></p>
             </div>
@@ -674,7 +674,7 @@
       </p>
       <div class="cards-row three">
         @for (card of activityCards; track card.title) {
-          <div class="card activity-card" [style.--bg-photo]="'url(' + card.bg + ')'">
+          <div class="card activity-card card-slide" [style.--bg-photo]="'url(' + card.bg + ')'">
             <h4>{{ card.title }}</h4>
             <p>{{ card.text }}</p>
           </div>
@@ -690,7 +690,7 @@
       <p class="eyebrow">Academic background</p>
       <h2>Education</h2>
       <div class="education-grid">
-        <div class="card education-card" style="--bg-photo: url('assets/dmas.jpg')">
+        <div class="card education-card card-slide" style="--bg-photo: url('assets/dmas.jpg')">
           <div class="education-info">
             <h3>Universiti Utara Malaysia</h3>
             <p class="edu-line">School of Quantitative Sciences</p>
@@ -703,7 +703,7 @@
           </div>
           <img class="education-logo" src="assets/uum-logo.png" alt="Universiti Utara Malaysia logo" />
         </div>
-        <div class="card education-card" style="--bg-photo: url('assets/jitsin%20gate.jpg'); --bg-y: 80%">
+        <div class="card education-card card-slide" style="--bg-photo: url('assets/jitsin%20gate.jpg'); --bg-y: 80%">
           <div class="education-info">
             <h3>SMJK Jit Sin</h3>
             <p class="edu-line">Sijil Tinggi Persekolahan Malaysia (STPM)</p>
@@ -714,7 +714,7 @@
           </div>
           <img class="education-logo" src="assets/jitsin-logo.png" alt="SMJK Jit Sin logo" />
         </div>
-        <div class="card education-card" style="--bg-photo: url('assets/jit%20sin%20padang.jpg'); --bg-y: 85%">
+        <div class="card education-card card-slide" style="--bg-photo: url('assets/jit%20sin%20padang.jpg'); --bg-y: 85%">
           <div class="education-info">
             <h3>SMJK Jit Sin</h3>
             <p class="edu-line">Malaysian Certificate of Education (SPM)</p>

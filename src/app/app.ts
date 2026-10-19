@@ -892,7 +892,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       { threshold: 0.02, rootMargin: '0px 0px -6% 0px' },
     );
 
-    document.querySelectorAll('.reveal').forEach((el) => this.revealObserver?.observe(el));
+    document
+      .querySelectorAll('.reveal, .card-slide')
+      .forEach((el) => this.revealObserver?.observe(el));
   }
 
   ngOnDestroy(): void {
