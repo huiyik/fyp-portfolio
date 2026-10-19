@@ -313,9 +313,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   internshipGalleryPhotos: Photo[] = [
     {
-      src: 'assets/project%20dashboard%20.png',
+      src: 'assets/project%20dashboard.png',
       alt: 'Internship project dashboard',
-      caption: 'One page from the potential-customer leads dashboard built during the internship, not the whole project. This page covers the manufacturing process view only. Company-level data and chart details are redacted at the company\'s request, and the layout and filter design are shown as built.',
+      caption: 'One page from the potential-customer leads dashboard built during the internship, not the whole project. This page covers the manufacturing process view, with company names and their processes listed on the right.',
     },
     {
       src: 'assets/working.jpg',
