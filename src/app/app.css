@@ -1727,6 +1727,16 @@ main > section:nth-of-type(even) {
   margin-top: 3rem;
 }
 
+.internship-gallery {
+  margin-top: 3rem;
+}
+
+.internship-gallery h3 {
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+}
+
 .weekly-selector {
   display: flex;
   flex-direction: column;

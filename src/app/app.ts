@@ -311,6 +311,19 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     },
   ];
 
+  internshipGalleryPhotos: Photo[] = [
+    {
+      src: 'assets/project%20dashboard%20.png',
+      alt: 'Internship project dashboard',
+      caption: 'Potential-customer leads dashboard built during the internship, showing company counts by manufacturing process.',
+    },
+    {
+      src: 'assets/working.jpg',
+      alt: 'Working at my desk during the internship',
+      caption: 'At my desk during the internship, working in Microsoft Fabric and Power BI.',
+    },
+  ];
+
   activityCards: SimpleCard[] = [
     { title: 'Leadership', text: 'Event coordination, team management, administrative oversight', bg: 'assets/leadership%20pic.jpg' },
     { title: 'Project Management', text: 'Logistics planning, contingency preparation, cross-department coordination', bg: 'assets/project%20management%20pic.jpg' },

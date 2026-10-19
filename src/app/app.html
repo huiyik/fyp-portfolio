@@ -641,6 +641,19 @@
         </button>
         </div>
       </div>
+
+      <!-- Photo gallery -->
+      <div class="internship-gallery reveal">
+        <h3>Photo Gallery</h3>
+        <div class="gallery-grid">
+          @for (photo of internshipGalleryPhotos; track photo.src) {
+            <figure class="photo-frame" (click)="openLightbox(photo)">
+              <img [src]="photo.src" [alt]="photo.alt" />
+              <figcaption class="photo-caption">{{ photo.caption }}</figcaption>
+            </figure>
+          }
+        </div>
+      </div>
     </div>
     <div class="scroll-cue" aria-hidden="true">⌄</div>
   </section>
