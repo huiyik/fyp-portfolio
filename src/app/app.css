@@ -1771,6 +1771,14 @@ main > section:nth-of-type(even) {
   pointer-events: none;
 }
 
+/* Touch devices have no real hover, so a tap just follows the link
+   directly instead of popping up the definition first. */
+@media (hover: none) {
+  .skill-popover {
+    display: none;
+  }
+}
+
 .skill-popover::after {
   content: '';
   position: absolute;
