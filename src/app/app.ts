@@ -327,6 +327,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       alt: 'Onboarding session at the start of the internship',
       caption: 'Onboarding session at the start of the internship, covering the organisation\'s culture framework.',
     },
+    {
+      src: 'assets/site-visit.jpg',
+      alt: 'Site visit during the internship',
+      caption: 'Site visit during the internship, with Dr Sahubar Ali (centre) and my mentor, Mr. Koay Wei Sheng (left).',
+    },
   ];
 
   activityCards: SimpleCard[] = [
