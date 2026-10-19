@@ -149,6 +149,14 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.hoveredSkill.set(null);
   }
 
+  /** Looks up a skill tag's definition and reference link by its exact
+   *  display text. Returns null for tags with no entry, so the template
+   *  can fall back to a plain, non-interactive tag. */
+  getSkillInfo(name: string): SkillInfo | null {
+    const entry = this.skillLibrary[name];
+    return entry ? { name, ...entry } : null;
+  }
+
   /** Position of the shown project in signatureWorks, or -1 if it is not found. */
   workIndex = computed(() =>
     this.signatureWorks.findIndex((work) => work.title === this.selectedWork()),
@@ -478,146 +486,560 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     'Built and validated a statistical risk-scoring model, then stress-tested it with an out-of-time validation method. This found an assumption in the original design that needed correcting.',
   ];
 
-  skillsApplied: SkillInfo[] = [
-    {
-      name: 'Python',
+  skillsApplied: string[] = [
+    'Python',
+    'SQL',
+    'Pandas',
+    'Data cleaning & EDA',
+    'Dimensional modelling basics',
+    'Power BI & Tableau fundamentals',
+    'Technical report writing',
+    'Stakeholder communication',
+  ];
+
+  skillsGained: string[] = [
+    'Microsoft Fabric (Lakehouse, OneLake, Data Pipelines)',
+    'Polars',
+    'Delta Lake',
+    'Medallion architecture',
+    'SCD Type 2',
+    'Semantic models & Direct Lake',
+    'Advanced DAX',
+    'Row-Level Security',
+    'Pipeline orchestration & idempotency',
+    'Production-safety practices',
+    'Git & Azure DevOps',
+    'Dev / Test / Prod ALM',
+    'Credit risk / provision-matrix modelling',
+    'Out-of-time statistical validation',
+    'DAX filter-context debugging',
+    'Structured model-review & findings documentation',
+    'Sensitivity analysis',
+    'Cohort-based measurement design',
+    'Platform governance (service accounts, licensing)',
+  ];
+
+  /** Definitions and reference links for every skill tag across the site.
+   *  Looked up by exact tag text; a tag with no entry here renders as a
+   *  plain, non-interactive tag instead of a link. */
+  private readonly skillLibrary: Record<string, { definition: string; link: string }> = {
+    Python: {
       definition: 'A general-purpose programming language widely used for data analysis, scripting, and automation.',
       link: 'https://www.python.org/doc/essays/blurb/',
     },
-    {
-      name: 'SQL',
+    SQL: {
       definition: 'A query language for reading and changing data stored in relational databases.',
       link: 'https://en.wikipedia.org/wiki/SQL',
     },
-    {
-      name: 'Pandas',
+    Pandas: {
       definition: 'A Python library for working with tabular data, such as filtering, grouping, and reshaping tables.',
       link: 'https://pandas.pydata.org/docs/getting_started/overview.html',
     },
-    {
-      name: 'Data cleaning & EDA',
+    'Data cleaning & EDA': {
       definition: 'Fixing or removing incorrect data (cleaning), then visually exploring a dataset to understand its patterns before modelling (exploratory data analysis).',
       link: 'https://en.wikipedia.org/wiki/Exploratory_data_analysis',
     },
-    {
-      name: 'Dimensional modelling basics',
+    'Dimensional modelling basics': {
       definition: 'A data modelling technique that organises data into fact tables (measurements) and dimension tables (context), commonly used for reporting.',
       link: 'https://en.wikipedia.org/wiki/Dimensional_modeling',
     },
-    {
-      name: 'Power BI & Tableau fundamentals',
+    'Power BI & Tableau fundamentals': {
       definition: 'Core skills in two leading business intelligence tools, used to build interactive dashboards and reports from data.',
       link: 'https://learn.microsoft.com/power-bi/fundamentals/power-bi-overview',
     },
-    {
-      name: 'Technical report writing',
+    'Technical report writing': {
       definition: 'Writing a clear, structured document that explains a technical process, method, or result to a specific audience.',
       link: 'https://en.wikipedia.org/wiki/Technical_report',
     },
-    {
-      name: 'Stakeholder communication',
+    'Stakeholder communication': {
       definition: 'Clearly sharing project progress, findings, or decisions with the people who have an interest in the outcome.',
       link: 'https://en.wikipedia.org/wiki/Stakeholder_management',
     },
-  ];
-
-  skillsGained: SkillInfo[] = [
-    {
-      name: 'Microsoft Fabric (Lakehouse, OneLake, Data Pipelines)',
+    'Microsoft Fabric (Lakehouse, OneLake, Data Pipelines)': {
       definition: 'Microsoft\'s unified data platform, combining data storage (OneLake), a lake-based table format (Lakehouse), and pipeline orchestration in one service.',
       link: 'https://learn.microsoft.com/fabric/fundamentals/microsoft-fabric-overview',
     },
-    {
-      name: 'Polars',
+    Polars: {
       definition: 'A fast, memory-efficient DataFrame library for Python, used as an alternative to pandas for larger datasets.',
       link: 'https://docs.pola.rs/',
     },
-    {
-      name: 'Delta Lake',
+    'Delta Lake': {
       definition: 'An open table format that adds reliability features, such as transactions and version history, on top of data stored in a data lake.',
       link: 'https://delta.io/',
     },
-    {
-      name: 'Medallion architecture',
+    'Medallion architecture': {
       definition: 'A data design pattern that organises a pipeline into bronze (raw), silver (cleaned), and gold (business-ready) layers.',
       link: 'https://learn.microsoft.com/azure/databricks/lakehouse/medallion',
     },
-    {
-      name: 'SCD Type 2',
+    'SCD Type 2': {
       definition: 'A Slowly Changing Dimension technique that keeps a full history of changes to a record by adding new rows instead of overwriting old ones.',
       link: 'https://en.wikipedia.org/wiki/Slowly_changing_dimension',
     },
-    {
-      name: 'Semantic models & Direct Lake',
+    'Semantic models & Direct Lake': {
       definition: 'A semantic model defines how tables relate and calculate in Power BI. Direct Lake lets Power BI read Fabric lakehouse data directly, without importing a copy.',
       link: 'https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview',
     },
-    {
-      name: 'Advanced DAX',
+    'Advanced DAX': {
       definition: 'Data Analysis Expressions, the formula language used in Power BI to build calculated measures and columns, used here beyond basic aggregation.',
       link: 'https://learn.microsoft.com/dax/dax-overview',
     },
-    {
-      name: 'Row-Level Security',
+    'Row-Level Security': {
       definition: 'A Power BI feature that restricts which rows of data a user can see in a report, based on their identity or role.',
       link: 'https://learn.microsoft.com/power-bi/enterprise/service-admin-rls',
     },
-    {
-      name: 'Pipeline orchestration & idempotency',
+    'Pipeline orchestration & idempotency': {
       definition: 'Orchestration coordinates the order and scheduling of data processing steps. Idempotency means a pipeline can be re-run safely without producing duplicate or incorrect results.',
       link: 'https://en.wikipedia.org/wiki/Idempotence',
     },
-    {
-      name: 'Production-safety practices',
+    'Production-safety practices': {
       definition: 'Engineering habits, such as validation checks and safe failure handling, that protect a live system from being broken by a bad run or bad data.',
       link: 'https://learn.microsoft.com/azure/well-architected/reliability/principles',
     },
-    {
-      name: 'Git & Azure DevOps',
+    'Git & Azure DevOps': {
       definition: 'Git is a version control system for tracking code changes. Azure DevOps is Microsoft\'s platform for hosting repositories, pipelines, and project boards built on top of it.',
       link: 'https://learn.microsoft.com/devops/what-is-azure-devops',
     },
-    {
-      name: 'Dev / Test / Prod ALM',
+    'Dev / Test / Prod ALM': {
       definition: 'Application Lifecycle Management: promoting work through separate development, testing, and production environments before it goes live.',
       link: 'https://learn.microsoft.com/fabric/cicd/deployment-pipelines/understand-the-deployment-process',
     },
-    {
-      name: 'Credit risk / provision-matrix modelling',
+    'Credit risk / provision-matrix modelling': {
       definition: 'Estimating how likely a customer is not to pay, often using a provision matrix that applies a loss rate based on how overdue an invoice is.',
       link: 'https://en.wikipedia.org/wiki/Credit_risk',
     },
-    {
-      name: 'Out-of-time statistical validation',
+    'Out-of-time statistical validation': {
       definition: 'Testing a model on data from a later time period than it was trained on, to check it still works on data it has never seen.',
       link: 'https://en.wikipedia.org/wiki/Cross-validation_(statistics)',
     },
-    {
-      name: 'DAX filter-context debugging',
+    'DAX filter-context debugging': {
       definition: 'Diagnosing why a DAX measure returns the wrong number by tracing exactly which filters are active when it is evaluated.',
       link: 'https://learn.microsoft.com/dax/context-and-filters-dax',
     },
-    {
-      name: 'Structured model-review & findings documentation',
+    'Structured model-review & findings documentation': {
       definition: 'Running a formal review of a model\'s assumptions and methodology, and writing up every issue found as a ranked, documented finding.',
       link: 'https://en.wikipedia.org/wiki/Model_risk_management',
     },
-    {
-      name: 'Sensitivity analysis',
+    'Sensitivity analysis': {
       definition: 'Testing how much a model\'s final result changes when one input or parameter is varied, to see which inputs matter most.',
       link: 'https://en.wikipedia.org/wiki/Sensitivity_analysis',
     },
-    {
-      name: 'Cohort-based measurement design',
+    'Cohort-based measurement design': {
       definition: 'Measuring an outcome by following a fixed group (a cohort) from a defined starting point, instead of taking a snapshot at one point in time.',
       link: 'https://en.wikipedia.org/wiki/Cohort_study',
     },
-    {
-      name: 'Platform governance (service accounts, licensing)',
+    'Platform governance (service accounts, licensing)': {
       definition: 'Managing how a platform is administered safely at scale, including non-human service accounts and the licensing rules that control who can view or edit content.',
       link: 'https://learn.microsoft.com/power-bi/enterprise/service-admin-administering-power-bi-in-your-organization',
     },
-  ];
+    Java: {
+      definition: 'A general-purpose, object-oriented programming language widely used for desktop, web, and enterprise applications.',
+      link: 'https://en.wikipedia.org/wiki/Java_(programming_language)',
+    },
+    DAX: {
+      definition: 'Data Analysis Expressions, the formula language used in Power BI to build calculated measures and columns.',
+      link: 'https://learn.microsoft.com/dax/dax-overview',
+    },
+    NumPy: {
+      definition: 'A core Python library for fast numerical computing, built around a multi-dimensional array type.',
+      link: 'https://numpy.org/doc/stable/user/whatisnumpy.html',
+    },
+    'Scikit-learn': {
+      definition: 'A Python library providing ready-to-use implementations of common machine learning algorithms.',
+      link: 'https://scikit-learn.org/stable/getting_started.html',
+    },
+    'Web Scraping': {
+      definition: 'Automatically extracting data from web pages, usually by fetching and parsing their HTML.',
+      link: 'https://en.wikipedia.org/wiki/Web_scraping',
+    },
+    'Web scraping': {
+      definition: 'Automatically extracting data from web pages, usually by fetching and parsing their HTML.',
+      link: 'https://en.wikipedia.org/wiki/Web_scraping',
+    },
+    'Microsoft Fabric': {
+      definition: 'Microsoft\'s unified data platform, combining data storage, pipelines, and analytics tools in one service.',
+      link: 'https://learn.microsoft.com/fabric/fundamentals/microsoft-fabric-overview',
+    },
+    'Microsoft Fabric (Lakehouse, OneLake)': {
+      definition: 'Microsoft\'s unified data platform, combining data storage (OneLake) with a lake-based table format (Lakehouse).',
+      link: 'https://learn.microsoft.com/fabric/fundamentals/microsoft-fabric-overview',
+    },
+    'Delta Lake / OneLake': {
+      definition: 'Delta Lake is an open table format for reliable data storage. OneLake is Microsoft Fabric\'s built-in, tenant-wide version of that storage layer.',
+      link: 'https://learn.microsoft.com/fabric/onelake/onelake-overview',
+    },
+    'Medallion Architecture': {
+      definition: 'A data design pattern that organises a pipeline into bronze (raw), silver (cleaned), and gold (business-ready) layers.',
+      link: 'https://learn.microsoft.com/azure/databricks/lakehouse/medallion',
+    },
+    'Pipeline Orchestration': {
+      definition: 'Coordinating the order, timing, and dependencies of the steps in a data pipeline.',
+      link: 'https://en.wikipedia.org/wiki/Orchestration_(computing)',
+    },
+    'Pipeline orchestration': {
+      definition: 'Coordinating the order, timing, and dependencies of the steps in a data pipeline.',
+      link: 'https://en.wikipedia.org/wiki/Orchestration_(computing)',
+    },
+    'Power BI': {
+      definition: 'A Microsoft tool for connecting to data and building interactive reports and dashboards.',
+      link: 'https://learn.microsoft.com/power-bi/fundamentals/power-bi-overview',
+    },
+    Tableau: {
+      definition: 'A widely used business intelligence tool for building interactive data visualisations and dashboards.',
+      link: 'https://en.wikipedia.org/wiki/Tableau_Software',
+    },
+    'Semantic Models': {
+      definition: 'The layer in Power BI that defines how tables relate to each other and how measures are calculated, sitting between raw data and a report.',
+      link: 'https://learn.microsoft.com/power-bi/fundamentals/power-bi-overview',
+    },
+    Matplotlib: {
+      definition: 'A Python library for creating static charts and plots, such as line graphs and bar charts.',
+      link: 'https://matplotlib.org/stable/users/explain/quick_start.html',
+    },
+    'KDD Process': {
+      definition: 'Knowledge Discovery in Databases: a structured sequence of steps (selection, preprocessing, transformation, data mining, evaluation) for finding patterns in data.',
+      link: 'https://en.wikipedia.org/wiki/Data_mining',
+    },
+    'Machine Learning': {
+      definition: 'Building models that learn patterns from data, rather than being explicitly programmed with rules.',
+      link: 'https://en.wikipedia.org/wiki/Machine_learning',
+    },
+    'Data Mining': {
+      definition: 'Finding patterns and relationships in large datasets using statistical and computational methods.',
+      link: 'https://en.wikipedia.org/wiki/Data_mining',
+    },
+    'Kimball / Star Schema': {
+      definition: 'The Kimball method models reporting data as a star schema: a central fact table surrounded by descriptive dimension tables.',
+      link: 'https://en.wikipedia.org/wiki/Star_schema',
+    },
+    Classification: {
+      definition: 'A machine learning task that assigns each record to one of a fixed set of categories.',
+      link: 'https://en.wikipedia.org/wiki/Statistical_classification',
+    },
+    Streamlit: {
+      definition: 'A Python framework for turning a data script into a shareable interactive web app with minimal code.',
+      link: 'https://docs.streamlit.io/get-started',
+    },
+    'Git & GitHub': {
+      definition: 'Git is a version control system for tracking code changes. GitHub is a hosting platform for Git repositories.',
+      link: 'https://docs.github.com/get-started/using-git/about-git',
+    },
+    'Azure DevOps': {
+      definition: 'Microsoft\'s platform for hosting code repositories, pipelines, and project boards.',
+      link: 'https://learn.microsoft.com/devops/what-is-azure-devops',
+    },
+    'Microsoft Office': {
+      definition: 'Microsoft\'s suite of productivity applications, including Word, Excel, and PowerPoint.',
+      link: 'https://en.wikipedia.org/wiki/Microsoft_Office',
+    },
+    'Google Workspace': {
+      definition: 'Google\'s suite of cloud productivity and collaboration tools, including Docs, Sheets, and Drive.',
+      link: 'https://en.wikipedia.org/wiki/Google_Workspace',
+    },
+    'Simulated Annealing': {
+      definition: 'A metaheuristic optimisation method that searches for a good solution by occasionally accepting worse moves, to avoid getting stuck in a local optimum.',
+      link: 'https://en.wikipedia.org/wiki/Simulated_annealing',
+    },
+    'Metaheuristic Optimisation': {
+      definition: 'A family of general-purpose strategies for finding a good, though not guaranteed optimal, solution to a problem too large to search exhaustively.',
+      link: 'https://en.wikipedia.org/wiki/Metaheuristic',
+    },
+    'Algorithm Design': {
+      definition: 'Planning the step-by-step logic a program follows to solve a problem, before writing the code itself.',
+      link: 'https://en.wikipedia.org/wiki/Algorithm',
+    },
+    'Performance Tuning': {
+      definition: 'Adjusting a system\'s parameters or code to improve its speed or resource use.',
+      link: 'https://en.wikipedia.org/wiki/Performance_tuning',
+    },
+    'Orange Data Mining': {
+      definition: 'An open-source, visual data mining and machine learning tool that builds analysis workflows from drag-and-drop components.',
+      link: 'https://orangedatamining.com/',
+    },
+    'Random Forest': {
+      definition: 'A machine learning method that combines many decision trees and averages their predictions for a more accurate result.',
+      link: 'https://en.wikipedia.org/wiki/Random_forest',
+    },
+    'Neural Networks': {
+      definition: 'A machine learning model loosely inspired by the brain, made of connected layers of nodes that learn to approximate a function from data.',
+      link: 'https://en.wikipedia.org/wiki/Neural_network_(machine_learning)',
+    },
+    'Linear Regression': {
+      definition: 'A statistical method that models the relationship between inputs and an output as a straight line.',
+      link: 'https://en.wikipedia.org/wiki/Linear_regression',
+    },
+    'Cross-Validation': {
+      definition: 'A technique for testing a model by repeatedly training it on part of the data and testing it on the rest, for a more reliable estimate of its accuracy.',
+      link: 'https://en.wikipedia.org/wiki/Cross-validation_(statistics)',
+    },
+    'Model Evaluation Metrics': {
+      definition: 'Numerical measures, such as error rate or R-squared, used to judge how well a model\'s predictions match reality.',
+      link: 'https://en.wikipedia.org/wiki/Precision_and_recall',
+    },
+    'Object-Oriented Programming': {
+      definition: 'A programming style that organises code into objects, each bundling its own data and behaviour.',
+      link: 'https://en.wikipedia.org/wiki/Object-oriented_programming',
+    },
+    'Java Swing (GUI)': {
+      definition: 'A Java toolkit for building desktop graphical user interfaces, such as windows, buttons, and forms.',
+      link: 'https://en.wikipedia.org/wiki/Swing_(Java)',
+    },
+    'File I/O': {
+      definition: 'Reading data from and writing data to files on disk, so a program\'s data survives after it closes.',
+      link: 'https://en.wikipedia.org/wiki/Input/output',
+    },
+    'UML Design': {
+      definition: 'Unified Modeling Language: a standard set of diagrams for planning the structure of a software system before building it.',
+      link: 'https://en.wikipedia.org/wiki/Unified_Modeling_Language',
+    },
+    'Software Documentation': {
+      definition: 'Written material that explains how a piece of software is structured, built, or used.',
+      link: 'https://en.wikipedia.org/wiki/Software_documentation',
+    },
+    Selenium: {
+      definition: 'A tool for automating web browsers, commonly used for web scraping and automated testing.',
+      link: 'https://www.selenium.dev/documentation/',
+    },
+    'Random Forest Regressor': {
+      definition: 'A Random Forest model adapted to predict a continuous number, such as a price, rather than a category.',
+      link: 'https://en.wikipedia.org/wiki/Random_forest',
+    },
+    'Data Cleaning': {
+      definition: 'Fixing or removing incorrect, incomplete, or inconsistent data before it is analysed.',
+      link: 'https://en.wikipedia.org/wiki/Data_cleansing',
+    },
+    'Discrete Event Simulation': {
+      definition: 'A modelling technique that simulates a system as a sequence of distinct events over time, such as arrivals and service completions.',
+      link: 'https://en.wikipedia.org/wiki/Discrete-event_simulation',
+    },
+    'Arena Simulation Software': {
+      definition: 'A discrete event simulation tool used to build and run models of business processes, such as a store or a factory line.',
+      link: 'https://en.wikipedia.org/wiki/Arena_(software)',
+    },
+    'Queueing & Resource Scheduling': {
+      definition: 'Modelling how entities wait in line for a limited resource, and how that resource is allocated over time.',
+      link: 'https://en.wikipedia.org/wiki/Queueing_theory',
+    },
+    'What-If / Sensitivity Analysis': {
+      definition: 'Testing how a result changes when one assumption or input is changed, to compare different scenarios.',
+      link: 'https://en.wikipedia.org/wiki/Sensitivity_analysis',
+    },
+    'Model Verification & Validation': {
+      definition: 'Verification checks that a model was built correctly. Validation checks that it accurately represents the real system it models.',
+      link: 'https://en.wikipedia.org/wiki/Verification_and_validation_of_computer_simulation_models',
+    },
+    'Business Process Modelling': {
+      definition: 'Mapping out the steps, decisions, and flow of a real business process, usually to analyse or improve it.',
+      link: 'https://en.wikipedia.org/wiki/Business_process_modeling',
+    },
+    'Star schema basics': {
+      definition: 'A beginner-level grasp of the star schema: a central fact table surrounded by descriptive dimension tables.',
+      link: 'https://en.wikipedia.org/wiki/Star_schema',
+    },
+    'Kimball dimensional modelling': {
+      definition: 'A data modelling approach, created by Ralph Kimball, that structures reporting data around fact and dimension tables.',
+      link: 'https://en.wikipedia.org/wiki/Dimensional_modeling',
+    },
+    'Grain and bridge tables': {
+      definition: 'Grain is the level of detail one row in a fact table represents. A bridge table resolves a many-to-many relationship between a fact and a dimension.',
+      link: 'https://en.wikipedia.org/wiki/Dimensional_modeling',
+    },
+    'Advanced DAX (DISTINCTCOUNT, CALCULATE)': {
+      definition: 'Using more advanced DAX functions, such as DISTINCTCOUNT and CALCULATE, to change the filter context a measure is evaluated in.',
+      link: 'https://learn.microsoft.com/dax/dax-overview',
+    },
+    'Power BI cross-filter direction': {
+      definition: 'A setting on a relationship between two Power BI tables that controls whether filtering flows one way or both ways.',
+      link: 'https://learn.microsoft.com/power-bi/fundamentals/power-bi-overview',
+    },
+    'Idempotency and defensive coding': {
+      definition: 'Writing code so repeating an operation produces the same safe result (idempotency), and so it anticipates and handles unexpected input (defensive coding).',
+      link: 'https://en.wikipedia.org/wiki/Idempotence',
+    },
+    'Hashing for change detection': {
+      definition: 'Computing a short fingerprint (hash) of a record so a new version can be compared against the old one to detect whether anything changed.',
+      link: 'https://en.wikipedia.org/wiki/Hash_function',
+    },
+    'Name and fuzzy matching': {
+      definition: 'Matching records that refer to the same real-world thing even when their text does not match exactly, such as small spelling differences.',
+      link: 'https://en.wikipedia.org/wiki/Record_linkage',
+    },
+    'String normalisation': {
+      definition: 'Converting text into a single consistent format, such as fixing case or spacing, so comparisons and matches are reliable.',
+      link: 'https://en.wikipedia.org/wiki/Text_normalization',
+    },
+    Regex: {
+      definition: 'Regular expressions: a pattern language for finding, matching, or validating pieces of text.',
+      link: 'https://en.wikipedia.org/wiki/Regular_expression',
+    },
+    'Systematic data-quality auditing': {
+      definition: 'Methodically checking a dataset against defined rules or expectations, instead of spot-checking individual records.',
+      link: 'https://en.wikipedia.org/wiki/Data_quality',
+    },
+    'Pipeline scheduling and dependencies': {
+      definition: 'Defining when a pipeline runs and which steps must finish before others can start.',
+      link: 'https://en.wikipedia.org/wiki/Job_scheduler',
+    },
+    'Environment isolation and security boundaries': {
+      definition: 'Keeping separate environments, such as a sandbox and production, from being able to affect each other.',
+      link: 'https://en.wikipedia.org/wiki/Sandbox_(computer_security)',
+    },
+    'Semantic-model best practices': {
+      definition: 'Established conventions for structuring a Power BI semantic model so it performs well and stays easy to maintain.',
+      link: 'https://learn.microsoft.com/power-bi/fundamentals/power-bi-overview',
+    },
+    'Power BI report authoring (PBIP)': {
+      definition: 'Building a Power BI report using the Power BI Project (PBIP) file format, which stores the report as readable source files instead of one binary file.',
+      link: 'https://learn.microsoft.com/power-bi/developer/projects/projects-overview',
+    },
+    'Theming, map visuals, drill-through': {
+      definition: 'Styling a report consistently (theming), showing data on a map (map visuals), and letting a user click through from a summary to its detail (drill-through).',
+      link: 'https://learn.microsoft.com/power-bi/fundamentals/power-bi-overview',
+    },
+    'Time-series anomaly logic': {
+      definition: 'Rules or models that flag a data point as unusual compared to the normal pattern of a series over time.',
+      link: 'https://en.wikipedia.org/wiki/Anomaly_detection',
+    },
+    'ALM and deployment pipelines': {
+      definition: 'Application Lifecycle Management: promoting work through separate development, testing, and production environments before it goes live.',
+      link: 'https://learn.microsoft.com/fabric/cicd/deployment-pipelines/understand-the-deployment-process',
+    },
+    'Cross-workspace model deployment': {
+      definition: 'Deploying a semantic model so it is used from a different workspace than the one it was built in.',
+      link: 'https://learn.microsoft.com/fabric/cicd/deployment-pipelines/understand-the-deployment-process',
+    },
+    'RLS across environments': {
+      definition: 'Keeping row-level security rules consistent and correctly configured as a model moves between dev, test, and prod.',
+      link: 'https://learn.microsoft.com/power-bi/enterprise/service-admin-rls',
+    },
+    'Dev, Test, and Prod discipline': {
+      definition: 'Consistently promoting work through separate development, testing, and production environments before it goes live.',
+      link: 'https://learn.microsoft.com/fabric/cicd/deployment-pipelines/understand-the-deployment-process',
+    },
+    Documentation: {
+      definition: 'Written material that records how something works, so it can be understood and maintained by someone else later.',
+      link: 'https://en.wikipedia.org/wiki/Documentation',
+    },
+    'Credit risk analytics': {
+      definition: 'Using data and statistics to estimate how likely a customer or counterparty is to fail to repay what they owe.',
+      link: 'https://en.wikipedia.org/wiki/Credit_risk',
+    },
+    'Hypothesis testing': {
+      definition: 'A statistical method for checking whether a pattern seen in data is likely to be real, or could reasonably be due to chance.',
+      link: 'https://en.wikipedia.org/wiki/Statistical_hypothesis_test',
+    },
+    'SQL joins & key design': {
+      definition: 'Combining rows from multiple tables using SQL joins, and designing the key fields that make those joins accurate.',
+      link: 'https://en.wikipedia.org/wiki/Join_(SQL)',
+    },
+    'Microsoft Fabric notebooks': {
+      definition: 'Code notebooks inside Microsoft Fabric, used to explore, clean, and process data with Python or Spark.',
+      link: 'https://learn.microsoft.com/fabric/fundamentals/microsoft-fabric-overview',
+    },
+    'Data-quality auditing': {
+      definition: 'Methodically checking a dataset against defined rules or expectations, instead of spot-checking individual records.',
+      link: 'https://en.wikipedia.org/wiki/Data_quality',
+    },
+    'Literature review': {
+      definition: 'Systematically reading and summarising existing research or documented practice on a topic before starting new work.',
+      link: 'https://en.wikipedia.org/wiki/Literature_review',
+    },
+    'Data snapshotting & reproducibility': {
+      definition: 'Freezing a copy of data at a point in time, so an analysis gives the same result every time it is re-run.',
+      link: 'https://en.wikipedia.org/wiki/Reproducibility',
+    },
+    'Cross-workspace data access': {
+      definition: 'Reading data that lives in a different workspace than the one the current item is in.',
+      link: 'https://learn.microsoft.com/fabric/fundamentals/microsoft-fabric-overview',
+    },
+    'Risk scoring & validation': {
+      definition: 'Building a score that ranks risk, then checking that score against real, known outcomes to confirm it works.',
+      link: 'https://en.wikipedia.org/wiki/Credit_risk',
+    },
+    'Semantic model migration': {
+      definition: 'Moving a semantic model to a new workspace or environment while keeping its structure and connections intact.',
+      link: 'https://learn.microsoft.com/fabric/cicd/deployment-pipelines/understand-the-deployment-process',
+    },
+    'Power BI permissions troubleshooting': {
+      definition: 'Diagnosing why a specific user can or cannot see a Power BI report or its data as expected.',
+      link: 'https://learn.microsoft.com/power-bi/enterprise/service-admin-rls',
+    },
+    'Deployment auditing': {
+      definition: 'Checking what was actually changed or moved during a deployment, rather than assuming it went as planned.',
+      link: 'https://learn.microsoft.com/fabric/cicd/deployment-pipelines/understand-the-deployment-process',
+    },
+    'Expected-credit-loss / provision-matrix methodology': {
+      definition: 'Estimating how likely a customer is not to pay, often using a provision matrix that applies a loss rate based on how overdue an invoice is.',
+      link: 'https://en.wikipedia.org/wiki/Credit_risk',
+    },
+    'Financial risk data modelling': {
+      definition: 'Structuring financial and transactional data so it supports risk calculations and reporting.',
+      link: 'https://en.wikipedia.org/wiki/Credit_risk',
+    },
+    'Technical writing': {
+      definition: 'Writing clear, structured documents that explain a technical process, method, or result to a specific audience.',
+      link: 'https://en.wikipedia.org/wiki/Technical_writing',
+    },
+    'Rigorous validation practice': {
+      definition: 'Consistently checking a result against independent evidence before treating it as final.',
+      link: 'https://en.wikipedia.org/wiki/Verification_and_validation',
+    },
+    'Root-cause analysis under critique': {
+      definition: 'Tracing a problem back to its true underlying cause, done while responding to someone else\'s challenge or feedback.',
+      link: 'https://en.wikipedia.org/wiki/Root_cause_analysis',
+    },
+    'Data version-history auditing': {
+      definition: 'Checking a data source\'s change history to confirm what was and was not modified, and when.',
+      link: 'https://en.wikipedia.org/wiki/Data_lineage',
+    },
+    'Financial control gap analysis': {
+      definition: 'Comparing current financial data controls against what should be in place, to find and document the gaps.',
+      link: 'https://en.wikipedia.org/wiki/Internal_control',
+    },
+    'Out-of-time test design': {
+      definition: 'Designing an evaluation that trains a model on one time period and tests it only on a later, non-overlapping period.',
+      link: 'https://en.wikipedia.org/wiki/Cross-validation_(statistics)',
+    },
+    'Root-cause debugging of a data pipeline': {
+      definition: 'Tracing a pipeline bug back to its true source, rather than only fixing the symptom.',
+      link: 'https://en.wikipedia.org/wiki/Root_cause_analysis',
+    },
+    'Expected-credit-loss (IFRS 9 / MFRS 9) framework application': {
+      definition: 'Applying the IFRS 9 / MFRS 9 accounting standard\'s expected credit loss framework to estimate loan or receivables losses.',
+      link: 'https://en.wikipedia.org/wiki/IFRS_9',
+    },
+    'Structured findings documentation': {
+      definition: 'Writing up every issue found during a review as a ranked, clearly documented finding, instead of an informal list.',
+      link: 'https://en.wikipedia.org/wiki/Model_risk_management',
+    },
+    'Critical evaluation of a model’s own assumptions': {
+      definition: 'Actively questioning whether a model\'s starting assumptions still hold, instead of taking them for granted.',
+      link: 'https://en.wikipedia.org/wiki/Model_risk_management',
+    },
+    'Data pipeline staleness-bug root-causing': {
+      definition: 'Tracing a bug where data silently stops updating back to its true source in the pipeline, instead of just patching the symptom.',
+      link: 'https://en.wikipedia.org/wiki/Root_cause_analysis',
+    },
+    'Roll-rate methodology': {
+      definition: 'A technique that estimates loss by measuring, in steps, the probability an account moves from one aging stage to the next, then chaining those steps together.',
+      link: 'https://en.wikipedia.org/wiki/Credit_risk',
+    },
+    'Reproducible evaluation design': {
+      definition: 'Designing a test so that running it again, by anyone, produces the same result.',
+      link: 'https://en.wikipedia.org/wiki/Reproducibility',
+    },
+    'Self-verification of technical methodology': {
+      definition: 'Checking your own understanding of a method against the actual data and logic, instead of assuming it is correct.',
+      link: 'https://en.wikipedia.org/wiki/Verification_and_validation',
+    },
+    'Technical documentation': {
+      definition: 'Written material that explains how a technical process or system works, so it can be understood and maintained by someone else.',
+      link: 'https://en.wikipedia.org/wiki/Technical_writing',
+    },
+    'Root-cause analysis': {
+      definition: 'Tracing a problem back to its true underlying cause, rather than only fixing the symptom.',
+      link: 'https://en.wikipedia.org/wiki/Root_cause_analysis',
+    },
+  };
 
   weeklyReports: WeeklyReport[] = [
     {

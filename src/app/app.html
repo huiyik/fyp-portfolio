@@ -106,7 +106,20 @@
               <h3>{{ category.title }}</h3>
               <div class="skill-tags">
                 @for (skill of category.skills; track skill) {
-                  <span class="tag">{{ skill }}</span>
+                  @if (getSkillInfo(skill); as info) {
+                    <a
+                      class="tag tag-info"
+                      [href]="info.link"
+                      target="_blank"
+                      rel="noopener"
+                      (mouseenter)="showSkillTooltip(info, $event)"
+                      (mouseleave)="hideSkillTooltip()"
+                      (focus)="showSkillTooltip(info, $event)"
+                      (blur)="hideSkillTooltip()"
+                    >{{ skill }}</a>
+                  } @else {
+                    <span class="tag">{{ skill }}</span>
+                  }
                 }
               </div>
             </div>
@@ -441,7 +454,20 @@
 
               <div class="skill-tags work-skills">
                 @for (skill of work.skills; track skill) {
-                  <span class="tag">{{ skill }}</span>
+                  @if (getSkillInfo(skill); as info) {
+                    <a
+                      class="tag tag-info"
+                      [href]="info.link"
+                      target="_blank"
+                      rel="noopener"
+                      (mouseenter)="showSkillTooltip(info, $event)"
+                      (mouseleave)="hideSkillTooltip()"
+                      (focus)="showSkillTooltip(info, $event)"
+                      (blur)="hideSkillTooltip()"
+                    >{{ skill }}</a>
+                  } @else {
+                    <span class="tag">{{ skill }}</span>
+                  }
                 }
               </div>
 
@@ -536,34 +562,42 @@
           <div>
             <h4>Skills applied</h4>
             <div class="skill-tags">
-              @for (skill of skillsApplied; track skill.name) {
-                <a
-                  class="tag tag-info"
-                  [href]="skill.link"
-                  target="_blank"
-                  rel="noopener"
-                  (mouseenter)="showSkillTooltip(skill, $event)"
-                  (mouseleave)="hideSkillTooltip()"
-                  (focus)="showSkillTooltip(skill, $event)"
-                  (blur)="hideSkillTooltip()"
-                >{{ skill.name }}</a>
+              @for (skill of skillsApplied; track skill) {
+                @if (getSkillInfo(skill); as info) {
+                  <a
+                    class="tag tag-info"
+                    [href]="info.link"
+                    target="_blank"
+                    rel="noopener"
+                    (mouseenter)="showSkillTooltip(info, $event)"
+                    (mouseleave)="hideSkillTooltip()"
+                    (focus)="showSkillTooltip(info, $event)"
+                    (blur)="hideSkillTooltip()"
+                  >{{ skill }}</a>
+                } @else {
+                  <span class="tag">{{ skill }}</span>
+                }
               }
             </div>
           </div>
           <div>
             <h4>Skills gained</h4>
             <div class="skill-tags">
-              @for (skill of skillsGained; track skill.name) {
-                <a
-                  class="tag tag-accent tag-info"
-                  [href]="skill.link"
-                  target="_blank"
-                  rel="noopener"
-                  (mouseenter)="showSkillTooltip(skill, $event)"
-                  (mouseleave)="hideSkillTooltip()"
-                  (focus)="showSkillTooltip(skill, $event)"
-                  (blur)="hideSkillTooltip()"
-                >{{ skill.name }}</a>
+              @for (skill of skillsGained; track skill) {
+                @if (getSkillInfo(skill); as info) {
+                  <a
+                    class="tag tag-accent tag-info"
+                    [href]="info.link"
+                    target="_blank"
+                    rel="noopener"
+                    (mouseenter)="showSkillTooltip(info, $event)"
+                    (mouseleave)="hideSkillTooltip()"
+                    (focus)="showSkillTooltip(info, $event)"
+                    (blur)="hideSkillTooltip()"
+                  >{{ skill }}</a>
+                } @else {
+                  <span class="tag tag-accent">{{ skill }}</span>
+                }
               }
             </div>
           </div>
@@ -622,7 +656,20 @@
                   <h5>Skills applied / developed</h5>
                   <div class="skill-tags">
                     @for (skill of report.skills; track skill) {
-                      <span class="tag">{{ skill }}</span>
+                      @if (getSkillInfo(skill); as info) {
+                        <a
+                          class="tag tag-info"
+                          [href]="info.link"
+                          target="_blank"
+                          rel="noopener"
+                          (mouseenter)="showSkillTooltip(info, $event)"
+                          (mouseleave)="hideSkillTooltip()"
+                          (focus)="showSkillTooltip(info, $event)"
+                          (blur)="hideSkillTooltip()"
+                        >{{ skill }}</a>
+                      } @else {
+                        <span class="tag">{{ skill }}</span>
+                      }
                     }
                   </div>
                 </div>
