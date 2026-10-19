@@ -343,6 +343,16 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   internshipGalleryPhotos: Photo[] = [
     {
+      src: 'assets/onboarding.jpg',
+      alt: 'Onboarding session at the start of the internship',
+      caption: 'Onboarding session at the start of the internship, covering the organisation\'s culture framework.',
+    },
+    {
+      src: 'assets/group%20photo%20with%20the%20team.jpg',
+      alt: 'Group photo with the team',
+      caption: 'With the team during the internship.',
+    },
+    {
       src: 'assets/project%20dashboard.png',
       alt: 'Internship project dashboard',
       caption: 'One page from the potential-customer leads dashboard built during the internship, not the whole project. Sensitive info are redacted here.',
@@ -351,11 +361,6 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       src: 'assets/working.jpg',
       alt: 'Working at my desk during the internship',
       caption: 'At my desk during the internship, building a sandbox project with free, scrapable weather data from a public API. I used an AI coding agent in VS Code to automate the workflow between VS Code and Microsoft Fabric.',
-    },
-    {
-      src: 'assets/onboarding.jpg',
-      alt: 'Onboarding session at the start of the internship',
-      caption: 'Onboarding session at the start of the internship, covering the organisation\'s culture framework.',
     },
     {
       src: 'assets/site-visit.jpg',
