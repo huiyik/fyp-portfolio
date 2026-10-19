@@ -537,14 +537,16 @@
             <h4>Skills applied</h4>
             <div class="skill-tags">
               @for (skill of skillsApplied; track skill.name) {
-                <span
+                <a
                   class="tag tag-info"
-                  tabindex="0"
+                  [href]="skill.link"
+                  target="_blank"
+                  rel="noopener"
                   (mouseenter)="showSkillTooltip(skill, $event)"
                   (mouseleave)="hideSkillTooltip()"
                   (focus)="showSkillTooltip(skill, $event)"
                   (blur)="hideSkillTooltip()"
-                >{{ skill.name }}</span>
+                >{{ skill.name }}</a>
               }
             </div>
           </div>
@@ -552,14 +554,16 @@
             <h4>Skills gained</h4>
             <div class="skill-tags">
               @for (skill of skillsGained; track skill.name) {
-                <span
+                <a
                   class="tag tag-accent tag-info"
-                  tabindex="0"
+                  [href]="skill.link"
+                  target="_blank"
+                  rel="noopener"
                   (mouseenter)="showSkillTooltip(skill, $event)"
                   (mouseleave)="hideSkillTooltip()"
                   (focus)="showSkillTooltip(skill, $event)"
                   (blur)="hideSkillTooltip()"
-                >{{ skill.name }}</span>
+                >{{ skill.name }}</a>
               }
             </div>
           </div>
@@ -840,6 +844,6 @@
 @if (hoveredSkill(); as skill) {
   <div class="skill-popover" [style.left]="skillTooltipPos().left" [style.top]="skillTooltipPos().top">
     <p class="skill-popover-def">{{ skill.definition }}</p>
-    <a class="skill-popover-link" [href]="skill.link" target="_blank" rel="noopener">{{ skill.linkLabel }}</a>
+    <p class="skill-popover-hint">Click the skill to read more ↗</p>
   </div>
 }

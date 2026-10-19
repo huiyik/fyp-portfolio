@@ -60,7 +60,6 @@ interface SkillInfo {
   name: string;
   definition: string;
   link: string;
-  linkLabel: string;
 }
 
 interface SignatureWork {
@@ -484,49 +483,41 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       name: 'Python',
       definition: 'A general-purpose programming language widely used for data analysis, scripting, and automation.',
       link: 'https://www.python.org/doc/essays/blurb/',
-      linkLabel: 'python.org',
     },
     {
       name: 'SQL',
       definition: 'A query language for reading and changing data stored in relational databases.',
       link: 'https://en.wikipedia.org/wiki/SQL',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Pandas',
       definition: 'A Python library for working with tabular data, such as filtering, grouping, and reshaping tables.',
       link: 'https://pandas.pydata.org/docs/getting_started/overview.html',
-      linkLabel: 'pandas docs',
     },
     {
       name: 'Data cleaning & EDA',
       definition: 'Fixing or removing incorrect data (cleaning), then visually exploring a dataset to understand its patterns before modelling (exploratory data analysis).',
       link: 'https://en.wikipedia.org/wiki/Exploratory_data_analysis',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Dimensional modelling basics',
       definition: 'A data modelling technique that organises data into fact tables (measurements) and dimension tables (context), commonly used for reporting.',
       link: 'https://en.wikipedia.org/wiki/Dimensional_modeling',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Power BI & Tableau fundamentals',
       definition: 'Core skills in two leading business intelligence tools, used to build interactive dashboards and reports from data.',
       link: 'https://learn.microsoft.com/power-bi/fundamentals/power-bi-overview',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Technical report writing',
       definition: 'Writing a clear, structured document that explains a technical process, method, or result to a specific audience.',
       link: 'https://en.wikipedia.org/wiki/Technical_report',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Stakeholder communication',
       definition: 'Clearly sharing project progress, findings, or decisions with the people who have an interest in the outcome.',
       link: 'https://en.wikipedia.org/wiki/Stakeholder_management',
-      linkLabel: 'Wikipedia',
     },
   ];
 
@@ -535,115 +526,96 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       name: 'Microsoft Fabric (Lakehouse, OneLake, Data Pipelines)',
       definition: 'Microsoft\'s unified data platform, combining data storage (OneLake), a lake-based table format (Lakehouse), and pipeline orchestration in one service.',
       link: 'https://learn.microsoft.com/fabric/fundamentals/microsoft-fabric-overview',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Polars',
       definition: 'A fast, memory-efficient DataFrame library for Python, used as an alternative to pandas for larger datasets.',
       link: 'https://docs.pola.rs/',
-      linkLabel: 'docs.pola.rs',
     },
     {
       name: 'Delta Lake',
       definition: 'An open table format that adds reliability features, such as transactions and version history, on top of data stored in a data lake.',
       link: 'https://delta.io/',
-      linkLabel: 'delta.io',
     },
     {
       name: 'Medallion architecture',
       definition: 'A data design pattern that organises a pipeline into bronze (raw), silver (cleaned), and gold (business-ready) layers.',
       link: 'https://learn.microsoft.com/azure/databricks/lakehouse/medallion',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'SCD Type 2',
       definition: 'A Slowly Changing Dimension technique that keeps a full history of changes to a record by adding new rows instead of overwriting old ones.',
       link: 'https://en.wikipedia.org/wiki/Slowly_changing_dimension',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Semantic models & Direct Lake',
       definition: 'A semantic model defines how tables relate and calculate in Power BI. Direct Lake lets Power BI read Fabric lakehouse data directly, without importing a copy.',
       link: 'https://learn.microsoft.com/fabric/fundamentals/direct-lake-overview',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Advanced DAX',
       definition: 'Data Analysis Expressions, the formula language used in Power BI to build calculated measures and columns, used here beyond basic aggregation.',
       link: 'https://learn.microsoft.com/dax/dax-overview',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Row-Level Security',
       definition: 'A Power BI feature that restricts which rows of data a user can see in a report, based on their identity or role.',
       link: 'https://learn.microsoft.com/power-bi/enterprise/service-admin-rls',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Pipeline orchestration & idempotency',
       definition: 'Orchestration coordinates the order and scheduling of data processing steps. Idempotency means a pipeline can be re-run safely without producing duplicate or incorrect results.',
       link: 'https://en.wikipedia.org/wiki/Idempotence',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Production-safety practices',
       definition: 'Engineering habits, such as validation checks and safe failure handling, that protect a live system from being broken by a bad run or bad data.',
       link: 'https://learn.microsoft.com/azure/well-architected/reliability/principles',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Git & Azure DevOps',
       definition: 'Git is a version control system for tracking code changes. Azure DevOps is Microsoft\'s platform for hosting repositories, pipelines, and project boards built on top of it.',
       link: 'https://learn.microsoft.com/devops/what-is-azure-devops',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Dev / Test / Prod ALM',
       definition: 'Application Lifecycle Management: promoting work through separate development, testing, and production environments before it goes live.',
       link: 'https://learn.microsoft.com/fabric/cicd/deployment-pipelines/understand-the-deployment-process',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Credit risk / provision-matrix modelling',
       definition: 'Estimating how likely a customer is not to pay, often using a provision matrix that applies a loss rate based on how overdue an invoice is.',
       link: 'https://en.wikipedia.org/wiki/Credit_risk',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Out-of-time statistical validation',
       definition: 'Testing a model on data from a later time period than it was trained on, to check it still works on data it has never seen.',
       link: 'https://en.wikipedia.org/wiki/Cross-validation_(statistics)',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'DAX filter-context debugging',
       definition: 'Diagnosing why a DAX measure returns the wrong number by tracing exactly which filters are active when it is evaluated.',
       link: 'https://learn.microsoft.com/dax/context-and-filters-dax',
-      linkLabel: 'Microsoft Learn',
     },
     {
       name: 'Structured model-review & findings documentation',
       definition: 'Running a formal review of a model\'s assumptions and methodology, and writing up every issue found as a ranked, documented finding.',
       link: 'https://en.wikipedia.org/wiki/Model_risk_management',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Sensitivity analysis',
       definition: 'Testing how much a model\'s final result changes when one input or parameter is varied, to see which inputs matter most.',
       link: 'https://en.wikipedia.org/wiki/Sensitivity_analysis',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Cohort-based measurement design',
       definition: 'Measuring an outcome by following a fixed group (a cohort) from a defined starting point, instead of taking a snapshot at one point in time.',
       link: 'https://en.wikipedia.org/wiki/Cohort_study',
-      linkLabel: 'Wikipedia',
     },
     {
       name: 'Platform governance (service accounts, licensing)',
       definition: 'Managing how a platform is administered safely at scale, including non-human service accounts and the licensing rules that control who can view or edit content.',
       link: 'https://learn.microsoft.com/power-bi/enterprise/service-admin-administering-power-bi-in-your-organization',
-      linkLabel: 'Microsoft Learn',
     },
   ];
 

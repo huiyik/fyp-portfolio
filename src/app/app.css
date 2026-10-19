@@ -1740,9 +1740,10 @@ main > section:nth-of-type(even) {
   color: var(--accent);
 }
 
-/* Skill tags with a hover/focus definition popover. */
+/* Skill tags that link out to a reference, with a hover/focus definition popover. */
 .tag-info {
-  cursor: help;
+  cursor: pointer;
+  text-decoration: none;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
@@ -1785,12 +1786,13 @@ main > section:nth-of-type(even) {
   color: var(--text-body);
 }
 
-.skill-popover-link {
-  display: inline-block;
+.skill-popover-hint {
+  margin: 0;
   color: var(--accent);
-  font-size: 0.75rem;
-  text-decoration: underline;
-  pointer-events: auto;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .internship-weekly {
