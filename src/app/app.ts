@@ -322,6 +322,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       alt: 'Working at my desk during the internship',
       caption: 'At my desk during the internship, working in Microsoft Fabric and Power BI.',
     },
+    {
+      src: 'assets/onboarding.jpg',
+      alt: 'Onboarding session at the start of the internship',
+      caption: 'Onboarding session at the start of the internship, covering the organisation\'s culture framework.',
+    },
   ];
 
   activityCards: SimpleCard[] = [
