@@ -315,7 +315,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     {
       src: 'assets/project%20dashboard%20.png',
       alt: 'Internship project dashboard',
-      caption: 'Potential-customer leads dashboard built during the internship, showing company counts by manufacturing process.',
+      caption: 'Potential-customer leads dashboard built during the internship. Company-level data and chart details are redacted at the company\'s request; the layout and filter design are shown as built.',
     },
     {
       src: 'assets/working.jpg',
