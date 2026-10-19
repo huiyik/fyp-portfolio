@@ -1740,6 +1740,59 @@ main > section:nth-of-type(even) {
   color: var(--accent);
 }
 
+/* Skill tags with a hover/focus definition popover. */
+.tag-info {
+  cursor: help;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.tag-info:hover,
+.tag-info:focus-visible {
+  border-color: var(--accent);
+  background: var(--navy-lighter);
+  outline: none;
+}
+
+.skill-popover {
+  position: fixed;
+  transform: translate(-50%, calc(-100% - 12px));
+  background: var(--navy-light);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  width: 260px;
+  max-width: calc(100vw - 2rem);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: left;
+  z-index: 300;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.skill-popover::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+
+.skill-popover-def {
+  margin: 0 0 0.6rem;
+  color: var(--text-body);
+}
+
+.skill-popover-link {
+  display: inline-block;
+  color: var(--accent);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  pointer-events: auto;
+}
+
 .internship-weekly {
   margin-top: 3rem;
 }

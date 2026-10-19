@@ -536,16 +536,30 @@
           <div>
             <h4>Skills applied</h4>
             <div class="skill-tags">
-              @for (skill of skillsApplied; track skill) {
-                <span class="tag">{{ skill }}</span>
+              @for (skill of skillsApplied; track skill.name) {
+                <span
+                  class="tag tag-info"
+                  tabindex="0"
+                  (mouseenter)="showSkillTooltip(skill, $event)"
+                  (mouseleave)="hideSkillTooltip()"
+                  (focus)="showSkillTooltip(skill, $event)"
+                  (blur)="hideSkillTooltip()"
+                >{{ skill.name }}</span>
               }
             </div>
           </div>
           <div>
             <h4>Skills gained</h4>
             <div class="skill-tags">
-              @for (skill of skillsGained; track skill) {
-                <span class="tag tag-accent">{{ skill }}</span>
+              @for (skill of skillsGained; track skill.name) {
+                <span
+                  class="tag tag-accent tag-info"
+                  tabindex="0"
+                  (mouseenter)="showSkillTooltip(skill, $event)"
+                  (mouseleave)="hideSkillTooltip()"
+                  (focus)="showSkillTooltip(skill, $event)"
+                  (blur)="hideSkillTooltip()"
+                >{{ skill.name }}</span>
               }
             </div>
           </div>
@@ -819,5 +833,13 @@
       <p class="lightbox-caption">{{ photo.caption }}</p>
       <p class="lightbox-hint">Pinch, scroll, or double-tap to zoom &middot; Drag to pan &middot; Esc or &#10005; to close</p>
     </div>
+  </div>
+}
+
+<!-- Skill definition popover -->
+@if (hoveredSkill(); as skill) {
+  <div class="skill-popover" [style.left]="skillTooltipPos().left" [style.top]="skillTooltipPos().top">
+    <p class="skill-popover-def">{{ skill.definition }}</p>
+    <a class="skill-popover-link" [href]="skill.link" target="_blank" rel="noopener">{{ skill.linkLabel }}</a>
   </div>
 }
