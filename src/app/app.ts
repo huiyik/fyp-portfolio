@@ -330,7 +330,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     {
       src: 'assets/site-visit.jpg',
       alt: 'Site visit during the internship',
-      caption: 'Dr Sahubar Ali (centre) visiting me on site during the internship, to check in on my progress, with my mentor, Mr. Koay Wei Sheng (left).',
+      caption: 'Dr Sahubar Ali (centre) visiting me on site during the internship, with my mentor, Mr. Koay Wei Sheng (left).',
     },
   ];
 
