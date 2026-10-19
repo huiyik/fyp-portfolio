@@ -876,10 +876,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     this.revealObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            this.revealObserver?.unobserve(entry.target);
-          }
+          // Toggle both ways and keep observing, so a block slides in on the
+          // way down and slides back out on the way up, every time it
+          // crosses the trigger point, instead of only animating once.
+          entry.target.classList.toggle('visible', entry.isIntersecting);
         }
       },
       // Small threshold + bottom margin so blocks reveal reliably regardless
