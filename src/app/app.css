@@ -426,7 +426,7 @@ main > section:nth-of-type(even) {
 .card-slide {
   opacity: 0;
   transform: translateX(-56px);
-  transition: opacity 1.8s ease, transform 1.8s ease;
+  transition: opacity 2.6s ease, transform 2.6s ease;
 }
 
 .card-slide:nth-child(even) {
