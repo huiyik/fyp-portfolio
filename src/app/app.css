@@ -425,8 +425,8 @@ main > section:nth-of-type(even) {
    straight up, so a row of cards reads as converging into place. */
 .card-slide {
   opacity: 0;
-  transform: translateX(-280px);
-  transition: opacity 6s linear, transform 9s linear;
+  transform: translateX(-56px);
+  transition: opacity 1.8s ease, transform 1.8s ease;
 }
 
 .card-slide:nth-child(even) {
