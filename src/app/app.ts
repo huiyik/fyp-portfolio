@@ -429,7 +429,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       reflection:
         'This was my first time using Discrete Event Simulation to test a real operational decision instead of just building a model. The most useful part was the verification and validation step: checking that the schedule module repeated correctly over the full three-day run, then comparing the expanded model against the earlier, simpler one to confirm it still behaved as expected before trusting any of its results. The what-if analysis also showed a genuine trade-off rather than a clean win. Fixed staffing improved average waiting times, but the maximum waiting time was still high enough that our own recommendation was to reject it in favour of a variable schedule. A model does not have to recommend the most impressive-looking change to be useful.',
       pdf: 'assets/DES%20project.pdf',
-      bg: 'assets/DES%20Performance%20Comparison%20Table.jpg',
+      bg: 'assets/DES%20pic.jpg',
     },
   ];
 
