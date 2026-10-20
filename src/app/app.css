@@ -429,6 +429,10 @@ main > section:nth-of-type(even) {
   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.card-slide:nth-child(even) {
+  transform: translateX(56px);
+}
+
 .card-slide.visible {
   opacity: 1;
   transform: translateX(0);
