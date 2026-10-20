@@ -429,14 +429,20 @@ main > section:nth-of-type(even) {
   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.card-slide:nth-child(even) {
-  transform: translateX(56px);
-}
-
 .card-slide.visible {
   opacity: 1;
   transform: translateX(0);
 }
+
+/* Stagger siblings so a row slides in left to right, one after another,
+   instead of every card animating at once. */
+.card-slide:nth-child(2) { transition-delay: 0.12s; }
+.card-slide:nth-child(3) { transition-delay: 0.24s; }
+.card-slide:nth-child(4) { transition-delay: 0.36s; }
+.card-slide:nth-child(5) { transition-delay: 0.48s; }
+.card-slide:nth-child(6) { transition-delay: 0.6s; }
+.card-slide:nth-child(7) { transition-delay: 0.72s; }
+.card-slide:nth-child(8) { transition-delay: 0.84s; }
 
 @media (prefers-reduced-motion: reduce) {
   .card-slide {
