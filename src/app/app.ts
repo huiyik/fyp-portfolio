@@ -1396,7 +1396,6 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   private isDeleting = false;
   private typingTimeout?: ReturnType<typeof setTimeout>;
   private revealObserver?: IntersectionObserver;
-  private cardSlideObserver?: IntersectionObserver;
 
   private isDragging = false;
   private dragStart = { x: 0, y: 0 };
@@ -1450,29 +1449,14 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       { threshold: 0.02, rootMargin: '0px 0px -6% 0px' },
     );
 
-    document.querySelectorAll('.reveal').forEach((el) => this.revealObserver?.observe(el));
-
-    this.cardSlideObserver = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          entry.target.classList.toggle('visible', entry.isIntersecting);
-        }
-      },
-      // A -50% bottom margin shrinks the trigger zone to the viewport's top
-      // half, so a card only slides in once it has been scrolled roughly to
-      // the middle of the screen, not the instant its top edge appears.
-      // Margin-based (not a 0.5 ratio threshold), so it still works for
-      // cards taller than the viewport.
-      { threshold: 0, rootMargin: '0px 0px -50% 0px' },
-    );
-
-    document.querySelectorAll('.card-slide').forEach((el) => this.cardSlideObserver?.observe(el));
+    document
+      .querySelectorAll('.reveal, .card-slide')
+      .forEach((el) => this.revealObserver?.observe(el));
   }
 
   ngOnDestroy(): void {
     clearTimeout(this.typingTimeout);
     this.revealObserver?.disconnect();
-    this.cardSlideObserver?.disconnect();
     document.body.style.overflow = '';
   }
 
