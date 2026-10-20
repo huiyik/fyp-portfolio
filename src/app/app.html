@@ -65,7 +65,7 @@
       </p>
 
       <div class="about-grid">
-        <figure class="photo-frame card-slide" (click)="openLightbox(profilePhoto)">
+        <figure class="photo-frame" (click)="openLightbox(profilePhoto)">
           <img [src]="profilePhoto.src" [alt]="profilePhoto.alt" />
           <figcaption class="photo-caption">{{ profilePhoto.caption }}</figcaption>
         </figure>
@@ -100,7 +100,7 @@
       <h2>Technical Skills</h2>
       <div class="skills-grid">
         @for (category of skillCategories; track category.title) {
-          <div class="skill-card card-slide" [style.background-image]="'url(' + category.bg + ')'">
+          <div class="skill-card" [style.background-image]="'url(' + category.bg + ')'">
             <div class="skill-card-overlay"></div>
             <div class="skill-card-content">
               <h3>{{ category.title }}</h3>
@@ -173,7 +173,7 @@
           </ul>
         </div>
 
-        <aside class="career-card card card-slide" style="--bg-photo: url('assets/profile-2.jpg')">
+        <aside class="career-card card" style="--bg-photo: url('assets/profile-2.jpg')">
           <h3>Quick facts</h3>
           <dl>
             <div>
@@ -219,7 +219,7 @@
       </div>
 
       <!-- Part A: Overview -->
-      <div class="card fyp-overview card-slide" style="--bg-photo: url('assets/telco.jpg')">
+      <div class="card fyp-overview reveal" style="--bg-photo: url('assets/telco.jpg')">
         <h3 class="fyp-title">Customer Churn Prediction in the Telecommunications Industry Using Data Mining Techniques</h3>
         <div class="fyp-stats">
           @for (stat of fypStats; track stat.label) {
@@ -255,7 +255,7 @@
         <h3>Problem Statement</h3>
         <div class="cards-row three">
           @for (card of problemCards; track card.title) {
-            <div class="card problem-card card-slide">
+            <div class="card problem-card">
               <span class="problem-number">{{ card.number }}</span>
               <h4>{{ card.title }}</h4>
               <p>{{ card.text }}</p>
@@ -315,7 +315,7 @@
 
         <div class="cards-row three findings">
           @for (card of findingCards; track card.title) {
-            <div class="card finding-card card-slide">
+            <div class="card finding-card">
               <h4>{{ card.title }}</h4>
               <p [innerHTML]="card.text"></p>
             </div>
@@ -326,7 +326,7 @@
       <!-- Part E: Poster -->
       <div class="fyp-block fyp-block-center reveal">
         <h3>FYP Poster</h3>
-        <figure class="photo-frame large card-slide" (click)="openLightbox(posterPhoto)">
+        <figure class="photo-frame large" (click)="openLightbox(posterPhoto)">
           <img [src]="posterPhoto.src" [alt]="posterPhoto.alt" />
           <figcaption class="photo-caption">{{ posterPhoto.caption }}</figcaption>
         </figure>
@@ -337,7 +337,7 @@
         <h3>Dashboard Screenshots</h3>
         <div class="cards-row three">
           @for (shot of dashboardShots; track shot.src) {
-            <figure class="photo-frame card-slide" (click)="openLightbox(shot)">
+            <figure class="photo-frame" (click)="openLightbox(shot)">
               <img [src]="shot.src" [alt]="shot.alt" />
               <figcaption class="photo-caption">{{ shot.caption }}</figcaption>
             </figure>
@@ -354,7 +354,7 @@
         <h3>Photo Gallery</h3>
         <div class="gallery-grid">
           @for (photo of galleryPhotos; track photo.src) {
-            <figure class="photo-frame reveal" (click)="openLightbox(photo)">
+            <figure class="photo-frame" (click)="openLightbox(photo)">
               <img [src]="photo.src" [alt]="photo.alt" />
               <figcaption class="photo-caption">{{ photo.caption }}</figcaption>
             </figure>
@@ -365,7 +365,7 @@
       <!-- Part H: Supervision Record -->
       <div class="fyp-block fyp-block-center reveal">
         <h3>Supervision Record</h3>
-        <figure class="photo-frame large card-slide" (click)="openLightbox(attendancePhoto)">
+        <figure class="photo-frame large" (click)="openLightbox(attendancePhoto)">
           <img [src]="attendancePhoto.src" [alt]="attendancePhoto.alt" />
           <figcaption class="photo-caption">{{ attendancePhoto.caption }}</figcaption>
         </figure>
@@ -510,7 +510,7 @@
       </div>
 
       <!-- Overview -->
-      <div class="card internship-overview card-slide" style="--bg-photo: url('assets/wisma%20giap%20chew%20building.jpg')">
+      <div class="card internship-overview reveal" style="--bg-photo: url('assets/wisma%20giap%20chew%20building.jpg')">
         <h3>Overview</h3>
         <div class="internship-role">
           <div class="internship-org">
@@ -714,7 +714,7 @@
         <h3>Photo Gallery</h3>
         <div class="gallery-grid">
           @for (photo of internshipGalleryPhotos; track photo.src) {
-            <figure class="photo-frame reveal" (click)="openLightbox(photo)">
+            <figure class="photo-frame" (click)="openLightbox(photo)">
               <img [src]="photo.src" [alt]="photo.alt" />
               <figcaption class="photo-caption">{{ photo.caption }}</figcaption>
             </figure>
@@ -739,7 +739,7 @@
       </p>
       <div class="cards-row three">
         @for (card of activityCards; track card.title) {
-          <div class="card activity-card card-slide" [style.--bg-photo]="'url(' + card.bg + ')'">
+          <div class="card activity-card" [style.--bg-photo]="'url(' + card.bg + ')'">
             <h4>{{ card.title }}</h4>
             <p>{{ card.text }}</p>
           </div>
@@ -755,7 +755,7 @@
       <p class="eyebrow">Academic background</p>
       <h2>Education</h2>
       <div class="education-grid">
-        <div class="card education-card card-slide" style="--bg-photo: url('assets/dmas.jpg')">
+        <div class="card education-card" style="--bg-photo: url('assets/dmas.jpg')">
           <div class="education-info">
             <h3>Universiti Utara Malaysia</h3>
             <p class="edu-line">School of Quantitative Sciences</p>
@@ -768,7 +768,7 @@
           </div>
           <img class="education-logo" src="assets/uum-logo.png" alt="Universiti Utara Malaysia logo" />
         </div>
-        <div class="card education-card card-slide" style="--bg-photo: url('assets/jitsin%20gate.jpg'); --bg-y: 80%">
+        <div class="card education-card" style="--bg-photo: url('assets/jitsin%20gate.jpg'); --bg-y: 80%">
           <div class="education-info">
             <h3>SMJK Jit Sin</h3>
             <p class="edu-line">Sijil Tinggi Persekolahan Malaysia (STPM)</p>
@@ -779,7 +779,7 @@
           </div>
           <img class="education-logo" src="assets/jitsin-logo.png" alt="SMJK Jit Sin logo" />
         </div>
-        <div class="card education-card card-slide" style="--bg-photo: url('assets/jit%20sin%20padang.jpg'); --bg-y: 85%">
+        <div class="card education-card" style="--bg-photo: url('assets/jit%20sin%20padang.jpg'); --bg-y: 85%">
           <div class="education-info">
             <h3>SMJK Jit Sin</h3>
             <p class="edu-line">Malaysian Certificate of Education (SPM)</p>
