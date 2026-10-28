@@ -1358,8 +1358,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       week: 'Week 12',
-      dates: '12 to 18 October 2026 (in progress)',
-      focus: 'Self-checking the method from memory and separating how two account groups must be measured',
+      dates: '12 to 18 October 2026',
+      focus: 'Self-checking the method from memory, separating how two account groups must be measured, and shifting focus toward exposure reporting',
       tasks: [
         'Wrote out my own understanding of the roll-rate method from memory, without checking any reference, then compared it against the actual data and logic. Four points were wrong, and are worth recording as the easiest parts of the method to get wrong.',
         'Corrected the first error: a record does not belong to one aging stage, it belongs to a stage on a specific date. The same record contributes many rows over its life as time passes, which is also where most of the measurement volume comes from.',
@@ -1368,20 +1368,60 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Corrected the fourth error: I had left out the largest, not-yet-overdue group of accounts entirely, because it cannot use the same monthly measurement as the others. Its width varies by customer, so a month of waiting does not move every account the same distance.',
         'Worked out exactly why that group, and one other wider aging band, fail the monthly measurement: a month of waiting has to move a record exactly one stage for the monthly method to be valid, and it does not for either of these two groups. Measuring them correctly, as a cohort tracked from entry rather than as a monthly snapshot, gives a meaningfully different rate than the shortcut does.',
         'Identified that this same cohort-style measurement is needed in several places, not just those two groups: the same two aging bands, a fallback direct measurement if the chaining approach fails its own test, and every evaluation of the final combined figure, which is a cohort measurement by definition.',
+        'Stepped back and shifted the main focus from the loss-rate model to a simpler question the credit control team actually needed answered first: who owes money, how much, and how overdue is it. The loss-rate model and the customer risk score stay active, but now as a later improvement rather than the main piece of work.',
+        'Started a new exposure-reporting page on a data model built directly over the underlying records, separate from the existing risk model.',
+        'Found that a past system transition created a hard boundary in the data: a meaningful block of old records are migrated opening balances from before the current system went live, not real trading activity. Confirmed this with several independent signals pointing the same way, rather than relying on a single date cut-off.',
+        'Added a flag so those migrated records can be deliberately included or excluded from reporting, instead of silently mixing into live figures.',
+        'Found one long-dormant account responsible for a meaningful share of the open balance, with no activity since the system went live. Logged it as a question for the finance team rather than a modelling problem.',
       ],
       skills: [
         'Self-verification of technical methodology',
         'Cohort-based measurement design',
         'Technical documentation',
         'Root-cause analysis',
+        'Exposure-reporting scope definition',
+        'Legacy data boundary identification',
       ],
       challenges: [
         'All four errors were in the same place: what exactly is being measured and on what timeline. That suggests the unit of measurement is the part most worth stating explicitly in any write-up of the method, not the formula itself.',
         'The two account groups that fail the monthly shortcut are not a small edge case. One of them holds most of the money that has not yet gone overdue at all, so measuring it incorrectly would misstate the figure that matters most.',
       ],
       learning:
-        'Writing a method out from memory and checking it against the data found errors that simply reading the method back would not have. Recording where a well-understood method is still easy to misstate is as useful as recording the method itself.',
-      next: 'Apply the correct cohort-based measurement to the two account groups that need it, and re-run the full evaluation with the corrected logic in place.',
+        'Writing a method out from memory and checking it against the data found errors that simply reading the method back would not have. Recording where a well-understood method is still easy to misstate is as useful as recording the method itself. A date-based cut-off adopted for convenience also turned out to mark a genuine system boundary rather than just inconvenient data, which is worth checking for before settling on a history window.',
+      next: 'Begin building the exposure-reporting page itself, and settle the open questions it raised: how to treat the migrated pre-system records, and what is going on with the one dormant account.',
+    },
+    {
+      week: 'Week 13',
+      dates: '19 to 25 October 2026 (in progress)',
+      focus: 'Extending the model to a second entity and shipping the first exposure-reporting pages',
+      tasks: [
+        'Extended the reporting model to cover a second business entity, qualifying every account and record key by entity, since both entities number their own records independently and would otherwise collide silently.',
+        "Built a shared customer key so a customer trading with both entities is counted once instead of twice. The first attempt used the system's own customer identifier. It looked correct, matching hundreds of records with no duplicates within either entity, but a closer check showed every single cross-entity match it produced was between differently named customers. Replaced it with a match on normalised customer name instead, which produces a smaller but verified set of real matches.",
+        'Found that a number of customer groups now trading with both entities had previously been treated as entirely separate customers with separate limits.',
+        'Investigated adding a third, smaller entity, then backed it out. It sits in a small net-credit position, which is real but not an exposure risk, and including it meant every total on the page needed a caveat before it could be read correctly.',
+        "Found that the source system's negative-document flag does not reliably mark every credit document. Replaced the flag-based rule with one based on the amount's sign as well as the flag, affecting a very small number of records but correcting a real misclassification.",
+        'Built the first exposure-reporting page, answering three questions: who owes money, how much, and how concentrated is the total across customers.',
+        'Spent most of the page-build time on a dynamic ranking measure that failed for seven different reasons in a row, each a different way a measure can be evaluated incorrectly inside a matrix visual: ranking on the wrong column, a second grouping level narrowing the population being ranked, the measure recalculating once per matrix cell instead of once overall, and a slicer unintentionally clearing the same column the measure needed to rank on.',
+        'Found and fixed a concentration percentage reading above 100%, caused by comparing a total that included only debit balances against a total that was net of credits. Made both sides of the calculation use the same population.',
+        "Reconciled every figure on the finished page directly against the underlying data. Found and corrected a credit-balance figure that had been estimated at roughly a quarter of its real value, because the earlier estimate had added two unrelated subtotals rather than netting each customer's actual position.",
+        'Built a second, detail-level page listing every open item individually, with filters by entity, customer, age band, payment terms, document type, customer tenure, and days overdue, plus summary cards showing amount owed, credit on account, and the net of the two.',
+        'Found that one document-type code in the source system is used for three unrelated things: old migrated balances, manually raised charges, and credit notes, distinguished only by the sign of the amount. Added a proper document-type classification so page filters work on what a document actually is rather than on its raw system code, since filtering on the raw code would have hidden legitimate credit notes along with the old balances.',
+      ],
+      skills: [
+        'Multi-entity data modelling',
+        'Composite key design and validation',
+        'Power BI measure-as-filter debugging',
+        'Data reconciliation against source',
+        'Business rule derivation from ambiguous source codes',
+      ],
+      challenges: [
+        'A customer could not be found on the new exposure page, and it took three separate, stacked causes to explain why: the page was only showing the top 10 of a much longer list, a tenure filter had been left set to a narrow range from earlier testing, and a page filter excluding one payment-terms type had been left on and locked from an earlier test. All three had to be found before the customer reappeared.',
+        'A summary card meant to show the total of all customers in a credit position returned blank, because a card has no row grouping, so a filter meant to test each customer individually was instead testing the single combined total, which was positive. Rebuilt the measure to total only the negative balances across customers directly.',
+        'Two figures reported on the page during the week were later found to be wrong and corrected. One came from comparing figures taken on two different days as though they were the same point in time; the other was the credit-balance estimation error described above.',
+      ],
+      learning:
+        'A measure used as a filter inside a visual can be evaluated once per cell rather than once overall, which quietly changes what it means wherever the visual has more than one column. Three of the seven ranking failures this week were the same underlying mistake in different forms. A percentage also needs the same population on both sides of the calculation, and checking a finished page against the underlying data is not optional: two of the figures reported this week did not survive that check.',
+      next: 'Bring the credit-note-to-invoice link into the model so the detail page can show which invoice a credit belongs to, and resolve how long the standing unapplied credit balance has been sitting unresolved.',
     },
   ];
 
