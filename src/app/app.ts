@@ -1088,6 +1088,22 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       definition: 'An accounting standard for estimating future credit losses, calculated as exposure at default, multiplied by probability of default, multiplied by loss given default.',
       link: 'https://en.wikipedia.org/wiki/IFRS_9',
     },
+    'Technical documentation auditing': {
+      definition: "Checking a project's written documentation against what the underlying code or system actually does, since the two quietly drift apart over time.",
+      link: 'https://en.wikipedia.org/wiki/Software_documentation',
+    },
+    'Industry supply-chain research': {
+      definition: "Studying how an industry's goods move from raw material to finished product, to find where a specific material or part is actually used.",
+      link: 'https://en.wikipedia.org/wiki/Supply_chain',
+    },
+    'Keyword taxonomy design': {
+      definition: 'Choosing and organising the search terms used to classify or find items in a dataset, since different terms can describe the same thing with very different results.',
+      link: 'https://en.wikipedia.org/wiki/Controlled_vocabulary',
+    },
+    'Evidence-based filter validation': {
+      definition: 'Testing a proposed filtering rule against real data before relying on it, instead of trusting that it sounds reasonable.',
+      link: 'https://en.wikipedia.org/wiki/Data_validation',
+    },
   };
 
   weeklyReports: WeeklyReport[] = [
