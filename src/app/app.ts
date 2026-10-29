@@ -1153,7 +1153,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         'Completed a Slowly Changing Dimension (Type 2) design so historical changes are kept instead of overwritten.',
         'Built a two-stage matching process to separate new records from the existing dataset.',
         'Set up Row-Level Security so each business unit sees only its own data, plus a manager role with full access.',
-        'Ran a full data-quality audit across about 800 records and fixed several real logic bugs.',
+        'Ran a full data-quality audit across the dataset and fixed several real logic bugs.',
       ],
       skills: ['SCD Type 2', 'Row-Level Security', 'Name and fuzzy matching', 'Systematic data-quality auditing'],
       challenges: [
