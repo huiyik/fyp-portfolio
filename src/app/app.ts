@@ -1612,8 +1612,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     if (!this.isDragging) {
       return;
     }
-    this.panX.set(this.panStart.x + (event.clientX - this.dragStart.x) * App.PAN_SENSITIVITY);
-    this.panY.set(this.panStart.y + (event.clientY - this.dragStart.y) * App.PAN_SENSITIVITY);
+    // Only boost touch's pan distance; mouse drag keeps its original 1:1 feel.
+    const sensitivity = event.pointerType === 'touch' ? App.PAN_SENSITIVITY : 1;
+    this.panX.set(this.panStart.x + (event.clientX - this.dragStart.x) * sensitivity);
+    this.panY.set(this.panStart.y + (event.clientY - this.dragStart.y) * sensitivity);
   }
 
   onLightboxPointerUp(event: PointerEvent): void {
@@ -1621,6 +1623,17 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.activePointers.size < 2) {
       this.pinchStartDistance = 0;
+    }
+
+    if (event.pointerType !== 'touch') {
+      // Desktop mouse/pen: just stop dragging. Zoom set by the wheel or a
+      // double-click stays exactly as it always has, with none of the
+      // touch-only momentary-zoom/spring-back behavior below.
+      if (this.activePointers.size === 0) {
+        this.isDragging = false;
+        this.isPanning.set(false);
+      }
+      return;
     }
 
     if (this.activePointers.size === 1) {

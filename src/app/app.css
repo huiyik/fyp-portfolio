@@ -2250,10 +2250,7 @@ main > section:nth-of-type(even) {
 
 .lightbox-image-wrap {
   flex: 1 1 auto;
-  /* Visible, not hidden: a pinch-zoomed image is meant to bleed past this
-     box right out to the screen edge, not be clipped by its own frame. The
-     fixed, full-viewport overlay above it is what actually bounds it. */
-  overflow: visible;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2262,6 +2259,16 @@ main > section:nth-of-type(even) {
   cursor: zoom-in;
   touch-action: none;
   transform: translateZ(0);
+}
+
+/* Touch-only: a pinch-zoomed image is meant to bleed past this box right
+   out to the screen edge, not be clipped by its own frame. Scoped to
+   touch devices so desktop's wheel/double-click zoom keeps clipping as
+   it always has. */
+@media (hover: none) {
+  .lightbox-image-wrap {
+    overflow: visible;
+  }
 }
 
 .lightbox-image-wrap.zoomed {
