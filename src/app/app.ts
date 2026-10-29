@@ -1533,7 +1533,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.activePointers.size === 2) {
       this.isDragging = false;
-      this.isPanning.set(false);
+      // Disable the transform transition during an active pinch, same as
+      // single-finger panning, so each frame applies the scale instantly
+      // instead of easing toward it and lagging behind the fingers.
+      this.isPanning.set(true);
       this.pinchStartDistance = this.getPinchDistance();
       this.pinchStartScale = this.zoomScale();
       return;
