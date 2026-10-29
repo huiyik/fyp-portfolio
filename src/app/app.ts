@@ -1321,7 +1321,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       week: 'Week 13',
-      dates: '19 to 25 October 2026 (in progress)',
+      dates: '19 to 25 October 2026',
       focus: 'Extending the model to a second entity and shipping the first exposure-reporting pages',
       tasks: [
         "Extended the model to a second business entity, tagging every key with its entity so numbering sequences don't collide.",
@@ -1337,6 +1337,25 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       learning:
         'A measure used as a filter inside a visual can be evaluated once per cell rather than once overall, which quietly changes what it means. Checking a finished page against the underlying data is not optional.',
       next: 'Bring the credit-note-to-invoice link into the model and resolve how long the standing unapplied credit balance has been outstanding.',
+    },
+    {
+      week: 'Week 14',
+      dates: '26 to 29 October 2026 (in progress)',
+      focus: "Correcting the first project's documentation, and opening a new lead-sourcing project",
+      tasks: [
+        "Checked the first pipeline project's documentation against its actual code, and found it still pointed to an old workspace and location that no longer held anything.",
+        'Documented three real pipeline behaviours that had only ever existed as informal notes, including a lookup table standardising free-text fields and a multi-stage process for matching new records against existing ones.',
+        'Opened a new sourcing project: finding trading-arm leads within a specific industry supply chain, scoped to one region and covering both new and existing accounts.',
+        "Researched the target industry's supply chain in depth before touching any company list, and found the search term assumed at the start was the wrong one.",
+      ],
+      skills: ['Technical documentation auditing', 'Industry supply-chain research', 'Keyword taxonomy design', 'Evidence-based filter validation'],
+      challenges: [
+        "Tested and disproved my own earlier assumption that an existing internal directory wouldn't contain useful leads, simply by reading a sample of real entries.",
+        'Measured a proposed filtering shortcut against real data before using it, and found it would have discarded most of the companies that actually matched the target market.',
+      ],
+      learning:
+        "An assumption about what a source will or won't contain is cheap to test and expensive to get wrong. The right search term matters as much as the right source, since companies describe what they make, not who buys it.",
+      next: "Cross-reference the industry's own supplier list against the existing directory and the company's own customer records to confirm real leads.",
     },
   ];
 
