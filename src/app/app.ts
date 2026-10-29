@@ -1397,6 +1397,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   private activePointers = new Map<number, { x: number; y: number }>();
   private pinchStartDistance = 0;
   private pinchStartScale = 1;
+  private pinchMidStart = { x: 0, y: 0 };
 
   private static readonly TAPPABLE_CARD_SELECTOR = '.card, .photo-frame, .skill-card';
   private touchedCard: HTMLElement | null = null;
@@ -1545,6 +1546,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       // Zoom from wherever the fingers actually are, not always the
       // image's center.
       this.updatePinchOrigin(event.currentTarget as HTMLElement);
+      // Track the midpoint too, so moving both fingers together while
+      // pinching pans the image at the same time, not just zooms it.
+      this.pinchMidStart = this.getPinchMidpoint();
+      this.panStart = { x: this.panX(), y: this.panY() };
       return;
     }
 
@@ -1576,6 +1581,11 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
         const next = Math.min(5, Math.max(0.5, scale));
         this.zoomScale.set(next);
       }
+      // Dragging both fingers across the screen while pinching moves the
+      // image too, the same way Instagram's photo viewer combines the two.
+      const mid = this.getPinchMidpoint();
+      this.panX.set(this.panStart.x + (mid.x - this.pinchMidStart.x));
+      this.panY.set(this.panStart.y + (mid.y - this.pinchMidStart.y));
       return;
     }
 
@@ -1628,6 +1638,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
     const points = Array.from(this.activePointers.values());
     const [a, b] = points;
     return Math.hypot(b.x - a.x, b.y - a.y);
+  }
+
+  private getPinchMidpoint(): { x: number; y: number } {
+    const points = Array.from(this.activePointers.values());
+    const [a, b] = points;
+    return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
   }
 
   scrollToSection(id: string): void {
