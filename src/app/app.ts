@@ -1603,6 +1603,18 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       this.pinchStartDistance = 0;
     }
 
+    if (this.activePointers.size === 1) {
+      // Lifting one finger out of a two-finger pinch doesn't fire a new
+      // pointerdown for the finger still down, so hand off to single-finger
+      // panning here instead of leaving it stuck until a fresh gesture.
+      const [remaining] = Array.from(this.activePointers.values());
+      this.isDragging = true;
+      this.isPanning.set(true);
+      this.dragStart = { x: remaining.x, y: remaining.y };
+      this.panStart = { x: this.panX(), y: this.panY() };
+      return;
+    }
+
     if (this.activePointers.size === 0) {
       this.isDragging = false;
       // Re-enable the transform transition (now that isPanning is false)
