@@ -2194,6 +2194,10 @@ main > section:nth-of-type(even) {
   inset: 0;
   width: 100vw;
   height: 100vh;
+  /* Mobile browsers include the area behind the address bar in 100vh,
+     which pushes the caption below the real visible viewport. dvh
+     tracks the actual visible area as the browser chrome shows/hides. */
+  height: 100dvh;
   z-index: 2000;
   background: rgba(0, 0, 0, 0.92);
   display: flex;
@@ -2241,6 +2245,11 @@ main > section:nth-of-type(even) {
   height: 100%;
   max-width: 100vw;
   max-height: 100vh;
+  max-height: 100dvh;
+  /* Safety net: if the caption still doesn't fit (a long caption, or a
+     browser without dvh support), scroll instead of cropping it off. */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .lightbox-image-wrap {

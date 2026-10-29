@@ -1396,6 +1396,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   private pinchStartScale = 1;
 
   private static readonly TAPPABLE_CARD_SELECTOR = '.card, .photo-frame, .skill-card';
+  private touchedCard: HTMLElement | null = null;
+  private touchGestureStart: { x: number; y: number } | null = null;
 
   ngOnInit(): void {
     setTimeout(() => this.loading.set(false), 1500);
@@ -1404,17 +1406,43 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
     // Mobile browsers don't apply :hover on tap, so mirror the desktop
     // hover glow explicitly for touch by toggling a class on the tapped card.
+    // A scroll gesture starts with the same touchstart as a tap, so track
+    // movement and drop the glow the moment it looks like a scroll rather
+    // than a tap, instead of leaving it raised for the whole scroll.
     document.addEventListener(
       'touchstart',
       (event) => {
-        const card = (event.target as HTMLElement)?.closest(App.TAPPABLE_CARD_SELECTOR);
+        const touch = event.touches[0];
+        this.touchGestureStart = touch ? { x: touch.clientX, y: touch.clientY } : null;
+        const card = (event.target as HTMLElement)?.closest(App.TAPPABLE_CARD_SELECTOR) as HTMLElement | null;
+        this.touchedCard = card;
         card?.classList.add('is-touched');
       },
       { passive: true },
     );
-    const clearTouchedCard = (event: TouchEvent) => {
-      const card = (event.target as HTMLElement)?.closest(App.TAPPABLE_CARD_SELECTOR);
-      card?.classList.remove('is-touched');
+    document.addEventListener(
+      'touchmove',
+      (event) => {
+        if (!this.touchedCard || !this.touchGestureStart) {
+          return;
+        }
+        const touch = event.touches[0];
+        if (!touch) {
+          return;
+        }
+        const dx = Math.abs(touch.clientX - this.touchGestureStart.x);
+        const dy = Math.abs(touch.clientY - this.touchGestureStart.y);
+        if (dx > 10 || dy > 10) {
+          this.touchedCard.classList.remove('is-touched');
+          this.touchedCard = null;
+        }
+      },
+      { passive: true },
+    );
+    const clearTouchedCard = () => {
+      this.touchedCard?.classList.remove('is-touched');
+      this.touchedCard = null;
+      this.touchGestureStart = null;
     };
     document.addEventListener('touchend', clearTouchedCard, { passive: true });
     document.addEventListener('touchcancel', clearTouchedCard, { passive: true });
