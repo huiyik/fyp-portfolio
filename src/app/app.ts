@@ -1394,6 +1394,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   private dragStart = { x: 0, y: 0 };
   private panStart = { x: 0, y: 0 };
 
+  /** Pan moves further than the raw finger travel, so the edges of a
+   *  zoomed-in photo are reachable within a single swipe. */
+  private static readonly PAN_SENSITIVITY = 1.6;
+
   private activePointers = new Map<number, { x: number; y: number }>();
   private pinchStartDistance = 0;
   private pinchStartScale = 1;
@@ -1584,16 +1588,16 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       // Dragging both fingers across the screen while pinching moves the
       // image too, the same way Instagram's photo viewer combines the two.
       const mid = this.getPinchMidpoint();
-      this.panX.set(this.panStart.x + (mid.x - this.pinchMidStart.x));
-      this.panY.set(this.panStart.y + (mid.y - this.pinchMidStart.y));
+      this.panX.set(this.panStart.x + (mid.x - this.pinchMidStart.x) * App.PAN_SENSITIVITY);
+      this.panY.set(this.panStart.y + (mid.y - this.pinchMidStart.y) * App.PAN_SENSITIVITY);
       return;
     }
 
     if (!this.isDragging) {
       return;
     }
-    this.panX.set(this.panStart.x + (event.clientX - this.dragStart.x));
-    this.panY.set(this.panStart.y + (event.clientY - this.dragStart.y));
+    this.panX.set(this.panStart.x + (event.clientX - this.dragStart.x) * App.PAN_SENSITIVITY);
+    this.panY.set(this.panStart.y + (event.clientY - this.dragStart.y) * App.PAN_SENSITIVITY);
   }
 
   onLightboxPointerUp(event: PointerEvent): void {
