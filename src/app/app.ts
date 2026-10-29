@@ -1563,12 +1563,12 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       const distance = this.getPinchDistance();
       if (this.pinchStartDistance > 0) {
         const scale = this.pinchStartScale * (distance / this.pinchStartDistance);
-        const next = Math.min(4, Math.max(1, scale));
+        // Let the pinch move freely past the resting 1x-4x range, in and out,
+        // instead of hitting a hard wall. Letting go always springs it back
+        // to rest (see onLightboxPointerUp), so there is no need to clamp
+        // tightly while the gesture is still live.
+        const next = Math.min(5, Math.max(0.5, scale));
         this.zoomScale.set(next);
-        if (next === 1) {
-          this.panX.set(0);
-          this.panY.set(0);
-        }
       }
       return;
     }
@@ -1589,7 +1589,13 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.activePointers.size === 0) {
       this.isDragging = false;
+      // Re-enable the transform transition (now that isPanning is false)
+      // before resetting, so the spring-back below animates smoothly
+      // instead of snapping instantly.
       this.isPanning.set(false);
+      this.zoomScale.set(1);
+      this.panX.set(0);
+      this.panY.set(0);
     }
   }
 
