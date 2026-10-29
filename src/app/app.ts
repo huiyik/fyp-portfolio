@@ -376,8 +376,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   contactLinks: { icon: string; label: string; href: string }[] = [
-    { icon: 'assets/icon-email.png', label: 'hytang0806@gmail.com', href: '' },
-    { icon: 'assets/icon-phone.png', label: '+60 11-2319 1627', href: '' },
+    { icon: 'assets/icon-email.png', label: 'hytang0806@gmail.com', href: 'mailto:hytang0806@gmail.com' },
+    { icon: 'assets/icon-phone.png', label: '+60 11-2319 1627', href: 'tel:+601123191627' },
     { icon: 'assets/icon-github.png', label: 'github.com/huiyik', href: 'https://github.com/huiyik' },
     {
       icon: 'assets/icon-linkedin.png',
