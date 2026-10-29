@@ -878,6 +878,7 @@
           class="lightbox-image"
           [class.panning]="isPanning()"
           [style.transform]="'translate(' + panX() + 'px, ' + panY() + 'px) scale(' + zoomScale() + ')'"
+          [style.transformOrigin]="zoomOriginX() + '% ' + zoomOriginY() + '%'"
           draggable="false"
         />
       </div>

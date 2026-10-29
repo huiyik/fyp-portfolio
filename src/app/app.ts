@@ -106,6 +106,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   panX = signal(0);
   panY = signal(0);
   isPanning = signal(false);
+  /** Where a pinch should expand from, as a percentage of the image's own box. */
+  zoomOriginX = signal(50);
+  zoomOriginY = signal(50);
 
   selectedWeek = signal('Week 1');
 
@@ -1539,6 +1542,9 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       this.isPanning.set(true);
       this.pinchStartDistance = this.getPinchDistance();
       this.pinchStartScale = this.zoomScale();
+      // Zoom from wherever the fingers actually are, not always the
+      // image's center.
+      this.updatePinchOrigin(event.currentTarget as HTMLElement);
       return;
     }
 
@@ -1596,7 +1602,26 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
       this.zoomScale.set(1);
       this.panX.set(0);
       this.panY.set(0);
+      this.zoomOriginX.set(50);
+      this.zoomOriginY.set(50);
     }
+  }
+
+  private updatePinchOrigin(wrap: HTMLElement | null): void {
+    const points = Array.from(this.activePointers.values());
+    const [a, b] = points;
+    if (!wrap || !a || !b) {
+      return;
+    }
+    const midX = (a.x + b.x) / 2;
+    const midY = (a.y + b.y) / 2;
+    const img = wrap.querySelector('.lightbox-image') as HTMLElement | null;
+    const rect = img?.getBoundingClientRect();
+    if (!rect || rect.width === 0 || rect.height === 0) {
+      return;
+    }
+    this.zoomOriginX.set(Math.min(100, Math.max(0, ((midX - rect.left) / rect.width) * 100)));
+    this.zoomOriginY.set(Math.min(100, Math.max(0, ((midY - rect.top) / rect.height) * 100)));
   }
 
   private getPinchDistance(): number {

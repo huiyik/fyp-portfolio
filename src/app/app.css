@@ -2246,15 +2246,14 @@ main > section:nth-of-type(even) {
   max-width: 100vw;
   max-height: 100vh;
   max-height: 100dvh;
-  /* Safety net: if the caption still doesn't fit (a long caption, or a
-     browser without dvh support), scroll instead of cropping it off. */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .lightbox-image-wrap {
   flex: 1 1 auto;
-  overflow: hidden;
+  /* Visible, not hidden: a pinch-zoomed image is meant to bleed past this
+     box right out to the screen edge, not be clipped by its own frame. The
+     fixed, full-viewport overlay above it is what actually bounds it. */
+  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
