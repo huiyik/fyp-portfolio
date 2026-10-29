@@ -1397,6 +1397,10 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   /** Pan moves further than the raw finger travel, so the edges of a
    *  zoomed-in photo are reachable within a single swipe. */
   private static readonly PAN_SENSITIVITY = 1.6;
+  /** How long to wait, with no fingers down, before treating a pinch/pan
+   *  gesture as finished and springing back to rest. */
+  private static readonly RELAY_GRACE_MS = 220;
+  private restSnapTimeout?: ReturnType<typeof setTimeout>;
 
   private activePointers = new Map<number, { x: number; y: number }>();
   private pinchStartDistance = 0;
@@ -1482,6 +1486,7 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearTimeout(this.typingTimeout);
+    clearTimeout(this.restSnapTimeout);
     this.revealObserver?.disconnect();
     document.body.style.overflow = '';
   }
@@ -1511,6 +1516,8 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   }
 
   closeLightbox(): void {
+    clearTimeout(this.restSnapTimeout);
+    this.restSnapTimeout = undefined;
     this.lightboxPhoto.set(null);
     document.body.style.overflow = '';
   }
@@ -1537,6 +1544,15 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onLightboxPointerDown(event: PointerEvent): void {
+    // A brief all-fingers-up moment while relaying from one finger to
+    // another (to keep swiping past where the first finger ran out of
+    // screen) shouldn't be treated as finishing the gesture. Cancel the
+    // pending spring-back if a new finger lands before it fires.
+    if (this.restSnapTimeout !== undefined) {
+      clearTimeout(this.restSnapTimeout);
+      this.restSnapTimeout = undefined;
+    }
+
     this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
 
     if (this.activePointers.size === 2) {
@@ -1621,15 +1637,21 @@ export class App implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.activePointers.size === 0) {
       this.isDragging = false;
-      // Re-enable the transform transition (now that isPanning is false)
-      // before resetting, so the spring-back below animates smoothly
-      // instead of snapping instantly.
-      this.isPanning.set(false);
-      this.zoomScale.set(1);
-      this.panX.set(0);
-      this.panY.set(0);
-      this.zoomOriginX.set(50);
-      this.zoomOriginY.set(50);
+      // Don't spring back immediately: wait briefly in case this is a
+      // finger relay (lift, then land a different finger to keep
+      // swiping), which onLightboxPointerDown will cancel this for.
+      this.restSnapTimeout = setTimeout(() => {
+        this.restSnapTimeout = undefined;
+        // Re-enable the transform transition (now that isPanning is false)
+        // before resetting, so the spring-back below animates smoothly
+        // instead of snapping instantly.
+        this.isPanning.set(false);
+        this.zoomScale.set(1);
+        this.panX.set(0);
+        this.panY.set(0);
+        this.zoomOriginX.set(50);
+        this.zoomOriginY.set(50);
+      }, App.RELAY_GRACE_MS);
     }
   }
 
